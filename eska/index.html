@@ -47,10 +47,14 @@
         <a class="back-link" href="../"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#arrow-left"></use></svg>1c-tooling</a>
         <p class="eyebrow"><span></span> eska · установка</p>
         <h1>Установить eska</h1>
-        <p>Выберите свою систему и выполните команду в терминале.</p>
+        <p>Готовый опубликованный релиз, компоненты через Cargo или сборка checkout — выберите подходящий сценарий.</p>
+
+        <div class="hero-actions"><a class="button button-primary" href="./docs/#installation">Компоненты и Explorer</a><a class="button button-quiet" href="./docs/#project">Подключить проект</a></div>
       </div>
 
       <div class="install-grid standalone-install">
+        <div class="doc-callout install-release-note"><strong>Текущий проект и публичный релиз</strong><p>На 22 октября 2026 GitHub latest ESKA — 0.14.3; в нём ещё нет отдельного project ZIP. Для актуальных project/LSP-возможностей установите компоненты 0.15.0 через Cargo или из checkout и соберите Explorer по <a href="./docs/#installation">пошаговой инструкции</a>. Команды ниже устанавливают опубликованный пакет.</p></div>
+
         <article class="command-card">
           <div class="command-heading">
             <div>
@@ -83,8 +87,7 @@
               <svg class="icon icon-check" aria-hidden="true"><use href="../assets/icons.svg#check"></use></svg>
             </button>
           </div>
-          <pre><code><span class="prompt">PS&gt;</span> powershell -ExecutionPolicy Bypass -c \
-  "irm https://1c-tooling.github.io/eska/install.ps1 | iex"</code></pre>
+          <pre><code><span class="prompt">PS&gt;</span> powershell -ExecutionPolicy Bypass -c "irm https://1c-tooling.github.io/eska/install.ps1 | iex"</code></pre>
         </article>
 
         <div class="install-note">
@@ -92,7 +95,7 @@
             <span>После установки</span>
             <code>eska --version</code>
           </div>
-          <p>Скрипты загружают последнюю опубликованную сборку из GitHub Releases.</p>
+          <p>Скрипты берут последнюю опубликованную сборку. После установки откройте новый терминал. VSIX и BSL Analyzer устанавливаются отдельно.</p>
         </div>
       </div>
     </main>

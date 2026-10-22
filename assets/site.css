@@ -1309,7 +1309,7 @@ pre {
   line-height: 0.95;
 }
 
-.install-hero > p:last-child {
+.install-hero > p:not(.eyebrow) {
   max-width: 370px;
   margin: 1.5rem 0 0;
   color: var(--text-soft);
@@ -1660,5 +1660,80 @@ pre {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Documentation screenshots retain their original proportions at every width. */
+.doc-screenshot {
+  margin: 2rem 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+}
+
+.doc-screenshot a,
+.doc-screenshot img {
+  display: block;
+}
+
+.doc-screenshot img {
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.doc-screenshot figcaption {
+  padding: 1rem 1.2rem;
+  border-top: 1px solid var(--line);
+  color: var(--text-soft);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.screenshot-grid .doc-screenshot {
+  margin-block: 0;
+}
+
+.screenshot-wide img {
+  width: 100%;
+}
+
+.docs-hero > p.guide-date {
+  font-size: 0.9rem;
+}
+
+.doc-section a:not(.button) {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.doc-section a:hover,
+.install-release-note a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.install-release-note a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.install-release-note {
+  margin-top: 0;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (max-width: 760px) {
+  .screenshot-grid {
+    grid-template-columns: 1fr;
   }
 }

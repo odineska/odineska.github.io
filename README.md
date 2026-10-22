@@ -1,20 +1,37 @@
 # 1c-tooling.github.io
 
-Статический сайт организации и короткие адреса установщиков CLI.
+Статический GitHub Pages сайт инструментов 1С:
 
-## eska
+- `/` — ESKA, самостоятельные компоненты и Explorer со скриншотами;
+- `/eska/` — выбор между опубликованным пакетом и текущей сборкой;
+- `/eska/docs/` — подробное руководство: установка, Designer XML, свойства,
+  BSL, workspace/приложения, CI, Git, сборка, обновление и диагностика;
+- `/eska/install` и `/eska/install.ps1` — существующие короткие адреса установщиков.
 
-Linux и macOS:
+Текст руководства соответствует [`eska/docs/user-guide.md`](https://github.com/1c-tooling/eska/blob/main/docs/user-guide.md).
+При обновлении сверяйте его с CLI, `package.json` Explorer и фактическими Assets
+GitHub Releases. Версия checkout и latest опубликованного пакета могут различаться.
+Скриншоты хранятся в `assets/screenshots/`; на страницах можно открыть оригиналы.
+
+Локальный просмотр из корня репозитория, без сборки и сторонних зависимостей:
+
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Откройте [главную страницу](http://127.0.0.1:8000/),
+[установку](http://127.0.0.1:8000/eska/)
+и [руководство](http://127.0.0.1:8000/eska/docs/).
+
+Установщики используют опубликованный канал:
 
 ```sh
 curl --proto '=https' --tlsv1.2 -LsSf https://1c-tooling.github.io/eska/install | sh
 ```
 
-Windows PowerShell:
-
 ```powershell
 powershell -ExecutionPolicy Bypass -c "irm https://1c-tooling.github.io/eska/install.ps1 | iex"
 ```
 
-Для следующих CLI используйте отдельный каталог с той же структурой:
-`/<cli>/install`, `/<cli>/install.ps1` и `/<cli>/index.html`.
+Публикация сайта выполняется существующим GitHub Pages процессом.
+Локальные изменения сами по себе не обновляют публичные страницы.

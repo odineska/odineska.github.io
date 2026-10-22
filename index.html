@@ -28,6 +28,7 @@
 
       <nav class="site-nav" aria-label="Основная навигация">
         <a href="#eska"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#terminal"></use></svg>eska</a>
+        <a href="#explorer">Explorer</a>
         <a href="#install"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#download"></use></svg>Установка</a>
         <a href="https://github.com/1c-tooling" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>GitHub</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить тёмную тему">
@@ -46,27 +47,16 @@
       <section class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow"><span></span> Open source · инструменты для 1С</p>
-          <h1>
-            <span>Проекты 1С.</span>
-            <em><span>Из терминала —</span><span>в поставку.</span></em>
-          </h1>
-          <p class="hero-lead">
-            1c-tooling создаёт открытые инструменты для понятной и воспроизводимой
-            работы с проектами 1С.
-          </p>
+          <h1><span>Проекты 1С.</span><em><span>В редакторе</span><span>и терминале.</span></em></h1>
+          <p class="hero-lead">Метаданные и BSL в VS Code/VSCodium, анализ для CI, Git и сборка файлов 1С. Исходниками остаются Designer XML и обычные модули.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#install">
               <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#download"></use></svg>
               Установить eska
             </a>
-            <a class="button button-quiet" href="https://github.com/1c-tooling/eska" target="_blank" rel="noreferrer">
-              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>
-              Репозиторий
-            </a>
+            <a class="button button-quiet" href="./eska/docs/">Открыть руководство</a>
           </div>
-          <p class="hero-flow" aria-label="Рабочий процесс: XML, Git, файл поставки">
-            <span>XML</span><i aria-hidden="true"></i><span>Git</span><i aria-hidden="true"></i><span>.cf · .cfe · .epf · .erf</span>
-          </p>
+          <p aria-label="Рабочий процесс: Designer XML, Explorer и CLI, файл поставки" class="hero-flow"><span>Designer XML</span><i aria-hidden="true"></i><span>Explorer + CLI</span><i aria-hidden="true"></i><span>.cf · .cfe · .epf · .erf</span></p>
         </div>
 
         <div class="logo-stage" aria-label="Логотип 1c-tooling">
@@ -80,50 +70,78 @@
         <div class="section-intro">
           <p class="section-index">01 / eska</p>
           <div class="section-copy">
-            <h2>CLI для работы<br>с проектами 1С</h2>
-            <p>eska связывает XML-выгрузку, Git и платформу 1С, используя инструменты, необходимые выбранному сценарию.</p>
+            <h2>Инструменты<br/>под вашу задачу</h2>
+            <p>Project, Check, Build и VCS работают отдельно; общая команда eska вызывает нужный компонент. Для дерева метаданных достаточно project и Explorer.</p>
           </div>
         </div>
-
         <article class="product-card">
           <div class="product-name">
             <div>
-              <span class="status-dot" aria-hidden="true"></span>
+              <span aria-hidden="true" class="status-dot"></span>
               <span>CLI · Rust</span>
             </div>
-            <strong>eska</strong>
-            <a class="link-with-icon" href="https://github.com/1c-tooling/eska" target="_blank" rel="noreferrer">
-              <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>
-              github.com/1c-tooling/eska
-            </a>
+            <strong>
+              eska
+            </strong>
+            <a class="link-with-icon" href="https://github.com/1c-tooling/eska" rel="noreferrer" target="_blank">
+      <svg aria-hidden="true" class="icon"><use href="./assets/icons.svg#github"></use></svg>
+                    github.com/1c-tooling/eska
+                  </a>
           </div>
-
           <div class="feature-list">
             <div class="feature-row">
               <span>01</span>
-              <p>Подключает XML-выгрузку Конфигуратора к проекту.</p>
+              <p>Project: метаданные, контекст приложения, свойства и переименование.</p>
             </div>
             <div class="feature-row">
               <span>02</span>
-              <p>Показывает Git-изменения на уровне объектов и модулей 1С.</p>
+              <p>Check: XML и полный анализ внешним BSL Analyzer для CI.</p>
             </div>
             <div class="feature-row">
               <span>03</span>
-              <p>Собирает <code>.cf</code>, <code>.cfe</code>, <code>.epf</code> и <code>.erf</code>.</p>
+              <p>Build: сборка и распаковка .cf, .cfe, .epf, .erf платформой 1С.</p>
             </div>
             <div class="feature-row feature-row-muted">
               <span>04</span>
-              <p>Для отдельных сценариев нужны Git, Git LFS и платформа 1С с <code>ibcmd</code>; для <code>patch</code> — также <code>1cv8</code>.</p>
+              <p>VCS: задачи, semantic diff, commits и полки; оболочка eska объединяет команды.</p>
             </div>
           </div>
         </article>
       </section>
 
+      <section class="product-section shell" id="explorer">
+        <div class="section-intro">
+          <p class="section-index">02 / explorer</p>
+          <div class="section-copy">
+            <h2>Конфигурация<br/>перед глазами</h2>
+            <p>Объекты, модули, формы и команды в одном дереве. Свойства с поиском и переходом к XML, поддержка 1С и языковые функции BSL.</p>
+          </div>
+        </div>
+        <div class="screenshot-grid">
+          <figure class="doc-screenshot">
+            <a aria-label="Открыть скриншот: Дерево конфигурации в ESKA: 1C Explorer" href="./assets/screenshots/explorer-tree.png"><img alt="Дерево конфигурации в ESKA: 1C Explorer" decoding="async" height="618" loading="lazy" src="./assets/screenshots/explorer-tree.png" width="624"/></a>
+            <figcaption>Разделы метаданных, сортировка и фильтр пустых групп.</figcaption>
+          </figure>
+          <figure class="doc-screenshot">
+            <a aria-label="Открыть скриншот: Модули, реквизиты и команды справочника" href="./assets/screenshots/explorer-object.png"><img alt="Модули, реквизиты и команды справочника" decoding="async" height="700" loading="lazy" src="./assets/screenshots/explorer-object.png" width="627"/></a>
+            <figcaption>Исходники объекта и маркеры поддержки 1С.</figcaption>
+          </figure>
+        </div>
+        <figure class="doc-screenshot screenshot-wide">
+          <a aria-label="Открыть скриншот: Вкладка свойств конфигурации с поиском и ссылками на XML" href="./assets/screenshots/explorer-properties.png"><img alt="Вкладка свойств конфигурации с поиском и ссылками на XML" decoding="async" height="880" loading="lazy" src="./assets/screenshots/explorer-properties.png" width="1755"/></a>
+          <figcaption>Свойства сначала открываются для чтения. Замочек разрешает поддержанные правки; правила поддержки проверяются отдельно.</figcaption>
+        </figure>
+        <div class="hero-actions">
+          <a class="button button-primary" href="./eska/docs/#explorer">Как пользоваться Explorer</a>
+          <a class="button button-quiet" href="https://github.com/1c-tooling/eska-vscode-explorer">Исходники расширения</a>
+        </div>
+      </section>
+
       <section class="install-section shell" id="install">
         <div class="section-intro install-intro">
-          <p class="section-index">02 / установка</p>
-          <h2>Начать с одной<br>команды</h2>
-          <p>Короткие адреса всегда ведут на установщик последней опубликованной версии.</p>
+          <p class="section-index">03 / установка</p>
+          <h2>Выберите<br>способ установки</h2>
+          <p>Короткие команды ставят опубликованный релиз. Для текущих project/LSP-возможностей установите компоненты 0.15.0 и соберите VSIX по инструкции.</p>
         </div>
 
         <div class="install-grid">
@@ -159,8 +177,7 @@
                 <svg class="icon icon-check" aria-hidden="true"><use href="./assets/icons.svg#check"></use></svg>
               </button>
             </div>
-            <pre><code><span class="prompt">PS&gt;</span> powershell -ExecutionPolicy Bypass -c \
-  "irm https://1c-tooling.github.io/eska/install.ps1 | iex"</code></pre>
+            <pre><code><span class="prompt">PS&gt;</span> powershell -ExecutionPolicy Bypass -c "irm https://1c-tooling.github.io/eska/install.ps1 | iex"</code></pre>
           </article>
 
           <div class="install-footer">
