@@ -921,6 +921,10 @@ pre {
   line-height: 1.35;
 }
 
+.doc-section h3[id] {
+  scroll-margin-top: 2rem;
+}
+
 .doc-section > p,
 .doc-columns p,
 .workflow-steps p {

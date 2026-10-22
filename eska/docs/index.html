@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Пошаговое руководство ESKA и Explorer: установка, Designer XML, свойства, BSL, приложения, CI, Git и сборка 1С.">
     <meta name="theme-color" content="#f2c94c">
-    <title>ESKA и Explorer: руководство · 1c-tooling</title>
+    <title>ESKA: команды и сценарии работы · 1c-tooling</title>
     <script>
       /** Applies the saved theme before rendering. */
       (() => {
@@ -51,7 +51,7 @@
           </small>
         </div>
         <nav class="docs-toc">
-          <a href="#components">Компоненты</a>
+          <a href="#components">Полная ESKA и мини</a>
           <a href="#installation">Установка</a>
           <a href="#project">Первый проект</a>
           <a href="#explorer">Дерево и навигация</a>
@@ -64,6 +64,7 @@
           <a href="#version">Версия проекта</a>
           <a href="#updates">Обновление и удаление</a>
           <a href="#troubleshooting">Решение проблем</a>
+          <a href="#scenarios">9 рабочих сценариев</a>
           <a href="#references">Точные контракты</a>
         </nav>
       </aside>
@@ -71,21 +72,48 @@
         <header class="docs-hero">
           <p class="eyebrow"><span></span>ESKA + Explorer · руководство</p>
           <h1>От выгрузки<br/>до сборки</h1>
-          <p>Designer XML, дерево метаданных, свойства объектов, BSL, Git и файлы поставки. Пошаговый рабочий цикл текущей версии.</p>
-          <p class="guide-date">Проверено по исходникам 22 октября 2026. Checkout ESKA 0.15.0; опубликованные пакеты могут отставать.</p>
+          <p>Полная ESKA и мини-программы: существующие команды, различия, установка и девять рабочих сценариев. Designer XML, Explorer, BSL, Git и файлы 1С.</p>
+          <p class="guide-date">Руководство по текущим исходникам. Состав готовых пакетов проверяйте в выбранном выпуске.</p>
           <div class="docs-hero-actions">
-            <a class="button button-primary" href="#installation">Установка</a>
-            <a class="button button-quiet" href="#project">Первый проект</a>
-            <a class="button button-quiet" href="#explorer">Explorer</a>
+            <a class="button button-primary" href="#components">Полная и мини</a>
+            <a class="button button-quiet" href="#scenarios">9 сценариев</a>
+            <a class="button button-quiet" href="#installation">Установка</a>
+            <a class="button button-quiet" href="#build">Сборка 1С</a>
           </div>
         </header>
         <section class="doc-section" id="components">
           <div class="doc-heading">
             <span>01</span>
             <div>
-              <h2>Выберите нужные компоненты</h2>
+              <h2>Полная ESKA и мини-программы</h2>
             </div>
           </div>
+          <p>У ESKA два способа запуска. <strong>Общая команда <code>eska</code></strong> предоставляет единый вход:
+    <code>eska build</code>, <code>eska check</code>, <code>eska status</code>, <code>eska save</code> и другие команды.
+    <strong>Мини-программы</strong> запускают нужную часть напрямую: <code>eska-build</code>, <code>eska-check</code>,
+    <code>eska-vcs</code>, <code>eska-project</code>. Для обычной сборки подходят оба варианта:</p>
+          <pre><code class="language-sh"># Через общую ESKA
+eska build
+</code></pre>
+          <pre><code class="language-sh"># Напрямую через мини-программу
+eska-build build
+</code></pre>
+          <p>Это альтернативные вызовы: выполнять оба подряд для одной сборки не нужно.
+    Они используют один сборщик, один <code>eska.toml</code> и те же XML/BSL. Переносить проект,
+    конвертировать исходники или заводить второй конфиг при смене способа запуска
+    не требуется. У <code>eska-build</code> запуск без подкоманды тоже выполняет сборку;
+    в инструкции используется явное <code>eska-build build</code>, чтобы было видно действие.</p>
+          <h3>Что означает полный комплект</h3>
+          <p>Полный комплект — <code>eska</code> и четыре исполняемых компонента. Оболочка выбирает
+    владельца операции и запускает его отдельным процессом. Поэтому установка
+    одного crate <code>eska</code> через Cargo не устанавливает остальные executable:
+    для <code>eska build</code> нужен <code>eska-build</code>, для <code>eska check</code> — <code>eska-check</code>,
+    для <code>eska status</code> — <code>eska-vcs</code>. Нужный комплект устанавливается в разделе ниже.</p>
+          <p>Мини-программы можно использовать без оболочки. Это удобно, когда на рабочей
+    машине нужен только Explorer, в CI — только проверка, а на сборочном агенте —
+    только выпуск файлов 1С. Платформа, анализатор, Git и расширение редактора
+    устанавливаются по потребности; сам полный CLI их не заменяет.</p>
+          <h3>Какой набор выбрать</h3>
           <div class="table-wrap">
             <table>
               <thead>
@@ -123,13 +151,267 @@
             </table>
           </div>
           <p>Для дерева платформа, Git, анализатор и оболочка не обязательны.
-    Команды import и patch дополнительно используют VCS-компонент.
+    Команды <code>import</code> и <code>patch</code> дополнительно используют VCS-компонент.
+    Общий <code>eska build --manifest</code> также требует <code>eska-vcs</code> для сведений о Git;
+    прямой <code>eska-build build --manifest</code> работает без него и отмечает Git
+    в паспорте как <code>unavailable</code>.
     <code>eska-project</code> не является языковым сервером: он передаёт контекст и метаданные,
     а диагностики BSL вычисляет отдельный upstream-процесс. Текущая интеграция
     принимает <code>bsl-analyzer-app</code> <strong>0.3.2</strong>, CLI contract <strong>3.4</strong>.</p>
           <p>Исходники — выгрузка <strong>Designer XML</strong>: XML-дескрипторы, <code>.bsl</code> и ресурсы.
     XML и BSL редактируются непосредственно; промежуточный формат ESKA не нужен.
     После изменения в Конфигураторе выгрузите исходники заново самостоятельно.</p>
+          <h3>Соответствие существующих команд</h3>
+          <p>В таблицах перечислен публичный CLI текущего checkout. <strong>Совпадение пока
+    не полное</strong>: у мини-программ есть команды без входа через <code>eska</code>.
+    Отсутствующие входы общего CLI не следует считать реализованными.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Задача</th>
+                  <th>Через <code>eska</code></th>
+                  <th>Прямой запуск</th>
+                  <th>Особенности</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Базовая проверка проекта</td>
+                  <td><code>eska</code> без подкоманды</td>
+                  <td><code>eska-project validate</code> или <code>eska-project</code></td>
+                  <td>У явного <code>validate</code> есть JSON и selectors; это не полная проверка BSL</td>
+                </tr>
+                <tr>
+                  <td>Создать каркас</td>
+                  <td><code>eska new NAME --type TYPE</code></td>
+                  <td><code>eska-project new NAME --type TYPE</code></td>
+                  <td>Различаются настройка платформы и Git; см. ниже</td>
+                </tr>
+                <tr>
+                  <td>Подключить выгрузку</td>
+                  <td><code>eska init --source src</code></td>
+                  <td><code>eska-project init --source src</code></td>
+                  <td>Общий вход — составная операция; прямой — структурная</td>
+                </tr>
+                <tr>
+                  <td>Прочитать контекст приложения</td>
+                  <td>Нет отдельной команды</td>
+                  <td><code>eska-project context</code></td>
+                  <td>Поддерживает <code>--application</code> и <code>--format json</code></td>
+                </tr>
+                <tr>
+                  <td>Управлять конфигом анализатора</td>
+                  <td>Нет отдельной команды</td>
+                  <td><code>eska-project analyzer-config status/prepare/migrate</code></td>
+                  <td>Это подкоманды проектного компонента</td>
+                </tr>
+                <tr>
+                  <td>Метаданные</td>
+                  <td><code>eska metadata …</code></td>
+                  <td><code>eska-project metadata …</code></td>
+                  <td>Общие подкоманды <code>inspect</code>, <code>types</code>, <code>choices</code>, <code>check</code>, <code>apply</code>, <code>rename-preview</code>, <code>rename-apply</code>, <code>rename-recovery</code></td>
+                </tr>
+                <tr>
+                  <td>Версия проекта 1С</td>
+                  <td><code>eska version</code>, <code>eska version bump patch</code></td>
+                  <td><code>eska-project version</code>, <code>eska-project version bump patch</code></td>
+                  <td>Чтение версии XML и увеличение <code>major/minor/patch</code></td>
+                </tr>
+                <tr>
+                  <td>Диагностика окружения</td>
+                  <td><code>eska doctor</code></td>
+                  <td><code>eska-project doctor</code></td>
+                  <td>Project собирает в том числе проверки build/VCS; отсутствие компонента отражается в отчёте</td>
+                </tr>
+                <tr>
+                  <td>Сервер для Explorer</td>
+                  <td><code>eska ide --stdio</code></td>
+                  <td><code>eska-project serve --stdio</code></td>
+                  <td>Первый — legacy-вход; текущий backend Explorer использует второй</td>
+                </tr>
+                <tr>
+                  <td>Полная проверка XML/BSL</td>
+                  <td><code>eska check …</code></td>
+                  <td><code>eska-check …</code></td>
+                  <td>Аргументы одинаковы; у мини-программы нет дополнительного слова <code>check</code></td>
+                </tr>
+                <tr>
+                  <td>Сборка</td>
+                  <td><code>eska build …</code></td>
+                  <td><code>eska-build build …</code></td>
+                  <td>Одинаковый native pipeline; различие Git-данных паспорта описано ниже</td>
+                </tr>
+                <tr>
+                  <td>Распаковка в новый каталог</td>
+                  <td>Нет <code>eska unpack</code></td>
+                  <td><code>eska-build unpack INPUT DESTINATION</code></td>
+                  <td>Не создаёт манифест и Git</td>
+                </tr>
+                <tr>
+                  <td>Новый проект из файла 1С</td>
+                  <td><code>eska new NAME --from FILE</code></td>
+                  <td><code>eska-build unpack</code>, затем <code>eska-project init</code></td>
+                  <td>Это разные последовательности: прямой вариант не настраивает Git-workflow</td>
+                </tr>
+                <tr>
+                  <td>Замена source из файла 1С</td>
+                  <td><code>eska import FILE</code></td>
+                  <td><code>eska-build import FILE</code></td>
+                  <td>Нужен <code>eska-vcs</code>; сначала используйте <code>--dry-run</code></td>
+                </tr>
+                <tr>
+                  <td>Патч-расширение</td>
+                  <td><code>eska patch …</code></td>
+                  <td><code>eska-build patch …</code></td>
+                  <td>Ограниченный сценарий committed-изменений общих модулей; VCS нужен и для плана</td>
+                </tr>
+                <tr>
+                  <td>Очистка служебной ИБ</td>
+                  <td><code>eska clean</code></td>
+                  <td><code>eska-build clean</code></td>
+                  <td>Опубликованные файлы сборки сохраняются</td>
+                </tr>
+                <tr>
+                  <td>Поиск платформы</td>
+                  <td><code>eska platform list</code></td>
+                  <td><code>eska-build platform list</code></td>
+                  <td>Показывает доступные установки</td>
+                </tr>
+                <tr>
+                  <td>Машинные настройки</td>
+                  <td><code>eska config init</code>, <code>eska config edit</code></td>
+                  <td><code>eska-build config init</code>, <code>eska-build config edit</code></td>
+                  <td>Настройки runner и путей для этой машины</td>
+                </tr>
+                <tr>
+                  <td>Обновление CLI</td>
+                  <td><code>eska update --check</code>, <code>eska update</code></td>
+                  <td>Одноимённых команд у мини-программ нет</td>
+                  <td>Используется поддерживаемый опубликованный канал; Cargo/checkout обновляются своим способом</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Все публичные Git-команды доступны через оба входа:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Действие</th>
+                  <th>Через <code>eska</code></th>
+                  <th>Через <code>eska-vcs</code></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Клонировать проект</td>
+                  <td><code>eska clone URL DIRECTORY</code></td>
+                  <td><code>eska-vcs clone URL DIRECTORY</code></td>
+                </tr>
+                <tr>
+                  <td>Состояние проекта</td>
+                  <td><code>eska status</code></td>
+                  <td><code>eska-vcs status</code></td>
+                </tr>
+                <tr>
+                  <td>Изменения файлов или объектов</td>
+                  <td><code>eska diff</code>, <code>eska diff --semantic</code></td>
+                  <td><code>eska-vcs diff</code>, <code>eska-vcs diff --semantic</code></td>
+                </tr>
+                <tr>
+                  <td>История</td>
+                  <td><code>eska history --limit 10</code></td>
+                  <td><code>eska-vcs history --limit 10</code></td>
+                </tr>
+                <tr>
+                  <td>Начать задачу</td>
+                  <td><code>eska start TASK-123</code></td>
+                  <td><code>eska-vcs start TASK-123</code></td>
+                </tr>
+                <tr>
+                  <td>Переключить задачу</td>
+                  <td><code>eska switch TASK-123</code>, <code>eska switch --base</code></td>
+                  <td><code>eska-vcs switch TASK-123</code>, <code>eska-vcs switch --base</code></td>
+                </tr>
+                <tr>
+                  <td>Сохранить commit</td>
+                  <td><code>eska save -m "Сообщение"</code></td>
+                  <td><code>eska-vcs save -m "Сообщение"</code></td>
+                </tr>
+                <tr>
+                  <td>Завершить локальную задачу</td>
+                  <td><code>eska finish</code></td>
+                  <td><code>eska-vcs finish</code></td>
+                </tr>
+                <tr>
+                  <td>Отложить незавершённые изменения</td>
+                  <td><code>eska shelve</code></td>
+                  <td><code>eska-vcs shelve</code></td>
+                </tr>
+                <tr>
+                  <td>Показать полки</td>
+                  <td><code>eska shelves</code></td>
+                  <td><code>eska-vcs shelves</code></td>
+                </tr>
+                <tr>
+                  <td>Восстановить полку</td>
+                  <td><code>eska unshelve</code></td>
+                  <td><code>eska-vcs unshelve</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Где нельзя просто заменить имя программы</h3>
+          <p><code>eska new/init</code> выбирают платформу, настраивают workflow и при необходимости
+    инициализируют Git. У них есть <code>--workflow</code>, <code>--no-vcs</code> и параметры выбора
+    платформы. <code>eska new --from</code> дополнительно распаковывает бинарный файл 1С.
+    Это операции для полного рабочего цикла, которым нужны project/build,
+    а без <code>--no-vcs</code> — также VCS.</p>
+          <p><code>eska-project new/init</code> создают структуру проекта без поиска установленной
+    платформы и без Git-инициализации. У них нет <code>--workflow</code>, <code>--no-vcs</code> и <code>--from</code>.
+    Если передать <code>--platform-version</code>, значение записывается в манифест;
+    само наличие платформы этим не проверяется. <code>new</code> не генерирует XML объекта 1С.</p>
+          <p><code>eska build --manifest</code> запрашивает Git-сведения у <code>eska-vcs</code> и включает их
+    в паспорт. <code>eska-build build --manifest</code> самостоятельно к Git не обращается;
+    <code>source.git.status = "unavailable"</code> означает отсутствие полученных сведений,
+    а не доказанное отсутствие repository. Исходники и проверка результата сборки
+    используют общий механизм у обоих входов.</p>
+          <p><code>eska check --format json</code> соответствует <code>eska-check --format json</code>.
+    Запись <code>eska-check check</code> ошибочна. У <code>eska-build</code> действие, наоборот,
+    сохраняется: <code>eska-build build</code>, <code>eska-build clean</code>, <code>eska-build platform list</code>.</p>
+          <p>В текущем общем CLI нет <code>eska validate</code>, <code>eska context</code>, <code>eska analyzer-config</code>,
+    <code>eska serve</code> и <code>eska unpack</code>. Используйте соответствующий прямой вход из таблицы.
+    Для обычной проверки корня у общей программы есть запуск <code>eska</code> без подкоманды;
+    для подключения текущего Explorer — <code>eska-project serve --stdio</code>.</p>
+          <h3>Как читать и запускать примеры</h3>
+          <p>В разделах сборки, анализа и Git сначала показана общая <code>eska</code>, затем прямой
+    вариант. Выбирайте один вариант для каждого действия. Можно смешивать входы:
+    например, подготовить контекст через <code>eska-project</code>, а проверять и собирать
+    через <code>eska check</code> и <code>eska build</code>.</p>
+          <p>Команды над существующим проектом запускаются из каталога с <code>eska.toml</code>
+    или с глобальным <code>--project-dir</code>. Его аргумент — каталог, не путь к манифесту:</p>
+          <pre><code class="language-sh">eska --project-dir ./accounting build --dry-run
+eska-build --project-dir ./accounting build --dry-run
+eska-project --project-dir ./accounting context --format json
+</code></pre>
+          <p>Для workspace <code>--project-dir</code> задаёт корень поиска, <code>--project NAME</code> выбирает
+    участника для поддерживающей этот флаг команды, а <code>--application NAME</code>
+    выбирает контекст анализа. Это разные параметры. <code>eska check</code> использует
+    <code>--application</code>, но не <code>--project</code> и не <code>--workspace</code>.</p>
+          <p>Имена каталогов, <code>TASK-123</code>, пути <code>/path/to/…</code> и версия платформы
+    <code>8.3.27.2325</code> в примерах заменяются вашими значениями. Флаги <code>--dry-run</code>
+    есть только у конкретных операций: их наличие проверяется в справке.</p>
+          <pre><code class="language-sh">eska --help
+eska build --help
+eska-project --help
+eska-build build --help
+eska-check --help
+eska-vcs --help
+</code></pre>
+          <p><code>--version</code> показывает версию программы; <code>version</code> без двух дефисов читает
+    версию проекта 1С. <code>--lang ru|en</code> меняет human-вывод, машинные JSON keys
+    не локализуются.</p>
         </section>
         <section class="doc-section" id="installation">
           <div class="doc-heading">
@@ -139,21 +421,55 @@
             </div>
           </div>
           <h3>Публичный пакет и текущий checkout</h3>
-          <p>На дату проверки GitHub latest ESKA — <code>0.14.3</code>, Explorer — <code>0.0.12</code>.
-    Комплект ESKA <code>0.14.3</code> ещё не содержит отдельного project ZIP.
-    Все пять компонентов <code>0.15.0</code> уже опубликованы в Cargo registry.
+          <p>Компонентная поставка появилась в ESKA <code>0.15.0</code>; для готовых бинарников проверяйте
+    Assets выбранного <a href="https://github.com/1c-tooling/eska/releases">GitHub Release</a>.
+    Все пять компонентов также доступны в Cargo registry.
     Установите их через Cargo либо соберите checkout, а Explorer упакуйте из текущих
     исходников: новый backend со старым VSIX сам по себе не добавит новый клиент.
     Номер расширения в checkout пока также <code>0.0.12</code>, поэтому проверяйте происхождение
     VSIX, выбранный путь backend и его возможности, а не только номер пакета.</p>
-          <h3>Компоненты через Cargo</h3>
+          <h3>Полный комплект через Cargo</h3>
           <p>С установленным Rust/Cargo можно установить весь текущий набор:</p>
-          <pre><code class="language-sh">cargo install --locked eska-project@0.15.0 eska-check@0.15.0 eska-build@0.15.0 eska-vcs@0.15.0 eska@0.15.0
+          <pre><code class="language-sh">cargo install --locked eska-project eska-check eska-build eska-vcs eska
 </code></pre>
-          <p>Для одного дерева достаточно <code>cargo install --locked eska-project@0.15.0</code>.
-    Cargo собирает бинарник из опубликованного crate. Его каталог <code>bin</code> должен быть
+          <p>Cargo собирает бинарник из опубликованного crate. Его каталог <code>bin</code> должен быть
     в PATH редактора; либо задайте полный путь к установленному executable.
     BSL Analyzer и VSIX устанавливаются отдельно.</p>
+          <p>После установки проверьте все пять программ:</p>
+          <pre><code class="language-sh">eska --version
+eska-project --version
+eska-build --version
+eska-check --version
+eska-vcs --version
+</code></pre>
+          <p>Такой комплект позволяет использовать общие команды и вызывать мини-программы
+    напрямую. Для воспроизводимой установки закрепите совместимые версии пакетов
+    из одного выпуска через синтаксис Cargo <code>имя-пакета@версия</code>.
+    <code>eska --help</code> проверяет только доступность оболочки: это ещё не проверка
+    платформы, анализатора или компонентов выбранной операции.</p>
+          <h3>Выборочная установка мини-программ</h3>
+          <p>Если общий вход не нужен, установите только программы своего сценария.
+    Каждая строка ниже — самостоятельный вариант установки:</p>
+          <pre><code class="language-sh"># Дерево и свойства в Explorer
+cargo install --locked eska-project
+
+# Только статическая проверка; app-анализатор устанавливается отдельно
+cargo install --locked eska-check
+
+# Только сборка или распаковка; платформа устанавливается отдельно
+cargo install --locked eska-build
+
+# Только Git-workflow для уже подготовленного проекта
+cargo install --locked eska-vcs
+</code></pre>
+          <p>Для подготовки XML из бинарного файла и последующего подключения Explorer
+    нужны <code>eska-build</code> и <code>eska-project</code>. Для <code>import</code> или <code>patch</code> — <code>eska-build</code>
+    и <code>eska-vcs</code>. Для одной общей команды можно поставить оболочку и её владельца:</p>
+          <pre><code class="language-sh"># Минимальный набор для eska check
+cargo install --locked eska eska-check
+</code></pre>
+          <p>Он не обеспечивает <code>eska build</code> или <code>eska status</code>: их компоненты добавляются
+    отдельно. Внешний анализатор всё равно нужен для самой проверки.</p>
           <h3>ESKA из checkout</h3>
           <p>Нужны Git для получения репозитория и Rust с Cargo. Версия toolchain закреплена
     в <code>rust-toolchain.toml</code> — сейчас <code>1.99.1</code>. Существующий checkout можно использовать
@@ -172,11 +488,31 @@ eska --version
     терминале; для GUI надёжнее явно указать абсолютные пути в настройках Explorer.
     Для одного дерева достаточно собрать <code>cargo build -p eska-project --release --locked</code>.
     Сама установленная Rust-программа не требует Cargo для работы.</p>
+          <p>Аналогично собираются отдельные <code>eska-check</code>, <code>eska-build</code> и <code>eska-vcs</code> через
+    <code>cargo build -p &lt;имя-пакета&gt; --release --locked</code>. Для полного комплекта используйте
+    приведённую выше сборку workspace: сборка только <code>-p eska</code> не выпускает остальные
+    исполняемые компоненты.</p>
           <p>В PowerShell сборка та же; вместо <code>export</code> добавьте каталог в текущую сессию:</p>
           <pre><code class="language-powershell">$env:Path = "$(Join-Path (Get-Location) 'target/release');$env:Path"
 eska-project --version
 </code></pre>
           <p>В Windows имена бинарников заканчиваются на <code>.exe</code>.</p>
+          <h3>Как общая ESKA находит мини-программы</h3>
+          <p>Для каждого владельца можно задать явный путь в <code>ESKA_PROJECT_BINARY</code>,
+    <code>ESKA_BUILD_BINARY</code>, <code>ESKA_CHECK_BINARY</code> или <code>ESKA_VCS_BINARY</code>. Если override
+    задан неверно, команда сообщает ошибку, а не выбирает другой бинарник.
+    Без override поиск идёт рядом с запущенным executable, затем в PATH,
+    затем в <code>~/.eska/bin</code> (<code>USERPROFILE</code> в Windows).</p>
+          <p>Поэтому бинарники из одной сборки удобно хранить вместе. При нескольких
+    установках старая мини-программа рядом с <code>eska</code> может выбираться раньше новой
+    из PATH. Проверяйте не только номер оболочки, но и пути компонентов.
+    Для разового явного выбора на Linux/macOS:</p>
+          <pre><code class="language-sh">ESKA_BUILD_BINARY=/path/to/eska-build eska build --dry-run
+</code></pre>
+          <p>Путь замените существующим. Эта переменная выбирает компонент ESKA;
+    путь к платформенному <code>ibcmd</code> задаётся отдельно через параметры сборки.
+    Настройка <code>eska.explorer.executable</code> в режиме <code>project</code> также указывает
+    именно на <code>eska-project</code>, даже если в терминале вы пользуетесь полной <code>eska</code>.</p>
           <h3>BSL Analyzer</h3>
           <p>Возьмите <strong>app-бинарник</strong> <code>bsl-analyzer-app</code> из
     <a href="https://github.com/itrous/bsl-analyzer/releases/tag/v0.3.2">официального релиза 0.3.2</a>
@@ -197,7 +533,7 @@ cd eska-vscode-explorer
 bun install --frozen-lockfile --ignore-scripts
 bun run package
 </code></pre>
-          <p>Установите полученный <code>eska-explorer-<version>.vsix</code> через
+          <p>Установите полученный <code>eska-explorer-&lt;version&gt;.vsix</code> через
     <strong>Расширения → … → Установить из VSIX…</strong>. Если пакет с тем же номером уже
     установлен, подтвердите замену и перезагрузите окно редактора.
     Альтернатива для текущей версии checkout:</p>
@@ -238,7 +574,7 @@ bun run package
     ├── CommonModules/
     └── …
 </code></pre>
-          <p>Из <code>accounting/</code> выполните:</p>
+          <p>Для подключения без платформы и Git из <code>accounting/</code> выполните:</p>
           <pre><code class="language-sh">eska-project init --source src
 eska-project validate
 eska-project context --format json
@@ -257,8 +593,25 @@ source = "src"
     <code>context</code> показывает реально выбранные источники и платформу анализа.
     У отдельного расширения, EPF или ERF без основной конфигурации контекст
     ограниченный (<code>limited_context</code>): функции базовой конфигурации могут не разрешаться.</p>
+          <p>Если нужен полный цикл с Git и платформой, <strong>вместо</strong> структурного <code>init</code>
+    используйте общий вход для той же ещё не подключённой выгрузки:</p>
+          <pre><code class="language-sh">eska init --source src --workflow trunk --platform-version 8.3.27.2325
+eska
+eska status
+</code></pre>
+          <p>Это требует project/build/VCS-компонентов и подходящей платформы.
+    <code>eska</code> без подкоманды проверяет проект; полный анализ запускается отдельно
+    через <code>eska check</code>. Два варианта <code>init</code> не выполняются последовательно:
+    оба создают манифест, но выбирают разный объём настройки.</p>
           <h3>Если есть только CF/CFE/EPF/ERF</h3>
-          <p>Сначала установите платформу с <code>ibcmd</code> и узнайте точную версию:</p>
+          <p>Сначала установите платформу с <code>ibcmd</code> и узнайте точную версию.
+    Для нового проекта с Git используйте полную ESKA:</p>
+          <pre><code class="language-sh">eska platform list
+eska new processor --from import.epf --workflow trunk --platform-version 8.3.27.2325
+</code></pre>
+          <p>Результат — каталог <code>processor</code> с исходниками, манифестом и Git-настройкой.
+    Дальше работайте из него. Для распаковки и подключения без Git используйте
+    другой вариант, через мини-программы:</p>
           <pre><code class="language-sh">eska-build platform list
 eska-build unpack import.epf import-xml --platform-version 8.3.27.2325
 eska-project init import-xml --source .
@@ -420,7 +773,7 @@ eska-project analyzer-config prepare --analyzer /path/to/bsl-analyzer-app
     <strong>актуальный</strong> <code>preview_token</code> из ответа:</p>
           <pre><code class="language-sh">eska-project analyzer-config migrate --apply --preview-token TOKEN --analyzer /path/to/bsl-analyzer-app
 </code></pre>
-          <p>Оригинал сохраняется в <code>bsl-analyzer.toml.eska-original-<hash></code>.
+          <p>Оригинал сохраняется в <code>bsl-analyzer.toml.eska-original-&lt;hash&gt;</code>.
     Ручные изменения уже сгенерированного файла вызывают конфликт вместо перезаписи.</p>
           <p>В строке состояния <code>ESKA v…</code> относится к project, а <code>BSL Analyzer v…</code> —
     к выбранному app. Проверенный бинарник ещё не означает готовую модель языка.
@@ -475,7 +828,7 @@ source = "."
     <code>type = "extension"</code> и <code>name = "data-import"</code>, <code>type = "processing"</code>.
     Выбирайте <code>source</code> по фактическому расположению XML, без автоматического
     добавления <code>/src</code>. При подключении существующих выгрузок <code>eska-project init</code>
-    из workspace обновляет список members; <code>new</code> создаёт участника в <code>src/<name></code>.</p>
+    из workspace обновляет список members; <code>new</code> создаёт участника в <code>src/&lt;name&gt;</code>.</p>
           <pre><code class="language-sh">eska-project validate --workspace
 eska-project context --application accounting --format json
 eska-project analyzer-config prepare --application accounting --analyzer /path/to/bsl-analyzer-app
@@ -499,16 +852,29 @@ eska-project analyzer-config prepare --application accounting --analyzer /path/t
               <h2>Проверяйте проект локально и в CI</h2>
             </div>
           </div>
+          <p>Через общую ESKA:</p>
+          <pre><code class="language-sh">eska check --analyzer /path/to/bsl-analyzer-app --format json --report check-result.json
+</code></pre>
+          <p>Через мини-программу, с теми же параметрами:</p>
           <pre><code class="language-sh">eska-check --analyzer /path/to/bsl-analyzer-app --format json --report check-result.json
 </code></pre>
           <p>Файл отчёта должен быть <strong>новым</strong>, вне source; его родительский каталог должен
     существовать. При повторном запуске выберите новое имя или отдельно удалите
     свой старый отчёт. Команда не перезаписывает существующий результат.
+    Пример с <code>check-result.json</code> рассчитан на <code>source = "src"</code>. Если source —
+    корень проекта (<code>"."</code>), задайте путь отчёта вне проекта, например
+    <code>/path/to/reports/check-result.json</code>, где <code>/path/to/reports</code> — существующий каталог.
     Для приложения добавьте <code>--application accounting</code>.
-    Общий вход <code>eska check</code> принимает те же параметры.</p>
+    Выберите один вызов: если выполнить оба с тем же <code>--report</code>, второй откажется
+    заменять уже созданный файл.</p>
           <p>Проверка обходит объявленные XML и выполняет полный анализ BSL выбранного
     контекста. Потерянный или оборванный ответ анализатора не считается успехом.
     Сеть, Git, IDE и платформа 1С не требуются, если бинарник и контекст уже доступны.</p>
+          <p>Оба входа сами подготавливают принадлежащий ESKA <code>bsl-analyzer.toml</code> и проверяют
+    его анализатором. Для обычного CI-запуска executable <code>eska-project</code> не нужен.
+    Если требуется миграция пользовательского файла или смена активного контекста,
+    сначала выполните соответствующую команду <code>eska-project analyzer-config</code>:
+    проверка не принимает такие решения автоматически.</p>
           <p>Пороги задаются в owning <code>eska.toml</code>:</p>
           <pre><code class="language-toml">[tools.eska-check]
 max_errors = 0
@@ -583,17 +949,17 @@ eska save -m "chore: Подключён проект ESKA"
                 <tr>
                   <td><code>trunk</code></td>
                   <td><code>main</code></td>
-                  <td><code>task/<ID></code></td>
+                  <td><code>task/&lt;ID&gt;</code></td>
                 </tr>
                 <tr>
                   <td><code>github-flow</code></td>
                   <td><code>main</code></td>
-                  <td><code>feature/<ID></code></td>
+                  <td><code>feature/&lt;ID&gt;</code></td>
                 </tr>
                 <tr>
                   <td><code>git-flow</code></td>
                   <td><code>develop</code></td>
-                  <td><code>feature/<ID></code></td>
+                  <td><code>feature/&lt;ID&gt;</code></td>
                 </tr>
                 <tr>
                   <td><code>custom</code></td>
@@ -610,6 +976,17 @@ eska diff --semantic
 eska save --dry-run
 eska save -m "fix: Исправлен расчёт суммы"
 </code></pre>
+          <p>Если проект и workflow уже подготовлены, те же действия доступны без оболочки:</p>
+          <pre><code class="language-sh">eska-vcs start TASK-123
+eska-vcs status
+eska-vcs diff --semantic
+eska-vcs save --dry-run
+eska-vcs save -m "fix: Исправлен расчёт суммы"
+</code></pre>
+          <p>У <code>eska-vcs</code> нет <code>new/init</code>: мини-программа работает с уже существующим
+    проектом и Git repository. Установка только VCS не создаёт исходники,
+    манифест и workflow. Для начала с нуля используйте составные команды выше
+    либо отдельно подготовьте структуру и VCS-настройки.</p>
           <p>Изменяйте XML/BSL в редакторе либо выгружайте новые изменения из Конфигуратора,
     затем проверяйте diff и анализ. Semantic diff сообщает поддержанные изменения
     объектов/модулей; он не заменяет чтение diff или BSL-анализ.
@@ -628,18 +1005,143 @@ eska save -m "fix: Исправлен расчёт суммы"
               <h2>Собирайте и распаковывайте файлы 1С</h2>
             </div>
           </div>
+          <h3>Подготовьте платформу и проект</h3>
+          <p>Для <code>eska build</code> нужны оболочка и <code>eska-build</code>; для прямого <code>eska-build build</code>
+    достаточно сборщика. В обоих случаях необходимы Designer XML, <code>eska.toml</code>
+    и установленная платформа 1С с <code>ibcmd</code>. Explorer, BSL Analyzer и project-сервер
+    для обычной сборки не требуются.</p>
           <p>В owning манифесте укажите <strong>свою точную установленную</strong> версию:</p>
           <pre><code class="language-toml">[build]
 platform_version = "8.3.27.2325"
 artifacts_directory = "build"
 </code></pre>
-          <p>Сначала проверьте окружение и план, затем соберите:</p>
+          <h3>Сборка через полную ESKA</h3>
+          <p>Из каталога проекта сначала посмотрите платформы, затем план и результат:</p>
+          <pre><code class="language-sh">eska platform list
+eska build --dry-run
+eska build
+</code></pre>
+          <p><code>platform list</code> показывает доступные установки. <code>--dry-run</code> выполняет preflight
+    и показывает план, но не создаёт файл сборки. Успех dry-run не равен успешной
+    компиляции: артефакт появляется после обычного <code>build</code>.</p>
+          <p>Для паспорта сборки используйте <code>eska build --manifest</code> вместо обычного build.
+    В этом варианте дополнительно нужен <code>eska-vcs</code>, даже если пользователь
+    не собирается выполнять Git-команды вручную.</p>
+          <h3>Сборка через мини-программу</h3>
+          <p>Альтернативная последовательность для того же проекта:</p>
           <pre><code class="language-sh">eska-build platform list
 eska-build build --dry-run
-eska-build build --manifest
+eska-build build
 </code></pre>
+          <p>Здесь оболочка не нужна. Для паспорта используйте <code>eska-build build --manifest</code>.
+    Мини-программа не получает сведения о repository и записывает Git как
+    <code>unavailable</code>. Остальные правила сборки и проверки исходников общие.</p>
+          <h3>Результаты и параметры сборки</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Тип в манифесте</th>
+                  <th>Результат</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>configuration</code></td>
+                  <td><code>.cf</code></td>
+                </tr>
+                <tr>
+                  <td><code>extension</code></td>
+                  <td><code>.cfe</code></td>
+                </tr>
+                <tr>
+                  <td><code>processing</code></td>
+                  <td><code>.epf</code></td>
+                </tr>
+                <tr>
+                  <td><code>report</code></td>
+                  <td><code>.erf</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>По умолчанию используется <code>build/</code>, если <code>artifacts_directory</code> не переопределён.
+    Точный путь к артефакту сообщает команда. <code>--manifest</code> собирает из фиксированного
+    снимка source и сохраняет машинный паспорт рядом с результатом.
+    У общей и прямой команды одинаковые основные параметры:</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Параметр</th>
+                  <th>Когда использовать</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--dry-run</code></td>
+                  <td>Проверить готовность окружения и план до сборки</td>
+                </tr>
+                <tr>
+                  <td><code>--manifest</code></td>
+                  <td>Получить артефакт с паспортом; Git-сведения зависят от входа</td>
+                </tr>
+                <tr>
+                  <td><code>--output PATH</code></td>
+                  <td>Задать путь одного артефакта; должен быть выбран один проект</td>
+                </tr>
+                <tr>
+                  <td><code>--format json</code></td>
+                  <td>Получить машинный результат для скрипта</td>
+                </tr>
+                <tr>
+                  <td><code>--project NAME</code></td>
+                  <td>Собрать участника workspace; выбор можно повторять</td>
+                </tr>
+                <tr>
+                  <td><code>--workspace</code></td>
+                  <td>Собрать всех участников workspace</td>
+                </tr>
+                <tr>
+                  <td><code>--platform-version VERSION</code></td>
+                  <td>Выбрать версию платформы на этот запуск</td>
+                </tr>
+                <tr>
+                  <td><code>--ibcmd PATH</code></td>
+                  <td>Явно указать executable платформы</td>
+                </tr>
+                <tr>
+                  <td><code>--base-configuration FILE.cf</code></td>
+                  <td>Загрузить базовую конфигурацию для EPF/ERF</td>
+                </tr>
+                <tr>
+                  <td><code>--recreate-infobase</code></td>
+                  <td>Создать служебную ИБ заново вместо переиспользования</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Относительный <code>--output</code> считается от корня проекта или workspace.
+    Разовый <code>--platform-version</code> не переписывает значение в манифесте.
+    Полную справку показывают <code>eska build --help</code> и <code>eska-build build --help</code>.</p>
+          <h3>EPF/ERF с базовой конфигурацией</h3>
+          <p>Если обработка или отчёт использует объекты базы, передайте актуальный CF:</p>
+          <pre><code class="language-sh">eska build --base-configuration ../base.cf --recreate-infobase
+</code></pre>
+          <p>Альтернатива через мини-программу:</p>
+          <pre><code class="language-sh">eska-build build --base-configuration ../base.cf --recreate-infobase
+</code></pre>
+          <p>При изменении базового CF пересоздайте служебную ИБ, чтобы сборка использовала
+    новую базу. Этот параметр относится к native-сборке. Контекст BSL Analyzer
+    задаётся отдельно через <code>applications</code> и исходники базовой конфигурации;
+    передача CF сборщику сама по себе не добавляет БСП или базу в анализатор.</p>
+          <h3>Выбор установки 1С и Distrobox</h3>
           <p><code>ibcmd</code> должен соответствовать выбранной версии. При неоднозначности передайте
     <code>--ibcmd /path/to/ibcmd</code>, <code>--platform-arch</code> или настройте машинный конфиг:</p>
+          <pre><code class="language-sh">eska config init
+eska config edit
+</code></pre>
+          <p>Прямой вариант:</p>
           <pre><code class="language-sh">eska-build config init
 eska-build config edit
 </code></pre>
@@ -651,22 +1153,38 @@ platform_arch = "x86_64"
 </code></pre>
           <p>Контейнер и платформу подготовьте заранее. Для установки на основной системе
     используйте <code>runner = "host"</code> или автоматический поиск; Distrobox не обязателен.</p>
-          <p>Тип проекта определяет <code>.cf</code>, <code>.cfe</code>, <code>.epf</code> или <code>.erf</code>.
-    <code>--manifest</code> сохраняет паспорт сборки. Standalone build не читает repository
-    и отмечает Git как <code>unavailable</code>; общий <code>eska build --manifest</code> получает сведения
-    через VCS-компонент. Для EPF/ERF, которым нужна базовая конфигурация, доступен
-    <code>--base-configuration <файл.cf></code>; при изменении базового CF используйте <code>--recreate-infobase</code>.
-    Точные параметры смотрите в <code>eska-build build --help</code>.</p>
-          <p><code>eska-build clean</code> удаляет только управляемую служебную ИБ. Опубликованные
-    артефакты и паспорта сохраняются. Повторный build может переиспользовать ИБ.</p>
-          <p>Для обновления существующих исходников из файла используйте сначала
-    <code>eska import FILE --dry-run</code>, затем обычный <code>eska import FILE</code> с подтверждением.
-    Это замена source с VCS preflight, не слияние произвольных XML.
-    Для независимой выгрузки используйте <code>unpack</code> в новый каталог.</p>
+          <h3>Повторная сборка и очистка</h3>
+          <p>Совместимая повторная сборка может переиспользовать управляемую служебную ИБ.
+    Чтобы удалить её, выполните один из вариантов:</p>
+          <pre><code class="language-sh">eska clean
+</code></pre>
+          <pre><code class="language-sh">eska-build clean
+</code></pre>
+          <p>Опубликованные артефакты и паспорта сохраняются. Следующая сборка подготовит
+    служебную ИБ снова. Это не удаление рабочей информационной базы пользователя.</p>
+          <h3>Распаковка, import и patch — разные действия</h3>
+          <p><code>eska-build unpack FILE NEW_DIRECTORY</code> выгружает файл в новый каталог.
+    У общего CLI нет подкоманды <code>unpack</code>. Если нужен сразу проект с манифестом
+    и Git, используйте <code>eska new NAME --from FILE</code>; для мини-программ —
+    <code>unpack</code>, затем <code>eska-project init</code> без Git.</p>
+          <p>Для обновления <strong>существующего</strong> source из файла сначала получите preview:</p>
+          <pre><code class="language-sh">eska import updated.cf --dry-run
+eska import updated.cf
+</code></pre>
+          <p>Прямой вариант:</p>
+          <pre><code class="language-sh">eska-build import updated.cf --dry-run
+eska-build import updated.cf
+</code></pre>
+          <p>После preview проверьте выбранный проект, файл и заменяемые пути, затем
+    подтвердите обычный вызов. Обоим вариантам нужен <code>eska-vcs</code> для preflight.
+    Import заменяет source, а не сливает произвольные XML. Тип файла должен
+    соответствовать проекту; для EPF используйте <code>.epf</code>, для расширения — <code>.cfe</code>.</p>
           <p><code>eska patch --dry-run</code> строит ограниченный план патч-расширения по committed
     изменениям методов общих модулей. Для реального patch требуются VCS, <code>ibcmd</code>
     и <code>1cv8</code> одной установки. Команда не является универсальной упаковкой любых
-    изменений; применимость и runtime-проверки описаны в отдельном patch-контракте.</p>
+    изменений; применимость и runtime-проверки описаны в отдельном patch-контракте.
+    Прямой вход — <code>eska-build patch</code>; те же ограничения действуют для него.
+    Реальный файл патча не создаётся при <code>--dry-run</code>.</p>
         </section>
         <section class="doc-section" id="version">
           <div class="doc-heading">
@@ -675,10 +1193,18 @@ platform_arch = "x86_64"
               <h2>Меняйте версию проекта, а не CLI</h2>
             </div>
           </div>
+          <p>Через общую ESKA:</p>
+          <pre><code class="language-sh">eska version
+eska version bump patch
+</code></pre>
+          <p>Или через проектный компонент:</p>
           <pre><code class="language-sh">eska-project version
 eska-project version bump patch
 </code></pre>
           <p>Это версия из XML проекта 1С; <code>eska-project --version</code> показывает версию инструмента.
+    Выполняйте <code>bump</code> только один раз выбранным способом: два вызова увеличат версию
+    дважды. Кроме <code>patch</code> доступны <code>minor</code> и <code>major</code>. Универсальной команды <code>set</code>
+    и dry-run у <code>version bump</code> нет.
     У workspace используйте selectors нужного участника. Изменение XML затем
     проверяйте в diff и сохраняйте отдельно в Git.</p>
         </section>
@@ -738,7 +1264,31 @@ python3 BUNDLE/components.py remove --component eska-project --root PREFIX
               <tbody>
                 <tr>
                   <td>Нет <code>eska-project</code> или project ZIP</td>
-                  <td>Источник установки: публичный <code>0.14.3</code> старше текущей компонентной сборки; используйте checkout</td>
+                  <td>Версию и Assets выбранного релиза; установите компонент через Cargo либо соберите checkout</td>
+                </tr>
+                <tr>
+                  <td>Есть <code>eska</code>, но не найден компонент</td>
+                  <td>Установите владельца: build/check/project/VCS. Один crate <code>eska</code> не устанавливает остальные executable</td>
+                </tr>
+                <tr>
+                  <td>Не принимается <code>eska unpack/context/analyzer-config</code></td>
+                  <td>Этих входов пока нет в общем CLI; используйте <code>eska-build unpack</code> или соответствующую команду <code>eska-project</code></td>
+                </tr>
+                <tr>
+                  <td>Не принимается <code>eska-check check</code></td>
+                  <td>Уберите второе <code>check</code>: мини-программа сразу выполняет проверку</td>
+                </tr>
+                <tr>
+                  <td><code>eska-project init</code> не принимает <code>--workflow</code></td>
+                  <td>Это структурный вход; составная операция с Git — <code>eska init</code></td>
+                </tr>
+                <tr>
+                  <td><code>eska build --manifest</code> требует VCS, а обычный build работает</td>
+                  <td>Общий вход получает Git-сведения для паспорта; установите <code>eska-vcs</code> или используйте прямую сборку без этих сведений</td>
+                </tr>
+                <tr>
+                  <td>После обновления PATH запускается старый компонент</td>
+                  <td>Проверьте <code>ESKA_*_BINARY</code> и бинарники рядом с оболочкой: они имеют приоритет перед PATH</td>
                 </tr>
                 <tr>
                   <td>Не подключается дерево</td>
@@ -799,9 +1349,270 @@ python3 BUNDLE/components.py remove --component eska-project --root PREFIX
     не поддерживаются. Встроенного отладчика и визуального редактора форм нет;
     конструктор запросов ещё не следует считать готовой возможностью.</p>
         </section>
-        <section class="doc-section" id="references">
+        <section class="doc-section" id="scenarios">
           <div class="doc-heading">
             <span>14</span>
+            <div>
+              <h2>Сценарии от начала до результата</h2>
+            </div>
+          </div>
+          <p>Это самостоятельные маршруты. Выберите сценарий по исходным данным;
+    не выполняйте все блоки подряд в одном каталоге. Имена каталогов и файлов
+    условные, а команды выполняются после установки указанных компонентов.
+    Варианты «через ESKA» и «напрямую» показывают альтернативы одного действия.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Исходная задача</th>
+                  <th>Сценарий</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Есть XML, нужны дерево и свойства без платформы</td>
+                  <td><a href="#scenario-editor">1. Минимальное рабочее место</a></td>
+                </tr>
+                <tr>
+                  <td>Есть XML, нужен весь рабочий цикл с Git и сборкой</td>
+                  <td><a href="#scenario-full">2. Полная ESKA</a></td>
+                </tr>
+                <tr>
+                  <td>Есть EPF/ERF, нужны исходники и обратная сборка</td>
+                  <td><a href="#scenario-binary">3. Работа с бинарным файлом</a></td>
+                </tr>
+                <tr>
+                  <td>Нужен анализ в CI без редактора и платформы</td>
+                  <td><a href="#scenario-ci">4. Проверка в CI</a></td>
+                </tr>
+                <tr>
+                  <td>Нужна только сборка на отдельной машине</td>
+                  <td><a href="#scenario-builder">5. Сборочный агент</a></td>
+                </tr>
+                <tr>
+                  <td>Конфигурация, расширение и EPF лежат вместе</td>
+                  <td><a href="#scenario-workspace">6. Workspace и приложение</a></td>
+                </tr>
+                <tr>
+                  <td>Нужно прервать задачу с незавершёнными правками</td>
+                  <td><a href="#scenario-shelf">7. Полка и переключение</a></td>
+                </tr>
+                <tr>
+                  <td>Пришёл новый файл 1С для существующего проекта</td>
+                  <td><a href="#scenario-import">8. Обновление через import</a></td>
+                </tr>
+                <tr>
+                  <td>Нужен патч по изменениям общего модуля</td>
+                  <td><a href="#scenario-patch">9. Патч-расширение</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 id="scenario-editor">Сценарий 1. Только Explorer и Designer XML</h3>
+          <p><strong>Есть:</strong> каталог <code>accounting/src</code> с <code>Configuration.xml</code> и остальной выгрузкой,
+    манифеста ещё нет. <strong>Нужно:</strong> открыть метаданные, модули и свойства.
+    <strong>Компоненты:</strong> <code>eska-project</code>, Explorer и редактор.</p>
+          <pre><code class="language-sh">cd accounting
+eska-project init --source src
+eska-project validate
+eska-project context --format json
+</code></pre>
+          <p>Откройте <code>accounting</code> в VS Code/VSCodium, разрешите доверие и настройте
+    backend <code>project</code> с путём к <code>eska-project</code>. Дерево должно показать корень
+    конфигурации. Откройте объект и свойства, затем модуль из группы «Модули».
+    Работа с интерфейсом показана на <a href="#explorer">скриншотах Explorer</a>.</p>
+          <p><strong>Результат:</strong> появился <code>eska.toml</code>, исходники остались Designer XML;
+    Git и платформа для этого маршрута не нужны. Для completion, переходов
+    и диагностики BSL добавьте app-анализатор <a href="#language">по разделу BSL</a>.
+    Если полный комплект уже установлен, используйте его <code>eska-project</code>:
+    оболочку для этого маршрута запускать необязательно.</p>
+          <h3 id="scenario-full">Сценарий 2. Полный цикл: XML → задача → проверка → сборка</h3>
+          <p><strong>Есть:</strong> выгрузка <code>accounting/src</code> без манифеста.
+    <strong>Компоненты:</strong> полный комплект ESKA, Git с настроенным автором,
+    <code>bsl-analyzer-app</code> и платформа 1С. Версия ниже — пример.</p>
+          <p>Подключите проект и создайте первый commit:</p>
+          <pre><code class="language-sh">cd accounting
+eska init --source src --workflow trunk --platform-version 8.3.27.2325
+eska save -m "chore: Подключён проект ESKA"
+eska start TASK-123
+</code></pre>
+          <p>Откройте проект в Explorer и внесите изменение в BSL или доступное свойство.
+    Сохраните файлы редактора. Подготовьте конфиг анализатора, если он ещё не готов:</p>
+          <pre><code class="language-sh">eska-project analyzer-config prepare --analyzer /path/to/bsl-analyzer-app
+</code></pre>
+          <p>Эта команда пока доступна только через мини-программу, даже при полном комплекте.
+    Если уже существует пользовательский <code>bsl-analyzer.toml</code>, сначала выполните
+    описанную в разделе BSL миграцию. Затем проверьте и соберите проект:</p>
+          <pre><code class="language-sh">eska status
+eska diff --semantic
+eska check --analyzer /path/to/bsl-analyzer-app
+eska build --dry-run
+eska build --manifest
+eska save --dry-run
+eska save -m "fix: Исправлен расчёт суммы"
+</code></pre>
+          <p>Переходите к следующему шагу после успешного завершения предыдущего и разбора
+    результата. <strong>Результат:</strong> локальный commit, файл 1С и паспорт сборки.
+    Паспорт относится к снимку на момент build: в этой последовательности изменения
+    ещё не были закоммичены при сборке. Для артефакта, связанного с итоговым commit,
+    повторите <code>eska build --manifest</code> после сохранения.</p>
+          <p>Публикация ветки и PR выполняются отдельно. <code>eska finish</code> используйте после
+    интеграции задачи по правилам workflow; он не выполняет эту интеграцию сам.</p>
+          <h3 id="scenario-binary">Сценарий 3. Получить XML из EPF/ERF и собрать файл обратно</h3>
+          <p><strong>Есть:</strong> <code>processor.epf</code>. <strong>Нужно:</strong> изменить модуль и получить новый EPF.
+    Платформа с <code>ibcmd</code> нужна при обоих вариантах.</p>
+          <p>Через полный комплект создайте проект с Git:</p>
+          <pre><code class="language-sh">eska new processor --from processor.epf --workflow trunk --platform-version 8.3.27.2325
+cd processor
+eska save -m "chore: Добавлены исходники обработки"
+</code></pre>
+          <p>Альтернатива без оболочки и Git — <code>eska-build</code> и <code>eska-project</code>:</p>
+          <pre><code class="language-sh">eska-build unpack processor.epf processor-xml --platform-version 8.3.27.2325
+eska-project init processor-xml --source . --platform-version 8.3.27.2325
+cd processor-xml
+eska-project validate
+</code></pre>
+          <p>Каталог назначения должен отсутствовать до <code>unpack</code>.
+    Во втором варианте XML находится непосредственно в <code>processor-xml</code>, поэтому
+    используется <code>--source .</code>. Не подставляйте <code>--source src</code> автоматически.</p>
+          <p>После редактирования и сохранения исходников выполните выбранный вариант:</p>
+          <pre><code class="language-sh"># В проекте из полной ESKA
+eska build --dry-run
+eska build
+</code></pre>
+          <pre><code class="language-sh"># В проекте из мини-программ
+eska-build build --dry-run
+eska-build build
+</code></pre>
+          <p>Если обработке нужна база, добавьте <code>--base-configuration ../base.cf</code>
+    и при смене базы <code>--recreate-infobase</code>, как в <a href="#build">разделе сборки</a>.
+    <strong>Результат:</strong> Designer XML в проекте и собранный EPF в каталоге артефактов;
+    входной <code>processor.epf</code> использовался как источник распаковки.
+    Для отчёта замените вход на <code>.erf</code>; тип определяется по фактическим метаданным.</p>
+          <h3 id="scenario-ci">Сценарий 4. Полная статическая проверка в CI</h3>
+          <p><strong>Есть:</strong> checkout проекта <code>accounting</code> с <code>eska.toml</code> и исходниками,
+    бинарник анализатора и существующий каталог отчётов вне source.
+    <strong>Минимальный набор:</strong> <code>eska-check</code> и <code>bsl-analyzer-app</code>. Project-сервер,
+    платформа 1С и редактор этому job не нужны.</p>
+          <pre><code class="language-sh">eska-check --project-dir ./accounting --analyzer /path/to/bsl-analyzer-app --format json --report /path/to/reports/check-001.json
+</code></pre>
+          <p>Если агент использует общий CLI, установите также <code>eska</code> и вызовите:</p>
+          <pre><code class="language-sh">eska --project-dir ./accounting check --analyzer /path/to/bsl-analyzer-app --format json --report /path/to/reports/check-001.json
+</code></pre>
+          <p>Выберите один вариант. Путь отчёта замените реальным; каждый запуск получает
+    новое имя либо работает в новом каталоге job. Для приложения добавьте
+    <code>--application accounting</code>. Пороги задайте в <code>[tools.eska-check]</code> манифеста.</p>
+          <p>Передайте exit code команды в статус CI: <code>0</code> — успех, <code>1</code> — превышены пороги,
+    <code>2</code> — неверный вызов, <code>3</code> — проверка не завершена, <code>130</code> — отмена.
+    <strong>Результат:</strong> JSON-отчёт и статус job. Наличие пустого списка диагностик
+    не означает успех, если анализ оборвался. Этот job проверяет XML/BSL,
+    а native-сборка выполняется отдельно при наличии платформы.</p>
+          <h3 id="scenario-builder">Сценарий 5. Отдельный сборочный агент</h3>
+          <p><strong>Есть:</strong> готовый проект <code>processor</code>, манифест с точной версией платформы
+    и установленный <code>ibcmd</code>. <strong>Минимальный набор ESKA:</strong> <code>eska-build</code>.</p>
+          <pre><code class="language-sh">eska-build --project-dir ./processor build --dry-run --format json
+eska-build --project-dir ./processor build --manifest --format json
+</code></pre>
+          <p>Сначала разберите результат dry-run; затем выполните сборку.
+    <strong>Результат:</strong> артефакт и паспорт со значением Git <code>unavailable</code>.
+    Для сборки с Git-сведениями установите оболочку и VCS-компонент и используйте:</p>
+          <pre><code class="language-sh">eska --project-dir ./processor build --manifest --format json
+</code></pre>
+          <p>Агенту с обычным <code>eska build</code> без паспорта VCS не требуется.
+    Native-сборка работает без редактора, LSP и check-компонента.
+    Статический анализ не запускается автоматически вместе с <code>build</code>;
+    если он нужен, добавьте отдельный шаг <code>check</code> до сборки.</p>
+          <h3 id="scenario-workspace">Сценарий 6. Собрать расширение и проверить его вместе с базой</h3>
+          <p><strong>Есть:</strong> workspace из <a href="#workspace">раздела приложений</a>: участники <code>main</code>,
+    <code>integration</code>, <code>data-import</code> и приложение <code>accounting</code>.
+    <strong>Нужно:</strong> анализ с базовым контекстом, затем сборка только расширения.</p>
+          <p>Сначала убедитесь, что манифесты и приложение разрешаются:</p>
+          <pre><code class="language-sh">eska-project validate --workspace
+eska-project context --application accounting --format json
+</code></pre>
+          <p>Через общую ESKA:</p>
+          <pre><code class="language-sh">eska check --application accounting --analyzer /path/to/bsl-analyzer-app
+eska build --project integration --dry-run
+eska build --project integration --manifest
+</code></pre>
+          <p>Или через мини-программы:</p>
+          <pre><code class="language-sh">eska-check --application accounting --analyzer /path/to/bsl-analyzer-app
+eska-build build --project integration --dry-run
+eska-build build --project integration --manifest
+</code></pre>
+          <p><strong>Результат:</strong> проверен контекст приложения, собран <code>.cfe</code> выбранного member.
+    Git-сведения паспорта отличаются по описанным выше правилам.
+    Для сборки всех members вместо <code>--project integration</code> используйте
+    <code>--workspace</code>; для нескольких — повторите <code>--project</code>.
+    Выбор приложения для анализа не означает сборку всех его участников.</p>
+          <h3 id="scenario-shelf">Сценарий 7. Прервать задачу и вернуть незавершённые изменения</h3>
+          <p><strong>Есть:</strong> активная ветка задачи <code>TASK-123</code> с несохранёнными в commit правками.
+    Нужно временно перейти на базовую ветку. Для общей команды нужен <code>eska-vcs</code>;
+    при прямом запуске достаточно только VCS-компонента и Git.</p>
+          <pre><code class="language-sh">eska shelve --dry-run
+eska shelve
+eska switch --base
+</code></pre>
+          <p>Позже, когда работу на другой ветке завершили и разобрали её изменения:</p>
+          <pre><code class="language-sh">eska switch TASK-123
+eska shelves
+eska unshelve --dry-run
+eska unshelve
+</code></pre>
+          <p>Прямой вариант использует <code>eska-vcs shelve</code>, <code>eska-vcs switch --base</code>,
+    <code>eska-vcs switch TASK-123</code>, <code>eska-vcs shelves</code> и <code>eska-vcs unshelve</code>
+    с теми же <code>--dry-run</code> перед действиями.</p>
+          <p><strong>Результат:</strong> восстановлены состояние index, рабочие файлы и сохранённые
+    untracked-файлы полки. Полка относится к ветке и всему repository, включая
+    соседние workspace members; это не отдельная полка выбранного модуля.
+    При несовпадении базы или конфликте сначала разберите отказ, не удаляя полку.</p>
+          <h3 id="scenario-import">Сценарий 8. Обновить существующий проект из нового файла 1С</h3>
+          <p><strong>Есть:</strong> подключённый проект конфигурации и новый <code>../updated.cf</code>.
+    Сначала сохраните нужные изменения source и проверьте состояние repository.
+    Нужны build/VCS-компоненты и платформа; для общего входа — также оболочка.</p>
+          <pre><code class="language-sh">eska status
+eska import ../updated.cf --dry-run
+</code></pre>
+          <p>После проверки плана выполните import и разберите полученный diff:</p>
+          <pre><code class="language-sh">eska import ../updated.cf
+eska status
+eska diff --semantic
+</code></pre>
+          <p>Альтернатива через мини-программы:</p>
+          <pre><code class="language-sh">eska-vcs status
+eska-build import ../updated.cf --dry-run
+eska-build import ../updated.cf
+eska-vcs diff --semantic
+</code></pre>
+          <p>Обычный import требует просмотра и подтверждения. После него выполните
+    <code>eska check</code> / <code>eska-check</code>, при необходимости сборку и только затем
+    <code>eska save</code> / <code>eska-vcs save</code> с сообщением о конкретном обновлении.
+    <strong>Результат:</strong> заменены исходники существующего проекта; повторный <code>init</code>
+    не нужен. Если нужна независимая выгрузка для сравнения, используйте
+    <code>eska-build unpack</code> в новый каталог вместо import.</p>
+          <h3 id="scenario-patch">Сценарий 9. Проверить возможность патч-расширения</h3>
+          <p><strong>Есть:</strong> проект с Git-workflow, базовая ветка <code>main</code> и закоммиченные изменения
+    поддержанных методов общих модулей. Это ограниченный patch-сценарий;
+    изменение произвольного объекта не становится допустимым патчем автоматически.</p>
+          <p>Получите план одним из способов:</p>
+          <pre><code class="language-sh">eska patch --base main --dry-run --format json
+</code></pre>
+          <pre><code class="language-sh">eska-build patch --base main --dry-run --format json
+</code></pre>
+          <p>Для плана нужен VCS-компонент, но не установленная платформа.
+    Если план допустим, для реального выпуска потребуются совместимые <code>ibcmd</code>
+    и <code>1cv8</code> одной установки. Каталог <code>build</code> ниже должен существовать,
+    а файл назначения — быть новым:</p>
+          <pre><code class="language-sh">eska patch --base main --output build/TASK-123.cfe
+</code></pre>
+          <p>Прямой вариант — <code>eska-build patch --base main --output build/TASK-123.cfe</code>.
+    <strong>Результат:</strong> ограниченное патч-расширение по принятому плану. Runtime-поведение
+    в рабочей базе этим не подтверждается; условия применимости и проверок
+    описаны в <a href="https://github.com/1c-tooling/eska/blob/main/docs/roadmap/t42-patch-extension.md">patch-контракте</a>.</p>
+        </section>
+        <section class="doc-section" id="references">
+          <div class="doc-heading">
+            <span>15</span>
             <div>
               <h2>Точные контракты</h2>
             </div>
@@ -809,6 +1620,7 @@ python3 BUNDLE/components.py remove --component eska-project --root PREFIX
           <p><a href="https://github.com/1c-tooling/eska/blob/main/docs/project-cli.md">Project CLI</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/ide-protocol.md">Metadata API</a> ·
     <a href="https://github.com/1c-tooling/eska/blob/main/docs/application-context.md">Приложения</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/analyzer-configuration.md">Конфиг и миграция</a> ·
     <a href="https://github.com/1c-tooling/eska/blob/main/docs/check-cli.md">CI</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/build-tool.md">Сборщик</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/vcs-tool.md">VCS</a> ·
+    <a href="https://github.com/1c-tooling/eska/blob/main/docs/component-delegation.md">Делегирование общей команды</a> ·
     <a href="https://github.com/1c-tooling/eska/blob/main/docs/component-installation.md">Компонентная установка</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/cli-update.md">Обновление CLI</a> ·
     <a href="https://github.com/1c-tooling/eska/blob/main/docs/roadmap/t42-patch-extension.md">Patch-контракт</a> ·
     <a href="https://github.com/1c-tooling/eska-vscode-explorer/blob/main/docs/packaging.md">Сборка и установка VSIX</a> ·
