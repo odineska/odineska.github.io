@@ -13,6 +13,7 @@
     const isDark = root.dataset.theme === "dark";
     themeButton.setAttribute("aria-label", isDark ? "Включить светлую тему" : "Включить тёмную тему");
     themeButton.setAttribute("aria-pressed", String(isDark));
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#0d1220" : "#f3f6fc");
   };
 
   /** Shows a short non-blocking status message. */
@@ -52,7 +53,11 @@
   const toggleTheme = () => {
     const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
     root.dataset.theme = nextTheme;
-    localStorage.setItem("theme", nextTheme);
+    try {
+      localStorage.setItem("theme", nextTheme);
+    } catch {
+      // Theme switching remains available when storage is restricted.
+    }
     syncThemeButton();
   };
 

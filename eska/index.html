@@ -1,29 +1,23 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Установка eska для Linux, macOS и Windows.">
-    <meta name="theme-color" content="#f2c94c">
-    <title>Установка eska · 1c-tooling</title>
-    <script>
-      /** Applies the saved theme before rendering. */
-      (() => {
-        const savedTheme = localStorage.getItem("theme");
-        const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        document.documentElement.dataset.theme = savedTheme || systemTheme;
-      })();
-    </script>
-    <link rel="icon" href="../assets/1c-tooling-logo.png" type="image/png">
+    <meta name="theme-color" content="#0d1220">
+    <title>Установка eska · Odineska</title>
+    <script src="../assets/theme.js"></script>
+    <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
+    <link rel="preload" href="../assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../assets/site.css">
   </head>
   <body class="install-page">
     <a class="skip-link" href="#content">К содержанию</a>
 
     <header class="site-header shell">
-      <a class="brand" href="../" aria-label="1c-tooling — главная">
-        <img src="../assets/1c-tooling-logo.png" alt="" width="40" height="40">
-        <span>1c-tooling</span>
+      <a class="brand" href="../" aria-label="Odineska — главная">
+        <img src="../assets/brand/odineska-mark.webp" alt="" width="40" height="40">
+        <span class="brand-name">odineska<span>.tech</span></span>
       </a>
 
       <nav class="site-nav" aria-label="Основная навигация">
@@ -44,7 +38,7 @@
 
     <main class="install-main shell" id="content">
       <div class="install-hero">
-        <a class="back-link" href="../"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#arrow-left"></use></svg>1c-tooling</a>
+        <a class="back-link" href="../"><svg class="icon" aria-hidden="true"><use href="../assets/icons.svg#arrow-left"></use></svg>odineska.tech</a>
         <p class="eyebrow"><span></span> eska · установка</p>
         <h1>Установить eska</h1>
         <p>Полный комплект для команд <code>eska …</code> или отдельные мини-программы для проекта, проверки, сборки и Git — выберите нужный набор.</p>

@@ -1,29 +1,23 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Пошаговое руководство ESKA и Explorer: установка, Designer XML, свойства, BSL, приложения, CI, Git и сборка 1С.">
-    <meta name="theme-color" content="#f2c94c">
-    <title>ESKA: команды и сценарии работы · 1c-tooling</title>
-    <script>
-      /** Applies the saved theme before rendering. */
-      (() => {
-        const savedTheme = localStorage.getItem("theme");
-        const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        document.documentElement.dataset.theme = savedTheme || systemTheme;
-      })();
-    </script>
-    <link rel="icon" href="../../assets/1c-tooling-logo.png" type="image/png">
+    <meta name="theme-color" content="#0d1220">
+    <title>ESKA: команды и сценарии работы · Odineska</title>
+    <script src="../../assets/theme.js"></script>
+    <link rel="icon" href="../../assets/brand/favicon.png" type="image/png">
+    <link rel="preload" href="../../assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="../../assets/site.css">
   </head>
   <body class="docs-page">
     <a class="skip-link" href="#docs-content">К документации</a>
 
     <header class="site-header shell">
-      <a class="brand" href="../../" aria-label="1c-tooling — главная">
-        <img src="../../assets/1c-tooling-logo.png" alt="" width="40" height="40">
-        <span>1c-tooling</span>
+      <a class="brand" href="../../" aria-label="Odineska — главная">
+        <img src="../../assets/brand/odineska-mark.webp" alt="" width="40" height="40">
+        <span class="brand-name">odineska<span>.tech</span></span>
       </a>
 
       <nav class="site-nav" aria-label="Основная навигация">
@@ -1631,7 +1625,7 @@ eska-vcs diff --semantic
 
     <footer class="site-footer shell compact-footer docs-footer">
       <p>ESKA + Explorer · Apache-2.0</p>
-      <a class="link-with-icon" href="../../"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#home"></use></svg>1c-tooling</a>
+      <a class="link-with-icon" href="../../"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#home"></use></svg>odineska.tech</a>
     </footer>
 
     <div class="copy-toast" role="status" aria-live="polite" aria-atomic="true"></div>

@@ -1,29 +1,23 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="1c-tooling — открытые инструменты для разработки на платформе 1С.">
-    <meta name="theme-color" content="#f2c94c">
-    <title>1c-tooling — инструменты для разработки на 1С</title>
-    <script>
-      /** Applies the saved theme before rendering. */
-      (() => {
-        const savedTheme = localStorage.getItem("theme");
-        const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        document.documentElement.dataset.theme = savedTheme || systemTheme;
-      })();
-    </script>
-    <link rel="icon" href="./assets/1c-tooling-logo.png" type="image/png">
+    <meta name="description" content="Odineska — открытые инструменты для разработки на платформе 1С: ESKA и Explorer для редактора, терминала и CI.">
+    <meta name="theme-color" content="#0d1220">
+    <title>Odineska — инструменты для разработки на 1С</title>
+    <script src="./assets/theme.js"></script>
+    <link rel="icon" href="./assets/brand/favicon.png" type="image/png">
+    <link rel="preload" href="./assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="./assets/site.css">
   </head>
   <body>
     <a class="skip-link" href="#content">К содержанию</a>
 
     <header class="site-header shell">
-      <a class="brand" href="./" aria-label="1c-tooling — главная">
-        <img src="./assets/1c-tooling-logo.png" alt="" width="40" height="40">
-        <span>1c-tooling</span>
+      <a class="brand" href="./" aria-label="Odineska — главная">
+        <img src="./assets/brand/odineska-mark.webp" alt="" width="40" height="40">
+        <span class="brand-name">odineska<span>.tech</span></span>
       </a>
 
       <nav class="site-nav" aria-label="Основная навигация">
@@ -59,10 +53,8 @@
           <p aria-label="Рабочий процесс: Designer XML, Explorer и CLI, файл поставки" class="hero-flow"><span>Designer XML</span><i aria-hidden="true"></i><span>Explorer + CLI</span><i aria-hidden="true"></i><span>.cf · .cfe · .epf · .erf</span></p>
         </div>
 
-        <div class="logo-stage" aria-label="Логотип 1c-tooling">
-          <div class="logo-orbit" aria-hidden="true"></div>
-          <img src="./assets/1c-tooling-logo.png" alt="Логотип 1c-tooling: две шестерни с буквами 1C" width="611" height="611">
-          <span class="logo-caption">tools for 1C developers</span>
+        <div class="prism-stage">
+          <img src="./assets/brand/odineska-prism.webp" alt="Призма Odineska: объёмный глаз из переплетённых плоскостей индиго и бирюзы" width="960" height="960" fetchpriority="high">
         </div>
       </section>
 
@@ -193,9 +185,9 @@
     </main>
 
     <footer class="site-footer shell">
-      <a class="brand footer-brand" href="./" aria-label="1c-tooling — главная">
-        <img src="./assets/1c-tooling-logo.png" alt="" width="32" height="32">
-        <span>1c-tooling</span>
+      <a class="brand footer-brand" href="./" aria-label="Odineska — главная">
+        <img src="./assets/brand/odineska-mark.webp" alt="" width="32" height="32">
+        <span class="brand-name">odineska<span>.tech</span></span>
       </a>
       <p>Открытые инструменты для экосистемы 1С.</p>
       <a class="link-with-icon" href="https://github.com/1c-tooling" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>GitHub</a>
