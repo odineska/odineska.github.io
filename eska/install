@@ -5,7 +5,7 @@ installer="$(mktemp)"
 trap 'rm -f "$installer"' 0 1 2 15
 
 curl --proto '=https' --tlsv1.2 -fsSL \
-  https://github.com/1c-tooling/eska/releases/latest/download/eska-installer.sh \
+  https://github.com/odineska/eska/releases/latest/download/eska-installer.sh \
   -o "$installer"
 
 sh "$installer"

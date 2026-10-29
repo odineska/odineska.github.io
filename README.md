@@ -1,4 +1,4 @@
-# 1c-tooling.github.io
+# odineska.github.io
 
 Статический GitHub Pages сайт Odineska — открытых инструментов для разработки на 1С:
 
@@ -9,7 +9,7 @@
   BSL, workspace/приложения, CI, Git, сборка, обновление и диагностика;
 - `/eska/install` и `/eska/install.ps1` — существующие короткие адреса установщиков.
 
-Текст руководства соответствует [`eska/docs/user-guide.md`](https://github.com/1c-tooling/eska/blob/main/docs/user-guide.md).
+Текст руководства соответствует [`eska/docs/user-guide.md`](https://github.com/odineska/eska/blob/main/docs/user-guide.md).
 При обновлении сверяйте его с CLI, `package.json` Explorer и фактическими Assets
 GitHub Releases. Версия checkout и latest опубликованного пакета могут различаться.
 Скриншоты хранятся в `assets/screenshots/`; на страницах можно открыть оригиналы.
@@ -49,11 +49,11 @@ python3 -m http.server 8000 --bind 127.0.0.1
 Установщики используют опубликованный канал:
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://1c-tooling.github.io/eska/install | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://odineska.github.io/eska/install | sh
 ```
 
 ```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://1c-tooling.github.io/eska/install.ps1 | iex"
+powershell -ExecutionPolicy Bypass -c "irm https://odineska.github.io/eska/install.ps1 | iex"
 ```
 
 Публикация сайта выполняется существующим GitHub Pages процессом.

@@ -23,7 +23,7 @@
       <nav class="site-nav" aria-label="Основная навигация">
         <a href="../"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#download"></use></svg>Установка</a>
         <a href="./" aria-current="page"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#book-open"></use></svg>Документация</a>
-        <a href="https://github.com/1c-tooling/eska" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#github"></use></svg>GitHub</a>
+        <a href="https://github.com/odineska/eska" target="_blank" rel="noreferrer"><svg class="icon" aria-hidden="true"><use href="../../assets/icons.svg#github"></use></svg>GitHub</a>
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить тёмную тему">
           <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="3.5"></circle>
@@ -416,7 +416,7 @@ eska-vcs --help
           </div>
           <h3>Публичный пакет и текущий checkout</h3>
           <p>Компонентная поставка появилась в ESKA <code>0.15.0</code>; для готовых бинарников проверяйте
-    Assets выбранного <a href="https://github.com/1c-tooling/eska/releases">GitHub Release</a>.
+    Assets выбранного <a href="https://github.com/odineska/eska/releases">GitHub Release</a>.
     Все пять компонентов также доступны в Cargo registry.
     Установите их через Cargo либо соберите checkout, а Explorer упакуйте из текущих
     исходников: новый backend со старым VSIX сам по себе не добавит новый клиент.
@@ -468,7 +468,7 @@ cargo install --locked eska eska-check
           <p>Нужны Git для получения репозитория и Rust с Cargo. Версия toolchain закреплена
     в <code>rust-toolchain.toml</code> — сейчас <code>1.99.1</code>. Существующий checkout можно использовать
     вместо повторного клонирования; сначала сохраните собственные изменения.</p>
-          <pre><code class="language-sh">git clone https://github.com/1c-tooling/eska.git
+          <pre><code class="language-sh">git clone https://github.com/odineska/eska.git
 cd eska
 cargo build --workspace --bins --release --locked
 export PATH="$PWD/target/release:$PATH"
@@ -522,7 +522,7 @@ eska-project --version
           <h3>Explorer из исходников</h3>
           <p>Нужны VS Code/VSCodium <strong>1.109.0 или новее</strong> и Bun для упаковки checkout.
     Из родительского каталога, в котором лежит <code>eska</code>:</p>
-          <pre><code class="language-sh">git clone https://github.com/1c-tooling/eska-vscode-explorer.git
+          <pre><code class="language-sh">git clone https://github.com/odineska/eska-vscode-explorer.git
 cd eska-vscode-explorer
 bun install --frozen-lockfile --ignore-scripts
 bun run package
@@ -1602,7 +1602,7 @@ eska-vcs diff --semantic
           <p>Прямой вариант — <code>eska-build patch --base main --output build/TASK-123.cfe</code>.
     <strong>Результат:</strong> ограниченное патч-расширение по принятому плану. Runtime-поведение
     в рабочей базе этим не подтверждается; условия применимости и проверок
-    описаны в <a href="https://github.com/1c-tooling/eska/blob/main/docs/roadmap/t42-patch-extension.md">patch-контракте</a>.</p>
+    описаны в <a href="https://github.com/odineska/eska/blob/main/docs/roadmap/t42-patch-extension.md">patch-контракте</a>.</p>
         </section>
         <section class="doc-section" id="references">
           <div class="doc-heading">
@@ -1611,14 +1611,14 @@ eska-vcs diff --semantic
               <h2>Точные контракты</h2>
             </div>
           </div>
-          <p><a href="https://github.com/1c-tooling/eska/blob/main/docs/project-cli.md">Project CLI</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/ide-protocol.md">Metadata API</a> ·
-    <a href="https://github.com/1c-tooling/eska/blob/main/docs/application-context.md">Приложения</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/analyzer-configuration.md">Конфиг и миграция</a> ·
-    <a href="https://github.com/1c-tooling/eska/blob/main/docs/check-cli.md">CI</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/build-tool.md">Сборщик</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/vcs-tool.md">VCS</a> ·
-    <a href="https://github.com/1c-tooling/eska/blob/main/docs/component-delegation.md">Делегирование общей команды</a> ·
-    <a href="https://github.com/1c-tooling/eska/blob/main/docs/component-installation.md">Компонентная установка</a> · <a href="https://github.com/1c-tooling/eska/blob/main/docs/cli-update.md">Обновление CLI</a> ·
-    <a href="https://github.com/1c-tooling/eska/blob/main/docs/roadmap/t42-patch-extension.md">Patch-контракт</a> ·
-    <a href="https://github.com/1c-tooling/eska-vscode-explorer/blob/main/docs/packaging.md">Сборка и установка VSIX</a> ·
-    <a href="https://github.com/1c-tooling/eska-vscode-explorer/blob/main/docs/language-service.md">Языковой клиент</a></p>
+          <p><a href="https://github.com/odineska/eska/blob/main/docs/project-cli.md">Project CLI</a> · <a href="https://github.com/odineska/eska/blob/main/docs/ide-protocol.md">Metadata API</a> ·
+    <a href="https://github.com/odineska/eska/blob/main/docs/application-context.md">Приложения</a> · <a href="https://github.com/odineska/eska/blob/main/docs/analyzer-configuration.md">Конфиг и миграция</a> ·
+    <a href="https://github.com/odineska/eska/blob/main/docs/check-cli.md">CI</a> · <a href="https://github.com/odineska/eska/blob/main/docs/build-tool.md">Сборщик</a> · <a href="https://github.com/odineska/eska/blob/main/docs/vcs-tool.md">VCS</a> ·
+    <a href="https://github.com/odineska/eska/blob/main/docs/component-delegation.md">Делегирование общей команды</a> ·
+    <a href="https://github.com/odineska/eska/blob/main/docs/component-installation.md">Компонентная установка</a> · <a href="https://github.com/odineska/eska/blob/main/docs/cli-update.md">Обновление CLI</a> ·
+    <a href="https://github.com/odineska/eska/blob/main/docs/roadmap/t42-patch-extension.md">Patch-контракт</a> ·
+    <a href="https://github.com/odineska/eska-vscode-explorer/blob/main/docs/packaging.md">Сборка и установка VSIX</a> ·
+    <a href="https://github.com/odineska/eska-vscode-explorer/blob/main/docs/language-service.md">Языковой клиент</a></p>
         </section>
       </main>
     </div>
