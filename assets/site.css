@@ -35,7 +35,11 @@
   --shadow: 0 24px 80px rgb(0 5 20 / 24%);
   --radius-lg: 1.6rem;
   --radius-md: 1.1rem;
-  --shell: min(1240px, calc(100% - 64px));
+  --gutter: 32px;
+  --content-width: 1240px;
+  --header-height: 96px;
+  --docs-nav-height: 64px;
+  --shell: min(var(--content-width), calc(100% - var(--gutter) * 2));
 }
 
 :root[data-theme="light"] {
@@ -59,6 +63,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
 }
 
 body {
@@ -147,12 +152,22 @@ pre {
 }
 
 .site-header {
+  position: sticky;
+  z-index: 40;
+  top: 0;
   display: flex;
+  width: 100%;
+  margin-inline: 0;
+  padding-inline: max(var(--gutter), calc((100% - var(--content-width)) / 2));
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  min-height: 96px;
+  min-height: var(--header-height);
   border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  box-shadow: 0 4px 24px rgb(0 5 20 / 8%);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
 }
 
 .brand {
@@ -809,7 +824,11 @@ h3 {
 
 .docs-sidebar {
   position: sticky;
-  top: 2rem;
+  top: calc(var(--header-height) + 1.5rem);
+  max-height: calc(100svh - var(--header-height) - 3rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
 }
 
 .docs-sidebar-title {
@@ -835,16 +854,25 @@ h3 {
 }
 
 .docs-toc a {
-  padding: 0.45rem 0;
+  padding: 0.5rem 0.65rem;
+  border-left: 2px solid transparent;
+  border-radius: 0 0.55rem 0.55rem 0;
   color: var(--text-soft);
   font-size: 0.78rem;
   line-height: 1.35;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
 .docs-toc a:hover {
-  transform: translateX(3px);
   color: var(--text);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+
+.docs-toc a[aria-current="location"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  color: var(--accent);
+  font-weight: 650;
 }
 
 .docs-content {
@@ -1380,35 +1408,53 @@ h3 {
 
 @media (max-width: 1100px) {
   .docs-shell {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+    display: block;
   }
 
   .docs-sidebar {
-    position: static;
+    z-index: 30;
+    top: var(--header-height);
+    height: var(--docs-nav-height);
+    max-height: none;
     min-width: 0;
+    overflow: visible;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+
+  .docs-sidebar-title {
+    display: none;
   }
 
   .docs-toc {
     display: flex;
-    margin-top: 1rem;
-    padding-bottom: 0.5rem;
-    gap: 1.25rem;
+    height: 100%;
+    margin: 0;
+    padding-block: 0.5rem;
+    gap: 0.4rem;
+    align-items: center;
     overflow-x: auto;
     scrollbar-width: thin;
   }
 
   .docs-toc a {
     flex: none;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0.55rem;
     white-space: nowrap;
-  }
-
-  .docs-toc a:hover {
-    transform: none;
   }
 
   .docs-content {
     width: 100%;
+    margin-top: 3rem;
+  }
+
+  .doc-section,
+  .doc-section h3[id] {
+    scroll-margin-top: calc(var(--docs-nav-height) + 1rem);
   }
 
   .hero-copy {
@@ -1465,7 +1511,8 @@ h3 {
 
 @media (max-width: 640px) {
   :root {
-    --shell: min(100% - 36px, 1240px);
+    --gutter: 18px;
+    --header-height: 76px;
     --radius-lg: 1.35rem;
     --radius-md: 1rem;
   }
@@ -1478,10 +1525,6 @@ h3 {
   .brand img {
     width: 36px;
     height: 36px;
-  }
-
-  .site-header {
-    min-height: 76px;
   }
 
   .site-nav {

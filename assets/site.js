@@ -1,4 +1,4 @@
-/** Initializes color theme and command-copy interactions. */
+/** Initializes the theme, copy controls and current documentation section. */
 (() => {
   const root = document.documentElement;
   const themeButton = document.querySelector("[data-theme-toggle]");
@@ -86,6 +86,81 @@
     button.addEventListener("click", handleCopy);
   };
 
+  /** Tracks the section at the reading edge without changing the URL or focus. */
+  const bindDocsNavigation = () => {
+    const toc = document.querySelector(".docs-toc");
+    const sidebar = document.querySelector(".docs-sidebar");
+    const header = document.querySelector(".site-header");
+    if (!toc || !sidebar || !header) return;
+
+    const items = [];
+    for (const link of toc.querySelectorAll('a[href^="#"]')) {
+      const section = document.getElementById(link.hash.slice(1));
+      if (section?.matches(".doc-section")) items.push({ link, section });
+    }
+    if (!items.length) return;
+
+    const compactLayout = matchMedia("(max-width: 1100px)");
+    let currentLink = null;
+    let updateQueued = false;
+
+    /** Scrolls only the navigation container, keeping the document stationary. */
+    const revealCurrentLink = (link) => {
+      const container = compactLayout.matches ? toc : sidebar;
+      const bounds = container.getBoundingClientRect();
+      const itemBounds = link.getBoundingClientRect();
+      const start = compactLayout.matches ? itemBounds.left - bounds.left : itemBounds.top - bounds.top;
+      const end = compactLayout.matches ? itemBounds.right - bounds.right : itemBounds.bottom - bounds.bottom;
+      const distance = start < 0 ? start - 4 : end > 0 ? end + 4 : 0;
+      if (!distance) return;
+
+      container.scrollBy({
+        left: compactLayout.matches ? distance : 0,
+        top: compactLayout.matches ? 0 : distance,
+        behavior: "instant",
+      });
+    };
+
+    /** Selects the last section above the pinned controls, including the page end. */
+    const updateCurrentSection = () => {
+      updateQueued = false;
+      const readingEdge = header.getBoundingClientRect().height + 24
+        + (compactLayout.matches ? sidebar.getBoundingClientRect().height : 0);
+      let current = null;
+
+      for (const item of items) {
+        if (item.section.getBoundingClientRect().top > readingEdge + 1) break;
+        current = item;
+      }
+      if (Math.ceil(window.scrollY + window.innerHeight) >= root.scrollHeight - 2) {
+        current = items.at(-1);
+      }
+
+      const nextLink = current?.link ?? null;
+      if (nextLink !== currentLink) {
+        currentLink?.removeAttribute("aria-current");
+        nextLink?.setAttribute("aria-current", "location");
+        currentLink = nextLink;
+      }
+      if (currentLink) revealCurrentLink(currentLink);
+    };
+
+    /** Coalesces scroll and layout changes into one update per rendered frame. */
+    const queueUpdate = () => {
+      if (updateQueued) return;
+      updateQueued = true;
+      window.requestAnimationFrame(updateCurrentSection);
+    };
+
+    window.addEventListener("scroll", queueUpdate, { passive: true });
+    window.addEventListener("resize", queueUpdate);
+    window.addEventListener("hashchange", queueUpdate);
+    window.addEventListener("pageshow", queueUpdate);
+    window.addEventListener("load", queueUpdate);
+    void document.fonts.ready.then(queueUpdate);
+    queueUpdate();
+  };
+
   /** Replaces fallback version labels with the latest version published on crates.io. */
   const syncEskaVersion = async () => {
     if (!eskaVersionElements.length) return;
@@ -110,5 +185,6 @@
   document.querySelectorAll("[data-copy]").forEach(bindCopyButton);
 
   syncThemeButton();
+  bindDocsNavigation();
   void syncEskaVersion();
 })();
