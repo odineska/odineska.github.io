@@ -878,6 +878,7 @@ h3 {
 .docs-content {
   width: min(100%, 860px);
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .docs-hero {
@@ -976,7 +977,7 @@ h3 {
   font-size: 0.87em;
 }
 
-.doc-section > pre,
+.doc-section pre,
 .doc-columns pre,
 .workflow-steps pre {
   margin: 1rem 0 0;
@@ -1553,7 +1554,7 @@ h3 {
   }
 
   .docs-hero h1 {
-    font-size: clamp(3rem, 15vw, 4.8rem);
+    font-size: clamp(2.25rem, 10vw, 3rem);
   }
 
   .docs-hero-actions .button {
@@ -1799,4 +1800,18 @@ h3 {
   .screenshot-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Expandable command help uses the same code style as the guide. */
+.doc-section details {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.doc-section summary {
+  cursor: pointer;
+  font-weight: 600;
+  overflow-wrap: anywhere;
 }

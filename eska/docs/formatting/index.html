@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="ru">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="Все параметры BSL/SDBL форматтера ESKA, профили, overrides, миграция, CLI и правила безопасной записи." name="description"/>
+  <meta content="#0d1220" name="theme-color"/>
+  <title>
+   Настройки форматирования · Odineska
+  </title>
+  <script src="../../../assets/theme.js">
+  </script>
+  <link href="../../../assets/brand/favicon.png" rel="icon" type="image/png"/>
+  <link as="font" crossorigin="" href="../../../assets/fonts/montserrat-semibold.woff2" rel="preload" type="font/woff2"/>
+  <link href="../../../assets/site.css" rel="stylesheet"/>
+ </head>
+ <body class="docs-page">
+  <a class="skip-link" href="#docs-content">
+   К документации
+  </a>
+  <header class="site-header shell">
+   <a aria-label="Odineska — главная" class="brand" href="../../../">
+    <img alt="" height="40" src="../../../assets/brand/odineska-mark.webp" width="40"/>
+    <span class="brand-name">
+     odineska
+     <span>
+      .tech
+     </span>
+    </span>
+   </a>
+   <nav aria-label="Основная навигация" class="site-nav">
+    <a href="../../">
+     <svg aria-hidden="true" class="icon">
+      <use href="../../../assets/icons.svg#download">
+      </use>
+     </svg>
+     Установка
+    </a>
+    <a aria-current="page" href="../">
+     <svg aria-hidden="true" class="icon">
+      <use href="../../../assets/icons.svg#book-open">
+      </use>
+     </svg>
+     Документация
+    </a>
+    <a href="https://github.com/odineska/eska" rel="noreferrer" target="_blank">
+     <svg aria-hidden="true" class="icon">
+      <use href="../../../assets/icons.svg#github">
+      </use>
+     </svg>
+     GitHub
+    </a>
+    <button aria-label="Включить тёмную тему" class="theme-toggle" data-theme-toggle="" type="button">
+     <svg aria-hidden="true" class="sun-icon" viewbox="0 0 24 24">
+      <circle cx="12" cy="12" r="3.5">
+      </circle>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42">
+      </path>
+     </svg>
+     <svg aria-hidden="true" class="moon-icon" viewbox="0 0 24 24">
+      <path d="M20.25 15.35A8.5 8.5 0 0 1 8.65 3.75a8.5 8.5 0 1 0 11.6 11.6Z">
+      </path>
+     </svg>
+    </button>
+   </nav>
+  </header>
+  <div class="docs-shell shell">
+   <aside aria-label="Разделы документации" class="docs-sidebar">
+    <div class="docs-sidebar-title">
+     <span>
+      eska
+     </span>
+     <small>
+      Designer XML
+     </small>
+    </div>
+    <nav class="docs-toc">
+     <a href="#статус-контракта">
+      Статус контракта
+     </a>
+     <a href="#конфигурация">
+      Конфигурация
+     </a>
+     <a href="#пресет-eska">
+      Пресет `eska`
+     </a>
+     <a href="#каталог-опций-версии-1">
+      Каталог опций версии 1
+     </a>
+     <a href="#миграция-и-машинный-контракт">
+      Миграция и машинный контракт
+     </a>
+     <a href="#защита-поддержки-и-методов-изменения-с-контролем">
+      Защита поддержки и методов изменения с контролем
+     </a>
+     <a href="#bsl-алгоритм-и-проверенные-границы">
+      BSL: алгоритм и проверенные границы
+     </a>
+     <a href="#sdbl-и-встроенные-запросы">
+      SDBL и встроенные запросы
+     </a>
+     <a href="#cli-файл-объект-member-и-проект">
+      CLI: файл, объект, member и проект
+     </a>
+     <a href="#приёмка-поставки-и-задержки">
+      Приёмка поставки и задержки
+     </a>
+    </nav>
+   </aside>
+   <main class="docs-content" id="docs-content">
+    <header class="docs-hero">
+     <p class="eyebrow">
+      <span>
+      </span>
+      ESKA · справочник форматирования
+     </p>
+     <h1>
+      Настройки форматирования
+     </h1>
+     <div class="docs-hero-actions">
+      <a class="button button-primary" href="../#formatting">
+       Начать форматирование
+      </a>
+      <a class="button button-quiet" href="../#practice">
+       Практический пример
+      </a>
+      <a class="button button-quiet" href="../cli/">
+       Справочник CLI
+      </a>
+     </div>
+    </header>
+    <section class="doc-section" id="статус-контракта">
+     <div class="doc-heading">
+      <span>
+       01
+      </span>
+      <div>
+       <h2>
+        Статус контракта
+       </h2>
+      </div>
+     </div>
+     <p>
+      T120 реализует политику в общем Rust core: профиль, схема, resolver, migration
+preview/apply и протокол текста. T121 добавляет библиотеку
+      <code>
+       eska-fmt
+      </code>
+      с алгоритмом
+BSL, T122 — SDBL и точечную запись встроенных запросов. В T123 готовы
+      <code>
+       eska-fmt
+      </code>
+      /
+      <code>
+       eska fmt
+      </code>
+      , RPC 1.33 и интерфейс Explorer. T144 завершена для
+локальной поставки и Linux/VSCodium;
+      <a href="https://github.com/odineska/eska/blob/main/docs/measurements/t144-formatting.json">
+       отчёт приёмки
+      </a>
+      .
+Анализатор не требуется для разрешения настроек или форматирования.
+     </p>
+     <p>
+      Первичный конфиг —
+      <code>
+       eska.toml
+      </code>
+      , секция
+      <code>
+       [format]
+      </code>
+      .
+      <a href="https://github.com/odineska/eska/blob/main/schemas/format-v1.schema.json">
+       JSON Schema версии 1
+      </a>
+      описывает эту секцию,
+а не целый манифест. Численные ограничения и область применения проверяет также
+строгий загрузчик проекта/workspace. Смена версии профиля требует явного выбора;
+новая версия приложения сама не меняет defaults профиля
+      <code>
+       1c
+      </code>
+      версии 1.
+     </p>
+    </section>
+    <section class="doc-section" id="конфигурация">
+     <div class="doc-heading">
+      <span>
+       02
+      </span>
+      <div>
+       <h2>
+        Конфигурация
+       </h2>
+      </div>
+     </div>
+     <pre><code class="language-toml">[format]
+profile = "team"
+profile_version = 1
+exclude = ["**/generated/**"]
+
+[format.profiles.team]
+based_on = "1c"
+
+[format.profiles.team.common]
+column_limit = 100
+
+[format.bsl]
+indent_style = "space"
+indent_width = 4
+
+[[format.overrides]]
+include = ["src/CommonModules/Legacy/**"]
+
+[format.overrides.bsl]
+column_limit = 0
+</code></pre>
+     <p>
+      Без секции используется
+      <code>
+       1c
+      </code>
+      версии 1. Существующие явные параметры
+      <code>
+       tools.bsl-analyzer.formatting
+      </code>
+      учитываются для BSL. При несовместимости со
+значением новой секции операция отклоняется до записи.
+      <code>
+       use_tabs=true
+      </code>
+      и
+      <code>
+       indent_size=1
+      </code>
+      означают один таб шириной 4 колонки; другой размер в режиме
+табуляции неоднозначен и требует явной миграции. В режиме пробелов сохраняется
+число пробелов.
+      <code>
+       indent_size
+      </code>
+      не становится шириной табуляции автоматически.
+     </p>
+     <p>
+      Порядок: разрешённый профиль → workspace common/язык → member common/язык →
+overrides workspace, затем member → параметры операции. В одном списке overrides
+последнее совпадение побеждает.
+      <code>
+       include
+      </code>
+      обязательно,
+      <code>
+       exclude
+      </code>
+      внутри правила
+отменяет только это правило. Пути относительно объявившего правила
+      <code>
+       eska.toml
+      </code>
+      ;
+поддерживаются
+      <code>
+       *
+      </code>
+      ,
+      <code>
+       ?
+      </code>
+      ,
+      <code>
+       **
+      </code>
+      и
+      <code>
+       /
+      </code>
+      .
+      <code>
+       **/
+      </code>
+      совпадает также с нулём каталогов.
+Абсолютные пути,
+      <code>
+       ..
+      </code>
+      , обратные слеши и классы
+      <code>
+       []
+      </code>
+      в glob не принимаются.
+     </p>
+     <p>
+      Таблицы наследуют отдельные ключи; скаляры и списки заменяются целиком.
+      <code>
+       exclude=[]
+      </code>
+      очищает наследованные исключения,
+      <code>
+       column_limit=0
+      </code>
+      отключает
+ограничение,
+      <code>
+       false
+      </code>
+      сохраняет свой смысл. Исключения не снимают защиту исходников.
+Пользовательские профили объявляются в
+      <code>
+       format.profiles.&lt;name&gt;
+      </code>
+      и наследуют
+      <code>
+       based_on
+      </code>
+      ; встроенные
+      <code>
+       1c
+      </code>
+      и
+      <code>
+       eska
+      </code>
+      переопределить нельзя. Неизвестные профили и циклы
+отклоняются. Параметры отступов редактора не переопределяют стиль проекта.
+     </p>
+    </section>
+    <section class="doc-section" id="пресет-eska">
+     <div class="doc-heading">
+      <span>
+       03
+      </span>
+      <div>
+       <h2>
+        Пресет
+        <code>
+         eska
+        </code>
+       </h2>
+      </div>
+     </div>
+     <p>
+      Встроенный
+      <code>
+       eska
+      </code>
+      версии 1 повторяет устойчивые правила оформления двух
+пользовательских образцов BSL. Он выбирается в проекте или workspace:
+     </p>
+     <pre><code class="language-toml">[format]
+profile = "eska"
+profile_version = 1
+</code></pre>
+     <p>
+      Пресет наследует
+      <code>
+       1c
+      </code>
+      : табуляция шириной 4 колонки, канонический регистр ключевых
+слов, пробелы вокруг операторов и после запятой. Для BSL он включает:
+     </p>
+     <ul>
+      <li>
+       лимит 150 колонок с переносами превышений и сохранением существующих переносов
+аргументов, правых частей присваиваний и бинарных выражений;
+      </li>
+      <li>
+       выравнивание
+       <code>
+        =
+       </code>
+       соседних присваиваний и запятых соседних однострочных вызовов
+одного метода с одинаковым числом аргументов;
+      </li>
+      <li>
+       отдельную группу для инициализации объекта перед заполнением его полей:
+у инициализации обычный пробел перед
+       <code>
+        =
+       </code>
+       , поля выравниваются между собой;
+      </li>
+      <li>
+       закрывающую скобку многострочного вызова на отдельной строке;
+      </li>
+      <li>
+       перенос многострочной строки после
+       <code>
+        =
+       </code>
+       и выравнивание её
+       <code>
+        |
+       </code>
+       по открывающей
+кавычке, включая обычный текст и строки в аргументах вложенных вызовов;
+      </li>
+      <li>
+       минимум одну пустую строку после объявления метода и перед его окончанием;
+      </li>
+      <li>
+       пустую строку между блоком
+       <code>
+        Если
+       </code>
+       , цикла или
+       <code>
+        Попытка
+       </code>
+       и соседними операциями;
+      </li>
+      <li>
+       пустые строки у границ тела с несколькими операциями; тело с одной операцией
+оформляется без внутренних пустых строк;
+      </li>
+      <li>
+       пустую строку перед
+       <code>
+        Возврат
+       </code>
+       , кроме единственной операции в ветке;
+      </li>
+      <li>
+       пустые строки вокруг многострочных инструкций между соседними операциями;
+      </li>
+      <li>
+       пустые строки вокруг групп присваиваний полям и самостоятельных вызовов
+методов одного объекта, включая его инициализацию перед заполнением.
+      </li>
+     </ul>
+     <p>
+      Число операций определяется отдельно для каждой ветки
+      <code>
+       Если
+      </code>
+      /
+      <code>
+       ИначеЕсли
+      </code>
+      /
+      <code>
+       Иначе
+      </code>
+      и
+      <code>
+       Попытка
+      </code>
+      /
+      <code>
+       Исключение
+      </code>
+      . Вложенный блок считается одной операцией,
+многострочный вызов — тоже; комментарии и пустые операторы не учитываются.
+     </p>
+     <p>
+      При
+      <code>
+       wrap_binary = "fit"
+      </code>
+      переносы выбираются по приоритету операций: сначала
+      <code>
+       Или
+      </code>
+      , затем
+      <code>
+       И
+      </code>
+      , сравнения, сложение и умножение. Короткое сравнение остаётся
+целиком, включая вызов слева и правый операнд. Существующий перенос перед или
+после
+      <code>
+       =
+      </code>
+      /
+      <code>
+       &lt;=
+      </code>
+      внутри такого сравнения убирается даже при
+      <code>
+       preserve_existing_line_breaks = true
+      </code>
+      ; ручные переносы логических и
+арифметических частей сохраняются. Внутри скобок выбор повторяется независимо.
+Явные
+      <code>
+       wrap_binary = "preserve"
+      </code>
+      и
+      <code>
+       "one_per_line"
+      </code>
+      сохраняют свой смысл.
+     </p>
+     <p>
+      Соседние обычные операции остаются подряд, без обязательного разделения каждой
+пары. Комментарий непосредственно перед отделяемой инструкцией остаётся с ней:
+пустая строка добавляется перед комментарием. Если тело пересекается с директивами
+препроцессора, для его внутренних границ сохраняется обычная политика пустых
+строк: физически альтернативные ветки не суммируются как последовательные операции.
+     </p>
+     <p>
+      Правила доступны независимо в
+      <code>
+       [format.bsl]
+      </code>
+      и включены в пресете со
+значением
+      <code>
+       1
+      </code>
+      :
+     </p>
+     <pre><code class="language-toml">[format.bsl]
+blank_lines_around_blocks = 1
+blank_lines_inside_multistatement_blocks = 1
+blank_lines_before_return = 1
+blank_lines_around_multiline_statements = 1
+blank_lines_between_object_groups = 1
+</code></pre>
+     <p>
+      У каждого параметра диапазон
+      <code>
+       0..16
+      </code>
+      ;
+      <code>
+       0
+      </code>
+      отключает соответствующее правило.
+При включённом правиле внутренних границ пустые строки у единственной операции
+убираются, включая ветку с одним
+      <code>
+       Возврат
+      </code>
+      или многострочной инструкцией.
+Компактность такой ветки имеет приоритет на её внутренних границах; у методов
+сохраняются
+      <code>
+       blank_lines_inside_methods
+      </code>
+      . В остальных промежутках структурный
+минимум имеет приоритет над
+      <code>
+       max_empty_lines
+      </code>
+      ; совпадающие требования
+объединяются, а не складываются.
+     </p>
+     <p>
+      Многострочность определяется по итоговому выводу инструкции до выравнивания,
+поэтому новый перенос сразу добавляет разделители, а свёрнутая инструкция
+сразу участвует в однострочной таблице. Многострочные присваивания всегда
+завершают таблицу
+      <code>
+       =
+      </code>
+      ; одиночное присваивание получает обычный пробел. Таблица
+не добавляется, если её отступы создадут превышение
+      <code>
+       column_limit
+      </code>
+      .
+     </p>
+     <p>
+      Группа объекта состоит минимум из двух соседних операций: присваиваний его
+полям/элементам и самостоятельных вызовов его методов. Инициализация перед
+первой такой операцией входит в группу:
+      <code>
+       Запрос = Новый Запрос
+      </code>
+      , затем
+      <code>
+       Запрос.Текст = ...
+      </code>
+      и
+      <code>
+       Запрос.УстановитьПараметр(...)
+      </code>
+      . Серия
+      <code>
+       Контекст.Вставить(...)
+      </code>
+      образует группу без обязательной инициализации рядом.
+      <code>
+       blank_lines_between_object_groups
+      </code>
+      добавляет разделители перед группой и после
+неё, сохраняя выравнивание и существующие либо обязательные внутренние интервалы.
+     </p>
+     <p>
+      Получатель определяется по левой части присваивания или по самостоятельному
+вызову. Упоминания в аргументах и правых частях не учитываются: присваивания
+      <code>
+       Отбор = Запрос.Выполнить()
+      </code>
+      и
+      <code>
+       ВыборкаОтбора = Отбор.Выбрать()
+      </code>
+      остаются
+отдельной парой между подготовкой запроса и заполнением контекста. Одиночное
+обращение к объекту не создаёт группу. При повторной инициализации начинается
+следующая группа, даже если имя переменной совпадает.
+     </p>
+     <p>
+      Учитываются вложенные пути, индексы, регистр имён и прилегающие комментарии;
+строковые индексы сравниваются точно. Без инициализации пути получателей должны
+совпадать целиком; после инициализации в группу входит заполнение его вложенных
+полей и элементов. Переход уровня, директива,
+      <code>
+       eska-fmt off/on
+      </code>
+      , другой получатель
+или обычная операция прерывают группу. Порядок операций сохраняется; определение
+типов и смысл методов не требуются.
+     </p>
+     <p>
+      Границы таблиц присваиваний и вызовов учитывают итоговую политику пустых строк:
+при
+      <code>
+       max_empty_lines = 0
+      </code>
+      удалённый промежуток объединяет соседние строки уже
+за один проход. Вызовы разделяются сохранённой пустой строкой, комментарием,
+другим получателем, числом аргументов или уровнем вложенности. В таблицу входит
+вызов, который после форматирования занимает одну строку, в том числе после
+сворачивания переносов при
+      <code>
+       preserve_existing_line_breaks = false
+      </code>
+      и
+      <code>
+       wrap_arguments = "fit"
+      </code>
+      . Сохранённые многострочные литералы и выражения
+остаются границами таблицы. Внутренние запятые вложенных вызовов не выравниваются
+по внешним. Выравнивание вызовов отключается для группы, которая из-за него
+выйдет за
+      <code>
+       column_limit
+      </code>
+      .
+     </p>
+     <p>
+      <code>
+       separate_object_initialization = true
+      </code>
+      отделяет присваивание объекту от таблиц
+выравнивания, если последующие присваивания той же группы заполняют его поля
+или элементы коллекции. Учитываются вложенные пути (
+      <code>
+       Контекст.Документ.Дата
+      </code>
+      ),
+индексы и регистр идентификаторов. Значения строковых индексов сравниваются точно.
+Определение типов и анализ правой части не требуются; пустая строка после
+инициализации этим правилом не добавляется. Например:
+     </p>
+     <pre><code class="language-bsl">ДокументОбъект = МенеджерОбъекта.СоздатьДокумент();
+ДокументОбъект.Дата        = ТекущаяДатаСеанса();
+ДокументОбъект.Комментарий = "Ляляля";
+</code></pre>
+     <p>
+      Опция действует вместе с
+      <code>
+       align_assignments
+      </code>
+      ; явное
+      <code>
+       false
+      </code>
+      возвращает единую
+таблицу присваиваний, включая инициализацию.
+     </p>
+     <p>
+      Лимит выбран по образцам: 464 непустые строки кода без отдельных комментариев
+и многострочных литералов, максимум 150 колонок при табуляции 4. При лимите 120
+превышение дали бы 16 строк. Комментарии достигали 173 колонок, строки внутри
+литералов — 194; их содержимое не переносится. Как и у
+      <code>
+       1c
+      </code>
+      , лимит мягкий:
+неразрывный идентификатор или литерал может быть длиннее него. Смешанные отступы
+образцов приводятся к табуляции; вручную расставленные пробелы перед или после
+запятых — к общей колонке запятых. Для SDBL
+      <code>
+       eska
+      </code>
+      сохраняет правила
+      <code>
+       1c
+      </code>
+      .
+     </p>
+     <p>
+      Профиль по умолчанию остаётся
+      <code>
+       1c
+      </code>
+      . Явные настройки
+      <code>
+       format.common
+      </code>
+      ,
+      <code>
+       format.bsl
+      </code>
+      ,
+overrides и параметры операции имеют приоритет над пресетом. Например,
+существующее
+      <code>
+       format.bsl.column_limit = 120
+      </code>
+      продолжит задавать лимит 120.
+Свой профиль может наследовать
+      <code>
+       based_on = "eska"
+      </code>
+      . Все правила и разрешение
+пресета принадлежат ESKA; адаптер IDE не реализует их повторно.
+     </p>
+     <p>
+      При генерации
+      <code>
+       bsl-analyzer.toml
+      </code>
+      профиль передаёт поддерживаемые параметры
+проверок: для
+      <code>
+       eska
+      </code>
+      это, в частности,
+      <code>
+       LineLength.maxLineLength = 150
+      </code>
+      .
+Отступы и допустимое число пустых строк также согласуются со стилем ESKA.
+Приоритеты, сохранение отключённых правил и границы workspace описаны в
+      <a href="https://github.com/odineska/eska/blob/main/docs/analyzer-configuration.md">
+       конфигурации анализатора
+      </a>
+      .
+     </p>
+    </section>
+    <section class="doc-section" id="каталог-опций-версии-1">
+     <div class="doc-heading">
+      <span>
+       04
+      </span>
+      <div>
+       <h2>
+        Каталог опций версии 1
+       </h2>
+      </div>
+     </div>
+     <p>
+      Общие параметры допустимы в
+      <code>
+       common
+      </code>
+      ,
+      <code>
+       bsl
+      </code>
+      ,
+      <code>
+       sdbl
+      </code>
+      и соответствующих таблицах
+профилей/overrides.
+      <code>
+       keyword_case
+      </code>
+      профиля SDBL по умолчанию
+      <code>
+       upper
+      </code>
+      , BSL —
+      <code>
+       canonical
+      </code>
+      . Типы, диапазоны, enum и остальные defaults входят в JSON Schema.
+     </p>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>
+          Ключ
+         </th>
+         <th>
+          Default
+         </th>
+         <th>
+          Смысл / English
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>
+          <code>
+           indent_style
+          </code>
+         </td>
+         <td>
+          <code>
+           tab
+          </code>
+         </td>
+         <td>
+          <code>
+           tab
+          </code>
+          или
+          <code>
+           space
+          </code>
+          ; indentation character
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           indent_width
+          </code>
+         </td>
+         <td>
+          <code>
+           4
+          </code>
+         </td>
+         <td>
+          Колонок на уровень; columns per block
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           tab_width
+          </code>
+         </td>
+         <td>
+          <code>
+           4
+          </code>
+         </td>
+         <td>
+          Визуальная ширина таба; tab stop width
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           continuation_indent_width
+          </code>
+         </td>
+         <td>
+          <code>
+           4
+          </code>
+         </td>
+         <td>
+          Добавочный отступ продолжения; continuation columns
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           column_limit
+          </code>
+         </td>
+         <td>
+          <code>
+           120
+          </code>
+         </td>
+         <td>
+          Ориентир длины,
+          <code>
+           0
+          </code>
+          без лимита; soft column limit
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           keyword_case
+          </code>
+         </td>
+         <td>
+          По языку
+         </td>
+         <td>
+          <code>
+           canonical
+          </code>
+          ,
+          <code>
+           upper
+          </code>
+          ,
+          <code>
+           lower
+          </code>
+          ,
+          <code>
+           preserve
+          </code>
+          ; token spelling
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           space_after_comma
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Пробел после запятой; comma spacing
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           space_around_operators
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Пробелы вокруг бинарных операторов; binary spacing
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           space_inside_parentheses
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Внутренние пробелы скобок; inner parentheses spacing
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           space_before_call_parenthesis
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Пробел перед скобкой вызова; call parentheses spacing
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           wrap_arguments
+          </code>
+         </td>
+         <td>
+          <code>
+           fit
+          </code>
+         </td>
+         <td>
+          <code>
+           fit
+          </code>
+          ,
+          <code>
+           one_per_line
+          </code>
+          ,
+          <code>
+           preserve
+          </code>
+          ; call argument layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           wrap_binary
+          </code>
+         </td>
+         <td>
+          <code>
+           fit
+          </code>
+         </td>
+         <td>
+          <code>
+           fit
+          </code>
+          ,
+          <code>
+           one_per_line
+          </code>
+          ,
+          <code>
+           preserve
+          </code>
+          ; binary expression layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           break_before_binary_operators
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Оператор начинает продолжение; leading operator
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           max_empty_lines
+          </code>
+         </td>
+         <td>
+          <code>
+           1
+          </code>
+         </td>
+         <td>
+          Максимум пустых строк; consecutive empty lines
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           trim_trailing_whitespace
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Удаление хвостовых пробелов вне литералов/комментариев; trailing trivia
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           insert_final_newline
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Финальный перевод строки; final newline
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           comments
+          </code>
+         </td>
+         <td>
+          <code>
+           indent_only
+          </code>
+         </td>
+         <td>
+          <code>
+           indent_only
+          </code>
+          или
+          <code>
+           preserve
+          </code>
+          ; comment indentation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           align_assignments
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: выравнивание соседних присваиваний; assignment columns
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           separate_object_initialization
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: исключать инициализацию из таблиц выравнивания перед заполнением её полей/элементов; separate receiver initialization
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           align_call_arguments
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: колонки запятых соседних одинаковых однострочных вызовов; adjacent call argument columns
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           closing_parenthesis_on_new_line
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: отдельная строка закрывающей скобки перенесённого вызова; multiline call closing delimiter
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           preserve_existing_line_breaks
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: при
+          <code>
+           fit
+          </code>
+          сохранять переносы аргументов/бинарных выражений, а также строку после
+          <code>
+           =
+          </code>
+          ; retain existing breaks while fitting
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           indent_multiline_strings
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только BSL: переносить многострочный литерал после
+          <code>
+           =
+          </code>
+          и выравнивать отступ перед `
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_between_methods
+          </code>
+         </td>
+         <td>
+          <code>
+           1
+          </code>
+         </td>
+         <td>
+          Только BSL: пустые строки между методами; method separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_inside_methods
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: минимум пустых строк после объявления и перед концом метода,
+          <code>
+           0..16
+          </code>
+          ; inner method boundaries
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_around_blocks
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: минимум пустых строк между блоком и соседними операциями,
+          <code>
+           0..16
+          </code>
+          ; control block separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_inside_multistatement_blocks
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: минимум пустых строк у границ тела с несколькими операциями; при
+          <code>
+           1..16
+          </code>
+          тело с одной операцией компактное,
+          <code>
+           0
+          </code>
+          отключает правило; branch body boundaries
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_before_return
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: минимум пустых строк перед
+          <code>
+           Возврат
+          </code>
+          ,
+          <code>
+           0..16
+          </code>
+          ; return separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_around_multiline_statements
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: разделение многострочной инструкции и соседних операций,
+          <code>
+           0..16
+          </code>
+          ; multiline statement separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_between_object_groups
+          </code>
+         </td>
+         <td>
+          <code>
+           0
+          </code>
+         </td>
+         <td>
+          Только BSL: разделители перед и после групп присваиваний полям и вызовов методов одного получателя,
+          <code>
+           0..16
+          </code>
+          ; object operation groups
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           select_items
+          </code>
+         </td>
+         <td>
+          <code>
+           one_per_line
+          </code>
+         </td>
+         <td>
+          Только SDBL:
+          <code>
+           fit
+          </code>
+          ,
+          <code>
+           one_per_line
+          </code>
+          ,
+          <code>
+           preserve
+          </code>
+          ; SELECT item layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           condition_items
+          </code>
+         </td>
+         <td>
+          <code>
+           one_per_line
+          </code>
+         </td>
+         <td>
+          Только SDBL: переносы условий; condition layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           group_items
+          </code>
+         </td>
+         <td>
+          <code>
+           one_per_line
+          </code>
+         </td>
+         <td>
+          Только SDBL: группировки/итоги/индекс; grouping layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           order_items
+          </code>
+         </td>
+         <td>
+          <code>
+           one_per_line
+          </code>
+         </td>
+         <td>
+          Только SDBL: порядок; sort list layout
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           blank_lines_between_queries
+          </code>
+         </td>
+         <td>
+          <code>
+           1
+          </code>
+         </td>
+         <td>
+          Только SDBL: пустые строки между запросами/UNION; query separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           clause_newlines
+          </code>
+         </td>
+         <td>
+          <code>
+           true
+          </code>
+         </td>
+         <td>
+          Только SDBL: секции с новой строки; clause separation
+         </td>
+        </tr>
+        <tr>
+         <td>
+          <code>
+           align_aliases
+          </code>
+         </td>
+         <td>
+          <code>
+           false
+          </code>
+         </td>
+         <td>
+          Только SDBL: выравнивание КАК/AS; alias columns
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <p>
+      Например, ширина 2 и
+      <code>
+       space
+      </code>
+      дают два пробела вместо таба;
+      <code>
+       space_after_comma
+      </code>
+      переключает
+      <code>
+       Метод(А,Б)
+      </code>
+      ↔
+      <code>
+       Метод(А, Б)
+      </code>
+      ;
+      <code>
+       space_around_operators
+      </code>
+      —
+      <code>
+       А=Б+В
+      </code>
+      ↔
+      <code>
+       А = Б + В
+      </code>
+      ;
+      <code>
+       keyword_case
+      </code>
+      —
+      <code>
+       если
+      </code>
+      ↔
+      <code>
+       Если
+      </code>
+      /
+      <code>
+       ЕСЛИ
+      </code>
+      ;
+      <code>
+       wrap_arguments
+      </code>
+      —
+      <code>
+       Метод(А, Б)
+      </code>
+      ↔ вызов с каждым аргументом на своей строке;
+      <code>
+       select_items
+      </code>
+      —
+      <code>
+       ВЫБРАТЬ А, Б
+      </code>
+      ↔ список полей по строкам;
+      <code>
+       align_aliases
+      </code>
+      /
+      <code>
+       align_assignments
+      </code>
+      добавляют пробелы до общей колонки. Golden-примеры проверяют оба алгоритма через публичный протокол.
+     </p>
+    </section>
+    <section class="doc-section" id="миграция-и-машинный-контракт">
+     <div class="doc-heading">
+      <span>
+       05
+      </span>
+      <div>
+       <h2>
+        Миграция и машинный контракт
+       </h2>
+      </div>
+     </div>
+     <p>
+      Миграция выполняется явно: preview содержит точный исходный текст и результат.
+Apply повторно проверяет план, текущие байты, тип файла и права. До замены создаёт
+исключительно новый
+      <code>
+       .eska-fmt-backup-&lt;sha256&gt;.toml
+      </code>
+      рядом с манифестом; совпавший
+backup допускается только при точном совпадении байтов. Чужой backup не заменяется.
+Повтор apply к уже применённому плану возвращает тот же backup. BOM/CRLF, прочие
+настройки и комментарии вне переносимой секции сохраняются. Подменённый план,
+изменившийся манифест или защищённый файл не применяются. Обычное форматирование
+миграцию манифеста не выполняет.
+     </p>
+     <p>
+      Протокол форматтера имеет
+      <code>
+       schema_version=1
+      </code>
+      :
+      <code>
+       language
+      </code>
+      (
+      <code>
+       bsl
+      </code>
+      /
+      <code>
+       sdbl
+      </code>
+      ), полный
+      <code>
+       options
+      </code>
+      , снимок
+      <code>
+       text
+      </code>
+      , nullable
+      <code>
+       range
+      </code>
+      . Координаты — полуоткрытые UTF-8 byte
+offsets, границы проверяются до разбора. Лимит снимка — 4 MiB. Ответ содержит
+      <code>
+       source_sha256
+      </code>
+      , список
+      <code>
+       edits
+      </code>
+      и фактический
+      <code>
+       formatted_range
+      </code>
+      . Адаптер IDE
+преобразует координаты в нативные и проверяет версию своего документа; форматтер
+не получает команды сохранить владельца. Полная эффективная политика содержит
+происхождение каждой настройки, версию профиля, язык и признак исключения.
+     </p>
+    </section>
+    <section class="doc-section" id="защита-поддержки-и-методов-изменения-с-контролем">
+     <div class="doc-heading">
+      <span>
+       06
+      </span>
+      <div>
+       <h2>
+        Защита поддержки и методов изменения с контролем
+       </h2>
+      </div>
+     </div>
+     <p>
+      Правила обязательны для
+      <code>
+       eska-fmt
+      </code>
+      ,
+      <code>
+       eska fmt
+      </code>
+      , IDE/RPC и форматирования запросов;
+настройки стиля и
+      <code>
+       --style
+      </code>
+      их не отключают. Они строже обычного разрешения
+редактирования:
+     </p>
+     <div class="table-wrap">
+      <table>
+       <thead>
+        <tr>
+         <th>
+          Состояние исходника
+         </th>
+         <th>
+          Допуск fmt
+         </th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr>
+         <td>
+          Запрет изменения на поддержке
+         </td>
+         <td>
+          Форматирование запрещено
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Редактирование с сохранением поддержки
+         </td>
+         <td>
+          Только явно выбранный непустой участок
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Собственный объект / снятая поддержка
+         </td>
+         <td>
+          Обычные операции документа и диапазона
+         </td>
+        </tr>
+        <tr>
+         <td>
+          Неизвестные или повреждённые правила
+         </td>
+         <td>
+          Форматирование запрещено
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </div>
+     <p>
+      Для редактирования с поддержкой
+      <code>
+       format/document
+      </code>
+      требует непустой
+      <code>
+       range
+      </code>
+      ,
+не совпадающий со всем файлом. Возвращаемые правки должны оставаться строго
+внутри выбранных байтов. Если расширение до синтаксической конструкции меняет
+текст снаружи, весь план отклоняется с
+      <code>
+       selection_expansion
+      </code>
+      : нужно выделить
+конструкции целиком, включая отступы. Отсутствующее/пустое выделение и выбор
+всего файла дают
+      <code>
+       selection_required
+      </code>
+      . Форматирование всего файла при сохранении
+тоже запрещено. CLI пока не предоставляет произвольный byte-range: для такого
+участка используется выделение IDE/RPC.
+     </p>
+     <p>
+      При массовом запуске по проекту, workspace или каталогу CLI пропускает
+недоступные для полного fmt файлы
+      <strong>
+       до чтения и разбора их текста
+      </strong>
+      и продолжает
+обработку разрешённых. JSON содержит
+      <code>
+       status:"skipped"
+      </code>
+      и
+      <code>
+       skip_reason
+      </code>
+      :
+      <code>
+       source_read_only
+      </code>
+      ,
+      <code>
+       support_unknown
+      </code>
+      либо
+      <code>
+       selection_required
+      </code>
+      . Human-вывод
+перечисляет пропуски. Это относится к apply,
+      <code>
+       --check
+      </code>
+      и
+      <code>
+       --diff
+      </code>
+      ; сами пропуски
+не повышают exit code. Явный запуск на одном запрещённом файле завершается с
+кодом 2. Исключённые через
+      <code>
+       exclude
+      </code>
+      файлы по-прежнему имеют
+      <code>
+       status:"excluded"
+      </code>
+      .
+     </p>
+     <p>
+      Методы
+      <code>
+       &amp;ИзменениеИКонтроль
+      </code>
+      /
+      <code>
+       &amp;ChangeAndValidate
+      </code>
+      сохраняются целиком:
+аннотации, заголовок, тело, комментарии,
+      <code>
+       #Удаление
+      </code>
+      и
+      <code>
+       #Вставка
+      </code>
+      . Обычный код
+того же модуля можно форматировать; его правки не пересекают защищённые методы.
+Выделение внутри такого метода не меняет его. Неоднозначные условные границы
+метода отклоняются без правок. Сервер независимо проверяет ответ компонента,
+включая старую версию форматтера, которая ещё не знает этого запрета.
+     </p>
+     <p>
+      Явно выбранный встроенный запрос (
+      <code>
+       --query-at
+      </code>
+      ,
+      <code>
+       --query-index
+      </code>
+      либо отдельный
+query-черновик) считается выбранным участком владельца. Для него сохраняются
+проверки поддержки и точечной записи. Внутри
+      <code>
+       ИзменениеИКонтроль
+      </code>
+      запрещено
+даже форматирование запроса:
+      <code>
+       change_control_protected
+      </code>
+      . Обычное ручное
+редактирование запроса этим правилом fmt не меняется.
+     </p>
+     <p>
+      При выдаче IDE-плана и перед публикацией CLI заново проверяются актуальные
+правила поддержки; неизвестное состояние разрешением не считается.
+     </p>
+    </section>
+    <section class="doc-section" id="bsl-алгоритм-и-проверенные-границы">
+     <div class="doc-heading">
+      <span>
+       07
+      </span>
+      <div>
+       <h2>
+        BSL: алгоритм и проверенные границы
+       </h2>
+      </div>
+     </div>
+     <p>
+      Форматтер разбирает заголовки/параметры методов, выражения, вызовы, обращения
+через точку и индекс, переменные, условия, циклы, исключения, переходы и
+асинхронный синтаксис. Обе языковые формы сохраняются. Препроцессорные ветви
+проверяются раздельно и объединяются только при согласованной структуре блоков.
+Аннотации и препроцессор остаются у левого края. Вне защищённого метода текст
+      <code>
+       #Удаление
+      </code>
+      /
+      <code>
+       #Delete
+      </code>
+      сохраняется побайтно; активная вставка участвует в разборе.
+Неизвестный синтаксис возвращает ошибку без правок.
+     </p>
+     <p>
+      Форматирование BSL сохраняет значения строк и не форматирует находящийся в них
+запрос. При
+      <code>
+       indent_multiline_strings = true
+      </code>
+      (включено в
+      <code>
+       eska
+      </code>
+      ) меняется только
+отступ перед
+      <code>
+       |
+      </code>
+      ; содержимое после
+      <code>
+       |
+      </code>
+      , экранированные кавычки, физические
+переводы строк и комментарии между продолжениями сохраняются точно. Для
+остальных литералов и при
+      <code>
+       false
+      </code>
+      исходные байты токена не меняются.
+Отдельные комментарии сохраняют собственную строку; комментарии после запятой
+и перед закрывающей скобкой не теряются при переносе аргументов.
+      <code>
+       comments=preserve
+      </code>
+      оставляет целиком содержащую комментарий конструкцию.
+      <code>
+       trim_trailing_whitespace=false
+      </code>
+      сохраняет пробелы на оставленных физических
+строках;
+      <code>
+       max_empty_lines
+      </code>
+      ограничивает их количество. Отдельно заданный
+      <code>
+       blank_lines_between_methods
+      </code>
+      имеет приоритет для интервала между методами.
+     </p>
+     <p>
+      Выделение расширяется до полных синтаксических конструкций, что отражается в
+      <code>
+       formatted_range
+      </code>
+      ; остальные байты сохраняются. При выделении только хвостовых
+пробелов в конце файла диапазон ответа включает их фактическую правку.
+Ошибки могут содержать nullable
+      <code>
+       offset
+      </code>
+      — UTF-8 byte offset начала проблемного токена/конструкции. Общие отказы
+политики не обязаны иметь позицию исходника. После печати выполняются повторный
+разбор и сравнение всех значимых токенов, включая точные литералы и комментарии.
+     </p>
+     <p>
+      Ограничения: снимок 4 MiB, 262144 токена, 128 уровней выражений/скобок/блоков,
+64 уровня препроцессора; весь результат ограничен 16 MiB, включая суммарные
+отступы всех конструкций. Превышение возвращает
+      <code>
+       output_too_large
+      </code>
+      до записи
+любого файла запланированной операции. Несогласуемые ветви и
+неподдержанные конструкции отклоняются. Это не проверка типов, доступности API
+или полноты бизнес-логики.
+     </p>
+     <p>
+      <a href="https://github.com/odineska/eska/blob/main/docs/measurements/t121-bsl-formatting.json">
+       Проверки T121
+      </a>
+      : 13 сценариев выполнены
+платформой 8.3.27.2325 в отдельной ИБ, исходный и форматированный код дали
+ожидаемые значения. Выборка 40 модулей buhmfo и пяти расширений прошла сравнение
+токенов и повторный проход; исходники пользователя не записывались. Это не сборка
+всей buhmfo. Дополнительные диагностики 27 fixtures завершены CLI анализатора;
+замечания о стиле/контекстах не объявляются отсутствующими.
+     </p>
+    </section>
+    <section class="doc-section" id="sdbl-и-встроенные-запросы">
+     <div class="doc-heading">
+      <span>
+       08
+      </span>
+      <div>
+       <h2>
+        SDBL и встроенные запросы
+       </h2>
+      </div>
+     </div>
+     <p>
+      Один алгоритм обрабатывает отдельный запрос и SDBL-черновик. Форматтер использует
+read-only проекцию секций из core: SELECT, JOIN/ON, WHERE, GROUP BY/HAVING, ORDER BY,
+вложенные SELECT, UNION, INTO/INDEX BY/DROP, пакеты и итоги. CASE и известные
+позиции СКД сохраняются исходными токенами; это не расширяет разрешения визуального
+конструктора. Неизвестная структура отклоняет весь запрос без частичной правки.
+Проверка грамматических границ не заменяет проверку типов и выполнение платформой.
+     </p>
+     <p>
+      <code>
+       select_items
+      </code>
+      ,
+      <code>
+       condition_items
+      </code>
+      ,
+      <code>
+       group_items
+      </code>
+      ,
+      <code>
+       order_items
+      </code>
+      принимают
+      <code>
+       fit
+      </code>
+      ,
+      <code>
+       one_per_line
+      </code>
+      ,
+      <code>
+       preserve
+      </code>
+      . Например,
+      <code>
+       WHERE A=1 AND B=2
+      </code>
+      превращается в строки
+      <code>
+       WHERE
+      </code>
+      ,
+      <code>
+       A = 1
+      </code>
+      ,
+      <code>
+       AND B = 2
+      </code>
+      ; режим
+      <code>
+       fit
+      </code>
+      оставляет помещающийся список
+вместе.
+      <code>
+       clause_newlines=false
+      </code>
+      допускает
+      <code>
+       SELECT A, B FROM T
+      </code>
+      . При
+      <code>
+       align_aliases=true
+      </code>
+      пробелы ставятся перед общей колонкой AS/КАК; AS внутри CAST
+выравниванию не подлежит. Ключевые слова/вызовы меняют регистр только в своих
+ролях: путь
+      <code>
+       T.Where
+      </code>
+      , псевдоним и
+      <code>
+       &amp;where
+      </code>
+      остаются исходными.
+     </p>
+     <p>
+      Выделение расширяется до полного запроса пакета со всеми ветвями UNION; вложенный
+запрос форматируется вместе с содержащим его запросом.
+      <code>
+       // eska-fmt off/on
+      </code>
+      сохраняет целиком затронутый запрос пакета.
+      <code>
+       comments=preserve
+      </code>
+      сохраняет запрос
+целиком при наличии комментариев. Непереносимые литералы/комментарии могут
+превышать
+      <code>
+       column_limit
+      </code>
+      . Ограничения core: 65536 токенов и 256 секций/запросов,
+не более 32 уровней вложенных SELECT. Отдельный снимок по-прежнему ограничен 4 MiB.
+     </p>
+     <p>
+      <code>
+       format_query
+      </code>
+      использует извлечение и
+      <code>
+       query::format_plan
+      </code>
+      core для выбранного
+статического BSL-литерала или запроса XML. Общий BSL fmt не трогает строковые
+значения. Динамические выражения не собираются в предполагаемый запрос.
+Обратная запись проверяет снимок, кодирует кавычки/entities и меняет только
+выбранное значение. Комментарии владельца переносятся по неизменным токенам;
+неоднозначный якорь отклоняет операцию. Для BSL может сохраниться начальный
+перевод строки запроса, необходимый для физической строки исходного комментария.
+CDATA может стать экранированным текстом внутри того же query-элемента;
+соседние XML-узлы/другие запросы остаются побайтно прежними.
+     </p>
+     <p>
+      <a href="https://github.com/odineska/eska/blob/main/docs/measurements/t122-query-formatting.json">
+       Приёмка T122
+      </a>
+      : 7 запросов и повторные
+13 BSL-сценариев выполнены платформой 8.3.27.2325. Ещё 16 сценариев T114 выполнены
+в обеих версиях на отдельной ИБ с тестовыми метаданными: 32/32, включая регистр,
+параметры виртуальных таблиц и СКД. Это не выполнение запросов в рабочей buhmfo.
+     </p>
+    </section>
+    <section class="doc-section" id="cli-файл-объект-member-и-проект">
+     <div class="doc-heading">
+      <span>
+       09
+      </span>
+      <div>
+       <h2>
+        CLI: файл, объект, member и проект
+       </h2>
+      </div>
+     </div>
+     <p>
+      В Explorer общий шаблон
+      <code>
+       files.readonlyInclude
+      </code>
+      не передаётся как запрет поверх
+разового native-разрешения записи в сеансе. Редактор применяет свои актуальные
+ограничения при штатном форматировании; провайдер возвращает план для его буфера.
+Права файловой системы, поддержка поставщика и блокировки владельца повторно
+проверяются ESKA. Разовое разрешение редактора их не отменяет.
+     </p>
+     <p>
+      <code>
+       eska-fmt [scope]
+      </code>
+      и
+      <code>
+       eska fmt [scope]
+      </code>
+      имеют одинаковые аргументы. Scope — путь
+к файлу или каталогу относительно
+      <code>
+       --project-dir
+      </code>
+      (по умолчанию текущий каталог).
+В проекте без scope выбираются BSL/SDBL из Designer source; каталог объекта
+задаётся обычным путём, например
+      <code>
+       src/Catalogs/Items
+      </code>
+      .
+      <code>
+       --member NAME
+      </code>
+      и
+      <code>
+       --workspace
+      </code>
+      используют общий resolver выбора ESKA. Отдельный BSL/SDBL-файл
+работает без манифеста с профилем 1С. Существующий ошибочный манифест не игнорируется.
+     </p>
+     <p>
+      <code>
+       --check
+      </code>
+      ,
+      <code>
+       --diff
+      </code>
+      ,
+      <code>
+       --dump-config
+      </code>
+      взаимоисключающие и ничего не записывают.
+Без них применяется проверенный план.
+      <code>
+       --style JSON
+      </code>
+      задаёт sparse override
+операции; все ключи и происхождение видны в
+      <code>
+       --dump-config
+      </code>
+      . Встроенный запрос
+выбирается явно:
+      <code>
+       --query-at BYTE
+      </code>
+      для BSL или
+      <code>
+       --query-index INDEX
+      </code>
+      для XML,
+индексы и координаты с нуля. Это режим одного файла.
+      <code>
+       --migrate-config
+      </code>
+      показывает
+миграцию корневого манифеста workspace/проекта,
+      <code>
+       --apply-migration
+      </code>
+      применяет её с backup.
+     </p>
+     <p>
+      <code>
+       --format json
+      </code>
+      :
+      <code>
+       {schema_version:1,formatter_version,mode,files,migration,error}
+      </code>
+      . Каждая запись files
+содержит path, language, source_sha256, changed, status, edits, effective, diff.
+      <code>
+       source_sha256
+      </code>
+      — null у исключённого файла и при
+      <code>
+       --dump-config
+      </code>
+      : текст не читается.
+Status:
+      <code>
+       unchanged
+      </code>
+      ,
+      <code>
+       excluded
+      </code>
+      ,
+      <code>
+       skipped
+      </code>
+      ,
+      <code>
+       planned
+      </code>
+      ,
+      <code>
+       applied
+      </code>
+      ,
+      <code>
+       failed
+      </code>
+      ,
+      <code>
+       not_applied
+      </code>
+      .
+Для
+      <code>
+       skipped
+      </code>
+      присутствует дополнительное поле
+      <code>
+       skip_reason
+      </code>
+      с машинной причиной защиты.
+Error — nullable структурированная ошибка
+      <code>
+       {code,field,offset?}
+      </code>
+      ; схема и значения
+не зависят от locale. В режиме diff правки также содержатся в edits; human вывод
+показывает исходную и новую версии. Код 0 — успех/предпросмотр, 1 — только
+      <code>
+       --check
+      </code>
+      с необходимыми изменениями, 2 — ошибка; отмена — 130. До записи всего
+плана проверяются снимки, права, поддержка и межпроцессные блокировки источников.
+     </p>
+     <p>
+      Чистый вход компонента
+      <code>
+       eska-fmt __format-text
+      </code>
+      принимает один JSON Request
+версии 1 на stdin, возвращает Response на stdout. Ошибка:
+      <code>
+       {schema_version:1,error}
+      </code>
+      с кодом 2. Вход не читает конфигурацию, файлы или индекс; полная политика передана
+вызывающим. Это тот же алгоритм, который используется CLI.
+     </p>
+     <p>
+      Примеры (scope относительно
+      <code>
+       --project-dir
+      </code>
+      ):
+     </p>
+     <pre><code class="language-sh">eska-fmt Module.bsl --check --format json
+eska fmt src/Catalogs/Items --diff
+eska fmt --member MyExtension
+eska fmt --workspace --check
+eska-fmt Query.sdbl --dump-config
+eska-fmt Module.bsl --query-at 123 --diff
+eska-fmt Schema.xml --query-index 0
+eska-fmt --migrate-config
+eska-fmt --apply-migration
+</code></pre>
+     <p>
+      Межпроцессная защита использует пустые lock-файлы в
+      <code>
+       .eska/source-locks
+      </code>
+      проекта;
+для отдельного файла — в его родительском каталоге. Это служебное состояние.
+Lock inode не удаляется при закрытии: владение снимает ОС при закрытии последнего
+handle, в том числе при завершении процесса. Снимок и политика поддержки всё равно
+проверяются до записи. Молчаливое снятие чужой блокировки не предусмотрено.
+План ограничен 128 MiB исходного/нового текста; обход — 100000 узлов и 128 уровней.
+Предпросмотр не создаёт lock-файлы. Применение сначала проверяет все файлы,
+получает leases и готовит все временные замены; только потом публикует исходники.
+Операция не обещает видеть dirty-буфер посторонней IDE. Внешние изменения диска
+проверяются по точным байтам; отказ preflight сохраняет весь план неприменённым.
+     </p>
+     <p>
+      Metadata API 1.33 предоставляет
+      <code>
+       format/document
+      </code>
+      ,
+      <code>
+       format/query
+      </code>
+      и bounded
+uploads. Сервер передаёт полную политику отдельному процессу
+      <code>
+       eska-fmt
+      </code>
+      , проверяет
+его контракт и полученные byte edits; алгоритм в project-компонент не встраивается.
+      <a href="https://github.com/odineska/eska/blob/main/docs/ide-protocol.md#api-133-%D0%BD%D0%B5%D0%B7%D0%B0%D0%B2%D0%B8%D1%81%D0%B8%D0%BC%D0%BE%D0%B5-%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0-%D0%B8-query-%D1%87%D0%B5%D1%80%D0%BD%D0%BE%D0%B2%D0%B8%D0%BA%D0%B0">
+       RPC-контракт
+      </a>
+      .
+До выдачи плана повторно проверяются источник, поддержка, манифест и ревизия
+query-сессии. CRLF нативного черновика сверяется с LF checkpoint в core; план
+по-прежнему адресует точный текст и его исходные UTF-8 координаты.
+Реальная CLI/RPC-приёмка запускается
+      <code>
+       tests/formatting_acceptance.py
+      </code>
+      с явными путями к трём бинарникам; стенд автоматически создаётся в playground.
+     </p>
+    </section>
+    <section class="doc-section" id="приёмка-поставки-и-задержки">
+     <div class="doc-heading">
+      <span>
+       10
+      </span>
+      <div>
+       <h2>
+        Приёмка поставки и задержки
+       </h2>
+      </div>
+     </div>
+     <p>
+      Выборочные пакеты и receipts используют
+      <code>
+       designer-xml-4
+      </code>
+      ;
+      <a href="https://github.com/odineska/eska/blob/main/docs/component-installation.md">
+       установка
+      </a>
+      .
+Проверены formatter-only, shell + formatter, Explorer + project + formatter
+без анализатора и полный набор с отдельным анализатором. VSIX прошёл проверку
+1331 файлов, установку и повтор после перезапуска в ru/en. Undo/Redo, сохранение,
+устаревший ответ, несовместимый компонент, BOM/CRLF и защита родителя проверены
+нативными командами VSCodium. Публичный релиз и пользовательская глобальная
+установка не изменялись.
+     </p>
+     <p>
+      Release CLI, первый процесс / медиана 7 повторов: малый BSL 4,3 / 3,8 мс,
+реальный модуль 200 КБ 16,2 / 18,7 мс, пакет 60 операторов 14,7 / 11,9 мс,
+полная копия расширения из 25 BSL-файлов (251 КБ) 52,7 / 47,4 мс.
+Применение копии и повторный check прошли, XML и исходное расширение не изменены.
+CLI/facade/RPC дают одинаковые планы. В установленном VSCodium: первый вызов
+282–305 мс, повторный 130–158 мс, с работающим анализатором и без него.
+     </p>
+     <p>
+      Начальные бюджеты этого стенда: CLI ≤25 мс для малого BSL, ≤75 мс для модуля
+200 КБ, ≤50 мс для пакета и ≤200 мс для проекта из 25 файлов; VSCodium ≤750 мс
+при первом вызове и ≤400 мс при повторном. Это исходные ориентиры данного
+оборудования, а не переносимые CI-лимиты и не бюджет конструктора T143.
+Кэш ОС не очищался. Полный массовый fmt buhmfo не заявлен: нужны scope/exclude
+с учётом ограничений размера. Windows/macOS/VS Code/Remote не проверены.
+     </p>
+     <p>
+      Воспроизведение замеров:
+      <code>
+       tests/formatting_performance.py --installation ROOT --corpus CORPUS_JSON --real-project EXTENSION_ROOT
+      </code>
+      , с
+      <code>
+       ESKA_TEST_ROOT
+      </code>
+      , указывающим
+на соседний
+      <code>
+       eska-playground
+      </code>
+      . Скрипт создаёт собственную копию, работает через
+установленные CLI, применяет только копию и сверяет исходные SHA-256.
+     </p>
+    </section>
+   </main>
+  </div>
+  <footer class="site-footer shell compact-footer docs-footer">
+   <p>
+    ESKA + Explorer · Apache-2.0
+   </p>
+   <a class="link-with-icon" href="../../../">
+    <svg aria-hidden="true" class="icon">
+     <use href="../../../assets/icons.svg#home">
+     </use>
+    </svg>
+    odineska.tech
+   </a>
+  </footer>
+  <div aria-atomic="true" aria-live="polite" class="copy-toast" role="status">
+  </div>
+  <script src="../../../assets/site.js">
+  </script>
+ </body>
+</html>
