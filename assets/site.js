@@ -96,7 +96,7 @@
     const items = [];
     for (const link of toc.querySelectorAll('a[href^="#"]')) {
       const section = document.getElementById(link.hash.slice(1));
-      if (section?.matches(".doc-section")) items.push({ link, section });
+      if (section?.matches(".doc-section, .doc-section h3[id]")) items.push({ link, section });
     }
     if (!items.length) return;
 

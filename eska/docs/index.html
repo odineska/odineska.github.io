@@ -12,7 +12,7 @@
   </script>
   <link href="../../assets/brand/favicon.png" rel="icon" type="image/png"/>
   <link as="font" crossorigin="" href="../../assets/fonts/montserrat-semibold.woff2" rel="preload" type="font/woff2"/>
-  <link href="../../assets/site.css" rel="stylesheet"/>
+  <link href="../../assets/site.css?v=20261113" rel="stylesheet"/>
  </head>
  <body class="docs-page">
   <a class="skip-link" href="#docs-content">
@@ -98,6 +98,12 @@
      </a>
      <a href="#explorer">
       Дерево и навигация
+     </a>
+     <a href="#forms">
+      Просмотр форм
+     </a>
+     <a href="#debug">
+      Запуск и отладка
      </a>
      <a href="#activity">
       Активность подпроектов
@@ -357,6 +363,8 @@ VS Code / VSCodium; команды остаются доступны без ре
           Обновление исходников из нового файла 1С и ограниченное патч-расширение по committed-изменениям
          </td>
         </tr>
+        <tr><td>Запуск и отладка</td><td>Клиент 1С, HTTP-отладка через Rust-адаптер, точки, шаги, переменные, выражения и профили test/prod</td></tr>
+        <tr><td>Обновление тестовой базы</td><td>Подтверждённое применение исходников, поддержанные частичные изменения и запуск с отладкой</td></tr>
         <tr>
          <td>
           CI
@@ -396,10 +404,11 @@ VS Code / VSCodium; команды остаются доступны без ре
       <code>
        new
       </code>
-      создаёт каркас, а не готовую конфигурацию или визуальную форму. Дизайнеры
-форм, макетов и XDTO, отладчик 1С, запуск пользовательского приложения и тестовый
-раннер не входят в текущий набор. Изменения работающей ИБ автоматически не
-выгружаются: исходная XML-выгрузка должна быть получена отдельно.
+      создаёт каркас, а не готовую конфигурацию или визуальную форму.
+Графическое редактирование форм, макетов и XDTO, а также тестовый раннер — в планах.
+Формы уже можно просматривать; <a href="#debug">запуск клиента и HTTP-отладка</a>
+доступны отдельно. Изменения работающей ИБ автоматически не выгружаются: исходная
+XML-выгрузка должна быть получена отдельно.
      </p>
      <p>
       Свойства редактируются по закрытой схеме backend. Произвольное добавление и
@@ -538,6 +547,7 @@ VSCodium, Remote или другой версии анализатора. Рез
           </code>
          </td>
         </tr>
+        <tr><td><code>eska-debug</code></td><td>Запуск и HTTP-отладка 1С через DAP, включая самостоятельный режим</td><td>DAP-клиент, исходники Designer XML и сервер отладки 1С <code>dbgs</code>; для запуска также клиент 1С</td></tr>
        </tbody>
       </table>
      </div>
@@ -886,11 +896,11 @@ eska-build --project-dir ./accounting build --dry-run --format json
        опубликованный
       </strong>
       комплект, а не произвольную feature-ветку.
-Полный комплект содержит все шесть утилит. Они размещаются в пользовательской
+Полный комплект содержит семь утилит, включая <code>eska-debug</code>. Они размещаются в пользовательской
 установке; после изменения PATH откройте новый терминал. Повторный запуск
 установщика обновляет весь комплект до версий выбранного выпуска. Ранее
 поставленные через Explorer компоненты не должны мешать такому обновлению.
-Внешний BSL Analyzer в эти шесть программ не входит и обновляется отдельно.
+Внешний BSL Analyzer в этот комплект не входит и обновляется отдельно.
      </p>
      <p>
       Проверьте не только оболочку, но и компоненты:
@@ -901,6 +911,7 @@ eska-build --version
 eska-check --version
 eska-vcs --version
 eska-fmt --version
+eska-debug --version
 </code></pre>
      <p>
       Не смешивайте случайные версии. Компоненты публикуются согласованным набором;
@@ -918,7 +929,7 @@ eska-fmt --version
      <p>
       Полный опубликованный набор через Cargo:
      </p>
-     <pre><code class="language-sh">cargo install --locked eska-project eska-check eska-build eska-vcs eska-fmt eska
+     <pre><code class="language-sh">cargo install --locked eska-project eska-check eska-build eska-vcs eska-fmt eska-debug eska
 </code></pre>
      <p>
       Можно установить только нужный компонент. Для дерева и свойств нужен project;
@@ -1782,14 +1793,28 @@ cache
 В multi-root workspace папка выбирается явно; для защиты исходников учитываются
 и дополнительные папки. Статус показывает фактически подключённый backend.
      </p>
-     <figure class="doc-screenshot">
-      <a href="../../assets/screenshots/explorer-tree.png" rel="noreferrer" target="_blank">
-       <img alt="Дерево метаданных Explorer: объекты и исходники." loading="lazy" src="../../assets/screenshots/explorer-tree.png"/>
-      </a>
-      <figcaption>
-       Дерево метаданных Explorer: объекты и исходники. Нажмите, чтобы открыть исходное изображение.
-      </figcaption>
-     </figure>
+     <h3>Настроить проводник перед работой</h3>
+     <ol>
+      <li>Откройте папку с <code>eska.toml</code>, а не вложенную <code>src</code>. Для готовой XML-выгрузки без manifest сначала выполните <code>eska-project init ./my-project --source src</code>.</li>
+      <li>Перетащите заголовок <strong>ESKA: 1C Explorer</strong> в самый верх проводника.</li>
+      <li>Сверните обычное дерево файлов, <strong>Структуру</strong> и <strong>Временную шкалу</strong> нажатием на заголовки.</li>
+      <li>Раскройте ESKA и нужный раздел метаданных. Если подключения нет, выполните команду <strong>Выбрать проект и подключиться</strong>.</li>
+     </ol>
+     <p>Первый скринкаст начинается с уже подключённого проекта и показывает настройку проводника. Все записи без звука: Linux, VS Code 1.144, Explorer 0.1.19 и ESKA 0.30.0.</p>
+<figure class="doc-screenshot demo-figure" id="demo-setup">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="demo-setup-caption">
+    <source src="../../assets/demos/2026-11/explorer-setup.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-setup.mp4">Открыть видео: Настроить проводник</a>
+  </video>
+  <figcaption id="demo-setup-caption">Перенесите ESKA: 1C Explorer наверх, сверните остальные группы и раскройте дерево проекта. <a href="../../assets/demos/2026-11/explorer-setup.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+<figure class="doc-screenshot demo-figure" id="demo-tree">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="demo-tree-caption">
+    <source src="../../assets/demos/2026-11/explorer-tree.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-tree.mp4">Открыть видео: Найти объект и открыть модуль</a>
+  </video>
+  <figcaption id="demo-tree-caption">Документ → реквизиты → табличная часть → модуль объекта BSL. <a href="../../assets/demos/2026-11/explorer-tree.mp4">MP4 без звука</a>.</figcaption>
+</figure>
      <h3 id="дерево-метаданных">
       Дерево метаданных
      </h3>
@@ -1809,6 +1834,16 @@ cache
 Дерево можно обновить целиком или у конкретного узла; если файловые события были
 исключены настройками наблюдения VS Code, используйте ручное обновление.
      </p>
+     <h3 id="forms">Просмотр управляемой формы</h3>
+     <p>Раскройте <strong>Формы</strong> у объекта и нажмите на форму. Выбор поля на изображении связан со структурой и свойствами; панель <strong>Данные</strong> раскрывает реквизиты. Можно переключать страницы и менять размеры панелей разделителями.</p>
+<figure class="doc-screenshot demo-figure" id="demo-forms">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-forms.webp" aria-label="Открыть форму" aria-describedby="demo-forms-caption">
+    <source src="../../assets/demos/2026-11/explorer-forms.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-forms.mp4">Открыть видео: Открыть форму</a>
+  </video>
+  <figcaption id="demo-forms-caption">Выберите поле на форме, раскройте данные и переключите страницы «Товары» и «Дополнительно». <a href="../../assets/demos/2026-11/explorer-forms.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+     <p><strong>Текущий этап работы с формами — только просмотр; редактирование форм — в планах.</strong> Это статический просмотр Designer XML 8.3.27 (beta): BSL и команды формы не исполняются, XML просмотрщик не записывает. Возможны различия геометрии и оформления. <a href="https://github.com/odineska/eska-vscode-explorer/blob/main/docs/form-preview.md">Возможности и ограничения</a>.</p>
      <h3 id="открытие-и-переход-от-файла">
       Открытие и переход от файла
      </h3>
@@ -1818,7 +1853,7 @@ cache
 остаётся доступен через свойства и XML; отсутствующий BSL не создаётся.
       </li>
       <li>
-       Для формы доступны её XML и модуль, без визуального дизайнера формы.
+       Нажатие на управляемую форму открывает статический просмотр; её XML и модуль доступны отдельно. Графическое редактирование формы пока не реализовано.
       </li>
       <li>
        <strong>
@@ -2036,6 +2071,23 @@ Unsaved BSL сам по себе не меняет Git-статус. Без вс
 клавиатурная навигация и темы используют стандартные механизмы VS Code;
 смена темы не переподключает проект.
      </p>
+     <h3 id="debug">Запуск и HTTP-отладка 1С</h3>
+     <p><code>eska-debug</code> — собственный адаптер на Rust: DAP для редактора и HTTP для сервера отладки 1С <code>dbgs</code>. .NET не требуется. Можно запустить клиент с отладкой или подключиться к работающему предмету.</p>
+     <ul>
+      <li>Обычные и условные точки, счётчики срабатываний, логпоинты и остановка по ошибкам.</li>
+      <li>Шаги, стек вызовов, переменные, Watch, hover и свои выражения BSL в Debug Console.</li>
+      <li>Раскрытие вложенных значений и коллекций, изменение доступных значений через <strong>Set Value</strong>.</li>
+      <li>Конфигурация, подключённые расширения и внешние обработки EPF.</li>
+     </ul>
+     <ol>
+      <li>Обновите инструменты ESKA: <code>eska-debug</code> устанавливается и при обновлении старого полного комплекта.</li>
+      <li>В дереве откройте контекстное меню <strong>Настройки проекта → Настроить проект</strong>, заполните и сохраните профиль <code>test</code> или <code>prod</code>.</li>
+      <li>Выполните <strong>Запустить 1С с отладкой</strong> или <strong>Подключиться к серверу отладки 1С</strong>, выберите профиль и поставьте точку в BSL.</li>
+     </ol>
+     <p>Адреса и пути хранятся в <code>.eska/settings_local.toml</code> вне Git. Поддержаны локальный запуск, Distrobox и доступный по сети/VPN HTTP-сервер отладки. Адрес базы и <code>debug.url</code> задаются отдельно.</p>
+     <p>Обновление базы средствами ESKA доступно только для <code>test</code>, включая поддержанные частичные изменения и сценарий «обновить и запустить с отладкой». Неподдержанные изменения требуют отдельного подтверждения полного импорта. Для <code>prod</code> доступны запуск с отладкой и подключение; тестовая база для этого не обязательна. Перед запуском проверяются исходники Git.</p>
+     <p>Evaluate и Set Value доступны и в <code>prod</code>: выражения выполняются в реальной сессии и могут иметь побочные эффекты. Нативный TCP-режим отладки 1С не поддерживается.</p>
+     <p><a href="https://github.com/odineska/eska/blob/main/docs/run-debug.md">Настройка и первый запуск</a> · <a href="https://github.com/odineska/eska/blob/main/docs/1c-http-debug.md">Проверенные сценарии и ограничения</a> · <a href="https://github.com/odineska/eska/blob/main/docs/eska-debug-standalone.md">Отдельный бинарник и DAP без ESKA</a></p>
     </section>
     <section class="doc-section" id="activity">
      <div class="doc-heading">
@@ -2142,14 +2194,13 @@ Standalone-проект этой функцией не отключается. �
 причину; неизвестное свойство не становится доступным только потому, что похоже
 на строку. Идентичность объекта и пути вложенных полей предоставляет backend.
      </p>
-     <figure class="doc-screenshot">
-      <a href="../../assets/screenshots/explorer-properties.png" rel="noreferrer" target="_blank">
-       <img alt="Панель свойств: поиск и типизированные значения Designer XML." loading="lazy" src="../../assets/screenshots/explorer-properties.png"/>
-      </a>
-      <figcaption>
-       Панель свойств: поиск и типизированные значения Designer XML. Нажмите, чтобы открыть исходное изображение.
-      </figcaption>
-     </figure>
+<figure class="doc-screenshot demo-figure" id="demo-properties">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="demo-properties-caption">
+    <source src="../../assets/demos/2026-11/explorer-properties.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-properties.mp4">Открыть видео: Посмотреть свойства</a>
+  </video>
+  <figcaption id="demo-properties-caption">Откройте свойства документа, найдите настройки номера и перейдите к исходному XML. <a href="../../assets/demos/2026-11/explorer-properties.mp4">MP4 без звука</a>.</figcaption>
+</figure>
      <div class="table-wrap">
       <table>
        <thead>
@@ -6262,12 +6313,13 @@ platform_version = "8.3.27.2342"
      </div>
      <p>
       <a href="cli/">
-       Справочник всех публичных команд
+       Справочник CLI
       </a>
-      построен по текущей
-справке шести бинарников. Он включает metadata inspect/types/choices/check/apply,
+      описывает общий вход и проектные компоненты.
+Он включает metadata inspect/types/choices/check/apply,
 rename/recovery, analyzer-config status/prepare/migrate, версии и selectors,
 платформенные операции, все workflow/полки, update и опции форматтера.
+У самостоятельного <code>eska-debug</code> есть <a href="https://github.com/odineska/eska/blob/main/docs/eska-debug-standalone.md">отдельная инструкция DAP</a>.
      </p>
      <p>
       Точная справка своей установленной сборки всегда доступна локально:
@@ -6278,6 +6330,7 @@ eska-check --help
 eska-fmt --help
 eska-build --help
 eska-vcs --help
+eska-debug --help
 </code></pre>
     </section>
     <section class="doc-section" id="references">
@@ -6473,7 +6526,7 @@ eska-vcs --help
   </footer>
   <div aria-atomic="true" aria-live="polite" class="copy-toast" role="status">
   </div>
-  <script src="../../assets/site.js">
+  <script src="../../assets/site.js?v=20261113">
   </script>
  </body>
 </html>

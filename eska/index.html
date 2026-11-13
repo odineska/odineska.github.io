@@ -9,7 +9,7 @@
     <script src="../assets/theme.js"></script>
     <link rel="icon" href="../assets/brand/favicon.png" type="image/png">
     <link rel="preload" href="../assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="../assets/site.css">
+    <link rel="stylesheet" href="../assets/site.css?v=20261113">
   </head>
   <body class="install-page">
     <a class="skip-link" href="#content">К содержанию</a>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="install-grid standalone-install">
-        <div class="doc-callout install-release-note"><strong>Полный комплект и выборочная установка</strong><p>Общая <code>eska</code> запускает установленные компоненты: для <code>eska build</code> нужен <code>eska-build</code>, для <code>eska check</code> — <code>eska-check</code>. Мини-программы работают напрямую без оболочки. Повторный запуск установщика обновляет все шесть утилит до одной выбранной версии, включая прежнюю выборочную установку из Explorer. Команды ниже устанавливают опубликованный пакет; состав его Assets проверяйте в выбранном выпуске. Установка через Cargo, сборка checkout и настройка Explorer описаны в <a href="./docs/#installation">пошаговой инструкции</a>.</p></div>
+        <div class="doc-callout install-release-note"><strong>Полный комплект и выборочная установка</strong><p>Общая <code>eska</code> запускает установленные компоненты: для <code>eska build</code> нужен <code>eska-build</code>, для <code>eska check</code> — <code>eska-check</code>. Мини-программы работают напрямую без оболочки. Повторный запуск установщика обновляет все семь утилит, включая <code>eska-debug</code>, до одной выбранной версии, включая прежнюю выборочную установку из Explorer. Команды ниже устанавливают опубликованный пакет; состав его Assets проверяйте в выбранном выпуске. Установка через Cargo, сборка checkout и настройка Explorer описаны в <a href="./docs/#installation">пошаговой инструкции</a>.</p></div>
 
         <article class="command-card">
           <div class="command-heading">
@@ -92,6 +92,18 @@
           <p>Скрипты берут последнюю опубликованную сборку. После установки откройте новый терминал. VSIX и BSL Analyzer устанавливаются отдельно.</p>
         </div>
       </div>
+      <section class="install-demo" aria-labelledby="install-demo-title">
+        <h2 id="install-demo-title">После установки — откройте проект</h2>
+        <p>Откройте папку с <code>eska.toml</code>, перенесите ESKA: 1C Explorer наверх и сверните остальные группы проводника.</p>
+<figure class="doc-screenshot demo-figure" id="install-setup">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../assets/demos/2026-11/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="install-setup-caption">
+    <source src="../assets/demos/2026-11/explorer-setup.mp4" type="video/mp4"/>
+    <a href="../assets/demos/2026-11/explorer-setup.mp4">Открыть видео: Настроить проводник</a>
+  </video>
+  <figcaption id="install-setup-caption">Перенесите ESKA: 1C Explorer наверх, сверните остальные группы и раскройте дерево проекта. <a href="../assets/demos/2026-11/explorer-setup.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+        <p><a href="./docs/#explorer">Дерево, свойства и формы: остальные скринкасты и инструкции</a></p>
+      </section>
     </main>
 
     <footer class="site-footer shell compact-footer">
@@ -100,6 +112,6 @@
     </footer>
 
     <div class="copy-toast" role="status" aria-live="polite" aria-atomic="true"></div>
-    <script src="../assets/site.js"></script>
+    <script src="../assets/site.js?v=20261113"></script>
   </body>
 </html>
