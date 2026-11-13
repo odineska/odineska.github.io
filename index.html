@@ -9,7 +9,7 @@
     <script src="./assets/theme.js"></script>
     <link rel="icon" href="./assets/brand/favicon.png" type="image/png">
     <link rel="preload" href="./assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="./assets/site.css">
+    <link rel="stylesheet" href="./assets/site.css?v=20261113">
   </head>
   <body>
     <a class="skip-link" href="#content">К содержанию</a>
@@ -159,9 +159,28 @@
         </div>
       </section>
 
+      <section class="product-section shell" id="debug">
+        <div class="section-intro">
+          <p class="section-index">03 / запуск и отладка</p>
+          <div class="section-copy">
+            <h2>Код 1С<br/>под контролем</h2>
+            <p>Запускайте клиент или подключайтесь к работающей сессии. Собственный Rust-адаптер общается с сервером отладки 1С по HTTP, без .NET.</p>
+          </div>
+        </div>
+        <div class="feature-list">
+          <div class="feature-row"><span>01</span><p>Точки останова, условия, счётчики, логпоинты, шаги и стек вызовов.</p></div>
+          <div class="feature-row"><span>02</span><p>Переменные, Watch, hover, свои выражения в Debug Console и Set Value.</p></div>
+          <div class="feature-row"><span>03</span><p>Профили test/prod, конфигурации, расширения и внешние обработки EPF. Обновление базы — только для test.</p></div>
+        </div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="./eska/docs/#debug">Настроить запуск и отладку</a>
+          <a class="button button-quiet" href="https://github.com/odineska/eska/blob/main/docs/eska-debug-standalone.md">Использовать адаптер отдельно</a>
+        </div>
+      </section>
+
       <section class="install-section shell" id="install">
         <div class="section-intro install-intro">
-          <p class="section-index">03 / установка</p>
+          <p class="section-index">04 / установка</p>
           <h2>Выберите<br>способ установки</h2>
           <p>Короткие команды ставят опубликованный релиз. Полный комплект, выборочная установка мини-программ через Cargo и сборка checkout описаны в руководстве.</p>
         </div>
@@ -220,6 +239,6 @@
     </footer>
 
     <div class="copy-toast" role="status" aria-live="polite" aria-atomic="true"></div>
-    <script src="./assets/site.js"></script>
+    <script src="./assets/site.js?v=20261113"></script>
   </body>
 </html>
