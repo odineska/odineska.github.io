@@ -110,23 +110,49 @@
           <p class="section-index">02 / explorer</p>
           <div class="section-copy">
             <h2>Конфигурация<br/>перед глазами</h2>
-            <p>Объекты и исходники в одном дереве. Свойства, редактор и конструктор запросов, поддержка 1С, BSL и форматирование. Workspace, БСП и отключение неиспользуемых подпроектов.</p>
+            <p>Объекты и исходники в одном дереве. Свойства, просмотр форм, запросы, BSL и форматирование. Начните с настройки проводника — как на первой записи ниже.</p>
           </div>
         </div>
-        <div class="screenshot-grid">
-          <figure class="doc-screenshot">
-            <a aria-label="Открыть скриншот: Дерево конфигурации в ESKA: 1C Explorer" href="./assets/screenshots/explorer-tree.png"><img alt="Дерево конфигурации в ESKA: 1C Explorer" decoding="async" height="618" loading="lazy" src="./assets/screenshots/explorer-tree.png" width="624"/></a>
-            <figcaption>Разделы метаданных, сортировка и фильтр пустых групп.</figcaption>
-          </figure>
-          <figure class="doc-screenshot">
-            <a aria-label="Открыть скриншот: Модули, реквизиты и команды справочника" href="./assets/screenshots/explorer-object.png"><img alt="Модули, реквизиты и команды справочника" decoding="async" height="700" loading="lazy" src="./assets/screenshots/explorer-object.png" width="627"/></a>
-            <figcaption>Исходники объекта и маркеры поддержки 1С.</figcaption>
-          </figure>
+        <p class="demo-note">Сначала настройте проводник, затем переходите к дереву, свойствам и формам. Четыре записи без звука; воспроизведение запускается по нажатию.</p>
+        <div class="demo-gallery">
+          <details class="demo-scenario" open><summary>1. Настроить проводник</summary>
+<figure class="doc-screenshot demo-figure" id="overview-setup">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="overview-setup-caption">
+    <source src="./assets/demos/2026-11/explorer-setup.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11/explorer-setup.mp4">Открыть видео: Настроить проводник</a>
+  </video>
+  <figcaption id="overview-setup-caption">Перенесите ESKA: 1C Explorer наверх, сверните остальные группы и раскройте дерево проекта. <a href="./assets/demos/2026-11/explorer-setup.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>2. Найти объект и открыть модуль</summary>
+<figure class="doc-screenshot demo-figure" id="overview-tree">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="overview-tree-caption">
+    <source src="./assets/demos/2026-11/explorer-tree.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11/explorer-tree.mp4">Открыть видео: Найти объект и открыть модуль</a>
+  </video>
+  <figcaption id="overview-tree-caption">Документ → реквизиты → табличная часть → модуль объекта BSL. <a href="./assets/demos/2026-11/explorer-tree.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>3. Посмотреть свойства</summary>
+<figure class="doc-screenshot demo-figure" id="overview-properties">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="overview-properties-caption">
+    <source src="./assets/demos/2026-11/explorer-properties.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11/explorer-properties.mp4">Открыть видео: Посмотреть свойства</a>
+  </video>
+  <figcaption id="overview-properties-caption">Откройте свойства документа, найдите настройки номера и перейдите к исходному XML. <a href="./assets/demos/2026-11/explorer-properties.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>4. Открыть форму</summary>
+<figure class="doc-screenshot demo-figure" id="overview-forms">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-forms.webp" aria-label="Открыть форму" aria-describedby="overview-forms-caption">
+    <source src="./assets/demos/2026-11/explorer-forms.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11/explorer-forms.mp4">Открыть видео: Открыть форму</a>
+  </video>
+  <figcaption id="overview-forms-caption">Выберите поле на форме, раскройте данные и переключите страницы «Товары» и «Дополнительно». <a href="./assets/demos/2026-11/explorer-forms.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+          </details>
         </div>
-        <figure class="doc-screenshot screenshot-wide">
-          <a aria-label="Открыть скриншот: Вкладка свойств конфигурации с поиском и ссылками на XML" href="./assets/screenshots/explorer-properties.png"><img alt="Вкладка свойств конфигурации с поиском и ссылками на XML" decoding="async" height="880" loading="lazy" src="./assets/screenshots/explorer-properties.png" width="1755"/></a>
-          <figcaption>Свойства сначала открываются для чтения. Замочек разрешает поддержанные правки; правила поддержки проверяются отдельно.</figcaption>
-        </figure>
+        <p class="demo-note">Linux · VS Code 1.144 · Explorer 0.1.19 · ESKA 0.30.0. Демо без пользовательских данных. Текущий этап работы с формами — только просмотр (beta); редактирование форм — в планах.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="./eska/docs/#explorer">Как пользоваться Explorer</a>
           <a class="button button-quiet" href="https://github.com/odineska/eska-vscode-explorer">Исходники расширения</a>

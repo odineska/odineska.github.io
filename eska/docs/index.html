@@ -99,6 +99,9 @@
      <a href="#explorer">
       Дерево и навигация
      </a>
+     <a href="#forms">
+      Просмотр форм
+     </a>
      <a href="#activity">
       Активность подпроектов
      </a>
@@ -1782,14 +1785,28 @@ cache
 В multi-root workspace папка выбирается явно; для защиты исходников учитываются
 и дополнительные папки. Статус показывает фактически подключённый backend.
      </p>
-     <figure class="doc-screenshot">
-      <a href="../../assets/screenshots/explorer-tree.png" rel="noreferrer" target="_blank">
-       <img alt="Дерево метаданных Explorer: объекты и исходники." loading="lazy" src="../../assets/screenshots/explorer-tree.png"/>
-      </a>
-      <figcaption>
-       Дерево метаданных Explorer: объекты и исходники. Нажмите, чтобы открыть исходное изображение.
-      </figcaption>
-     </figure>
+     <h3>Настроить проводник перед работой</h3>
+     <ol>
+      <li>Откройте папку с <code>eska.toml</code>, а не вложенную <code>src</code>. Для готовой XML-выгрузки без manifest сначала выполните <code>eska-project init ./my-project --source src</code>.</li>
+      <li>Перетащите заголовок <strong>ESKA: 1C Explorer</strong> в самый верх проводника.</li>
+      <li>Сверните обычное дерево файлов, <strong>Структуру</strong> и <strong>Временную шкалу</strong> нажатием на заголовки.</li>
+      <li>Раскройте ESKA и нужный раздел метаданных. Если подключения нет, выполните команду <strong>Выбрать проект и подключиться</strong>.</li>
+     </ol>
+     <p>Первый скринкаст начинается с уже подключённого проекта и показывает настройку проводника. Все записи без звука: Linux, VS Code 1.144, Explorer 0.1.19 и ESKA 0.30.0.</p>
+<figure class="doc-screenshot demo-figure" id="demo-setup">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="demo-setup-caption">
+    <source src="../../assets/demos/2026-11/explorer-setup.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-setup.mp4">Открыть видео: Настроить проводник</a>
+  </video>
+  <figcaption id="demo-setup-caption">Перенесите ESKA: 1C Explorer наверх, сверните остальные группы и раскройте дерево проекта. <a href="../../assets/demos/2026-11/explorer-setup.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+<figure class="doc-screenshot demo-figure" id="demo-tree">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="demo-tree-caption">
+    <source src="../../assets/demos/2026-11/explorer-tree.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-tree.mp4">Открыть видео: Найти объект и открыть модуль</a>
+  </video>
+  <figcaption id="demo-tree-caption">Документ → реквизиты → табличная часть → модуль объекта BSL. <a href="../../assets/demos/2026-11/explorer-tree.mp4">MP4 без звука</a>.</figcaption>
+</figure>
      <h3 id="дерево-метаданных">
       Дерево метаданных
      </h3>
@@ -1809,6 +1826,16 @@ cache
 Дерево можно обновить целиком или у конкретного узла; если файловые события были
 исключены настройками наблюдения VS Code, используйте ручное обновление.
      </p>
+     <h3 id="forms">Просмотр управляемой формы</h3>
+     <p>Раскройте <strong>Формы</strong> у объекта и нажмите на форму. Выбор поля на изображении связан со структурой и свойствами; панель <strong>Данные</strong> раскрывает реквизиты. Можно переключать страницы и менять размеры панелей разделителями.</p>
+<figure class="doc-screenshot demo-figure" id="demo-forms">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-forms.webp" aria-label="Открыть форму" aria-describedby="demo-forms-caption">
+    <source src="../../assets/demos/2026-11/explorer-forms.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-forms.mp4">Открыть видео: Открыть форму</a>
+  </video>
+  <figcaption id="demo-forms-caption">Выберите поле на форме, раскройте данные и переключите страницы «Товары» и «Дополнительно». <a href="../../assets/demos/2026-11/explorer-forms.mp4">MP4 без звука</a>.</figcaption>
+</figure>
+     <p><strong>Текущий этап работы с формами — только просмотр; редактирование форм — в планах.</strong> Это статический просмотр Designer XML 8.3.27 (beta): BSL и команды формы не исполняются, XML просмотрщик не записывает. Возможны различия геометрии и оформления. <a href="https://github.com/odineska/eska-vscode-explorer/blob/main/docs/form-preview.md">Возможности и ограничения</a>.</p>
      <h3 id="открытие-и-переход-от-файла">
       Открытие и переход от файла
      </h3>
@@ -1818,7 +1845,7 @@ cache
 остаётся доступен через свойства и XML; отсутствующий BSL не создаётся.
       </li>
       <li>
-       Для формы доступны её XML и модуль, без визуального дизайнера формы.
+       Нажатие на управляемую форму открывает статический просмотр; её XML и модуль доступны отдельно. Графическое редактирование формы пока не реализовано.
       </li>
       <li>
        <strong>
@@ -2142,14 +2169,13 @@ Standalone-проект этой функцией не отключается. �
 причину; неизвестное свойство не становится доступным только потому, что похоже
 на строку. Идентичность объекта и пути вложенных полей предоставляет backend.
      </p>
-     <figure class="doc-screenshot">
-      <a href="../../assets/screenshots/explorer-properties.png" rel="noreferrer" target="_blank">
-       <img alt="Панель свойств: поиск и типизированные значения Designer XML." loading="lazy" src="../../assets/screenshots/explorer-properties.png"/>
-      </a>
-      <figcaption>
-       Панель свойств: поиск и типизированные значения Designer XML. Нажмите, чтобы открыть исходное изображение.
-      </figcaption>
-     </figure>
+<figure class="doc-screenshot demo-figure" id="demo-properties">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="demo-properties-caption">
+    <source src="../../assets/demos/2026-11/explorer-properties.mp4" type="video/mp4"/>
+    <a href="../../assets/demos/2026-11/explorer-properties.mp4">Открыть видео: Посмотреть свойства</a>
+  </video>
+  <figcaption id="demo-properties-caption">Откройте свойства документа, найдите настройки номера и перейдите к исходному XML. <a href="../../assets/demos/2026-11/explorer-properties.mp4">MP4 без звука</a>.</figcaption>
+</figure>
      <div class="table-wrap">
       <table>
        <thead>

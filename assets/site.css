@@ -1454,7 +1454,8 @@ h3 {
   }
 
   .doc-section,
-  .doc-section h3[id] {
+  .doc-section h3[id],
+  .doc-section .demo-figure {
     scroll-margin-top: calc(var(--docs-nav-height) + 1rem);
   }
 
@@ -1814,4 +1815,60 @@ h3 {
   cursor: pointer;
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+/* Silent demos keep their native aspect ratio and load only when played. */
+.demo-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1248 / 758;
+  background: #1f1f1f;
+}
+
+.demo-gallery {
+  display: grid;
+  gap: 1rem;
+}
+
+.demo-scenario {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.demo-scenario > summary {
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.demo-scenario > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+}
+
+.demo-scenario .demo-figure {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.demo-note {
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.install-demo {
+  margin-top: 3rem;
+}
+
+.demo-figure figcaption a {
+  display: inline;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.demo-figure {
+  scroll-margin-top: 1.5rem;
 }
