@@ -1,0 +1,175 @@
+{
+  "recorded": "2026-11-18",
+  "environment": {
+    "os": "Linux",
+    "vscode": [
+      "1.109.0",
+      "1.144.0"
+    ],
+    "explorer": "0.1.23",
+    "eska": "0.32.0"
+  },
+  "scenes": [
+    {
+      "id": "setup",
+      "title": "Настроить проводник",
+      "durationSeconds": 14.583333,
+      "width": 1248,
+      "height": 758,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 380748,
+          "sha256": "0de5beffc4fdfa5fa35e15a8f506ebf21f1cd67f981971ff5a7262a5b344bdc9"
+        },
+        "mp4": {
+          "bytes": 146825,
+          "sha256": "4e060d79b00c232234ee98214be77e4fb743ea5ed0d57533d39e1eb675586369"
+        },
+        "webp": {
+          "bytes": 38434,
+          "sha256": "ace73cc9211829ac961b5b8d2eb072c080db7f5d8209b06fef10e0b6938c33f6"
+        }
+      }
+    },
+    {
+      "id": "tree",
+      "title": "Найти объект и открыть модуль",
+      "durationSeconds": 15.083333,
+      "width": 1248,
+      "height": 758,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 496390,
+          "sha256": "25122b5878f291874fcf7f6cc052c6bdb3c5b37c3e13ff4cc785e50de41270b9"
+        },
+        "mp4": {
+          "bytes": 148913,
+          "sha256": "e8bb4ce733e22f2ccd7d782a87ef56117148138b283d382cb94453bb66c2e8a5"
+        },
+        "webp": {
+          "bytes": 40542,
+          "sha256": "f78dc011638225f08b0fac39494748ef52165ace05792b069f95711e9cf905bb"
+        }
+      }
+    },
+    {
+      "id": "properties",
+      "title": "Посмотреть свойства",
+      "durationSeconds": 14.083333,
+      "width": 1248,
+      "height": 758,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 573073,
+          "sha256": "914eebecc974ad94d47b26c0848325a24311968b0ba91b30ebe84acd0e6e89f8"
+        },
+        "mp4": {
+          "bytes": 221421,
+          "sha256": "97a964983f37a493d7d117fd925de1aef22db361eafcfb31c8c2b78e2e46f62a"
+        },
+        "webp": {
+          "bytes": 46930,
+          "sha256": "f9449caae770500a0e5660706c5d79424f0b628d532d834ae3078e38aed99575"
+        }
+      }
+    },
+    {
+      "id": "forms",
+      "title": "Открыть форму",
+      "durationSeconds": 15.583333,
+      "width": 1248,
+      "height": 758,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 469883,
+          "sha256": "983ddfe13020816d9fe993bdcd474e7749cb399469d16c203a767f49b5eda097"
+        },
+        "mp4": {
+          "bytes": 191699,
+          "sha256": "49ccd971d0eb9f36815a1c59989bc14757c2be7e825c6976d2bd22ffff65516a"
+        },
+        "webp": {
+          "bytes": 66280,
+          "sha256": "3e66a991d8ac223f42d19f134423bdd1e5156a8dcf001875a8658e4f6414668d"
+        }
+      }
+    },
+    {
+      "id": "form-edit",
+      "title": "Изменить управляемую форму",
+      "durationSeconds": 16.083333,
+      "width": 1280,
+      "height": 800,
+      "audio": false,
+      "vscode": "1.109.0",
+      "files": {
+        "gif": {
+          "bytes": 538223,
+          "sha256": "2216b44e15b7a741c57938ff89630b6332faf5e132916f939d7f9a9c0606761f"
+        },
+        "mp4": {
+          "bytes": 151092,
+          "sha256": "b8991488c97b354af91783eca401c9f36a40d01425c71489d4d24a304bf9b250"
+        },
+        "webp": {
+          "bytes": 42218,
+          "sha256": "8c15c065a08b2eac68d3f3df0e4d1ce471858ab75b06503cd4da680cd95474ec"
+        }
+      }
+    },
+    {
+      "id": "scm",
+      "title": "Проверить Git-изменения по объектам",
+      "durationSeconds": 15.083333,
+      "width": 1248,
+      "height": 758,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 633033,
+          "sha256": "6412095cdceeb9bf5203a4b5bd91f9cee1e7005cf459ed4830a99fa2e3bc4750"
+        },
+        "mp4": {
+          "bytes": 180979,
+          "sha256": "9230e4f6b62b9685d71ac976837d7986714347e556fb9c32743570c4c9b88e3e"
+        },
+        "webp": {
+          "bytes": 36864,
+          "sha256": "f1a307c057e7633209ad02f365dfefb7a497cab88fb29ca6033c9a089cd46672"
+        }
+      }
+    },
+    {
+      "id": "query",
+      "title": "Собрать запрос",
+      "durationSeconds": 15.083333,
+      "width": 1280,
+      "height": 770,
+      "audio": false,
+      "vscode": "1.109.0",
+      "files": {
+        "gif": {
+          "bytes": 401330,
+          "sha256": "70add697ed12ede570fcb3d58a823761117f69422d5ce13e85f412bb45e0232e"
+        },
+        "mp4": {
+          "bytes": 102997,
+          "sha256": "f04ab46e86b7833e0ea547e6d04f4b8dc97f9dbc5c73713e0d2211ab4f76b30e"
+        },
+        "webp": {
+          "bytes": 29426,
+          "sha256": "4df7cab85832529e78b0d03c96bce2f6c6405ce8e928dc96c12056c7a56416c0"
+        }
+      }
+    }
+  ]
+}

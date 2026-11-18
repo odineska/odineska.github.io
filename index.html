@@ -9,7 +9,7 @@
     <script src="./assets/theme.js"></script>
     <link rel="icon" href="./assets/brand/favicon.png" type="image/png">
     <link rel="preload" href="./assets/fonts/montserrat-semibold.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="./assets/site.css?v=20261113">
+    <link rel="stylesheet" href="./assets/site.css?v=20261118">
   </head>
   <body>
     <a class="skip-link" href="#content">К содержанию</a>
@@ -42,7 +42,7 @@
         <div class="hero-copy">
           <p class="eyebrow"><span></span> Open source · инструменты для 1С</p>
           <h1><span>Проекты 1С.</span><em><span>В редакторе</span><span>и терминале.</span></em></h1>
-          <p class="hero-lead">Метаданные и BSL в VS Code/VSCodium, анализ для CI, Git и сборка файлов 1С. Исходниками остаются Designer XML и обычные модули.</p>
+          <p class="hero-lead">Редактирование метаданных, форм и запросов в VS Code и VSCodium. Проверки, Git, сборка, запуск и отладка из исходников Designer XML. <strong>Проект в активной разработке.</strong></p>
           <div class="hero-actions">
             <a class="button button-primary" href="#install">
               <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#download"></use></svg>
@@ -62,8 +62,8 @@
         <div class="section-intro">
           <p class="section-index">01 / eska</p>
           <div class="section-copy">
-            <h2>Инструменты<br/>под вашу задачу</h2>
-            <p>Полная ESKA: <code>eska build</code>, <code>eska check</code>, <code>eska status</code>. Мини-программы: <code>eska-build build</code>, <code>eska-check</code>, <code>eska-vcs status</code>. Один проект, два способа запуска; доступные команды и различия описаны в руководстве.</p>
+            <h2>Инструменты командной строки</h2>
+            <p>Общая команда <code>eska</code> запускает нужный компонент. Каждый инструмент также работает самостоятельно.</p>
           </div>
         </div>
         <article class="product-card">
@@ -81,23 +81,14 @@
                   </a>
           </div>
           <div class="feature-list">
-            <div class="feature-row">
-              <span>01</span>
-              <p>Project: метаданные, контекст приложения, свойства и переименование.</p>
-            </div>
-            <div class="feature-row">
-              <span>02</span>
-              <p>Check: XML и полный анализ внешним BSL Analyzer для CI.</p>
-            </div>
-            <div class="feature-row">
-              <span>03</span>
-              <p>Build: сборка и распаковка .cf, .cfe, .epf, .erf платформой 1С.</p>
-            </div>
-            <div class="feature-row feature-row-muted">
-              <span>04</span>
-              <p>VCS: задачи, semantic diff, commits и полки; оболочка eska объединяет команды.</p>
-            </div>
+            <div class="feature-row"><p><code>eska-project</code> — проекты, приложения, БСП, структура метаданных, свойства, формы и модули.</p></div>
+            <div class="feature-row"><p><code>eska-check</code> — структурная проверка XML и диагностика BSL для CI.</p></div>
+            <div class="feature-row"><p><code>eska-fmt</code> — форматирование BSL и запросов SDBL в редакторе и терминале.</p></div>
+            <div class="feature-row"><p><code>eska-build</code> — сборка и распаковка CF/CFE/EPF/ERF, импорт, патчи и обновление тестовой базы.</p></div>
+            <div class="feature-row"><p><code>eska-vcs</code> — история, семантический diff, ветки задач, коммиты и полки.</p></div>
+            <div class="feature-row"><p><code>eska-debug</code> — запуск с отладкой и подключение к серверу отладки 1С через DAP и HTTP.</p></div>
           </div>
+
         </article>
         <div class="hero-actions">
           <a class="button button-primary" href="./eska/docs/#components">Полная ESKA и мини-программы</a>
@@ -109,50 +100,76 @@
         <div class="section-intro">
           <p class="section-index">02 / explorer</p>
           <div class="section-copy">
-            <h2>Конфигурация<br/>перед глазами</h2>
-            <p>Объекты и исходники в одном дереве. Свойства, просмотр форм, запросы, BSL и форматирование. Начните с настройки проводника — как на первой записи ниже.</p>
+            <h2>Скринкасты Explorer</h2>
+            <p>Дерево объектов и модулей, редакторы форм и запросов, языковые сервисы BSL и панель Git с именами объектов 1С.</p>
           </div>
         </div>
-        <p class="demo-note">Сначала настройте проводник, затем переходите к дереву, свойствам и формам. Четыре записи без звука; воспроизведение запускается по нажатию.</p>
         <div class="demo-gallery">
-          <details class="demo-scenario" open><summary>1. Настроить проводник</summary>
+          <details class="demo-scenario" open><summary>Настроить проводник</summary>
 <figure class="doc-screenshot demo-figure" id="overview-setup">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="overview-setup-caption">
-    <source src="./assets/demos/2026-11/explorer-setup.mp4" type="video/mp4"/>
-    <a href="./assets/demos/2026-11/explorer-setup.mp4">Открыть видео: Настроить проводник</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18/explorer-setup.webp" aria-label="Настроить проводник" aria-describedby="overview-setup-caption">
+    <source src="./assets/demos/2026-11-18/explorer-setup.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-setup.mp4">Открыть видео «Настроить проводник»</a>
   </video>
-  <figcaption id="overview-setup-caption">Перенесите ESKA: 1C Explorer наверх, сверните остальные группы и раскройте дерево проекта. <a href="./assets/demos/2026-11/explorer-setup.mp4">MP4 без звука</a>.</figcaption>
+  <figcaption id="overview-setup-caption">Переместите панель ESKA наверх в проводнике, сверните соседние разделы и раскройте проект. <a href="./assets/demos/2026-11-18/explorer-setup.mp4">MP4 без звука, 15 с</a>.</figcaption>
 </figure>
           </details>
-          <details class="demo-scenario"><summary>2. Найти объект и открыть модуль</summary>
+          <details class="demo-scenario"><summary>Найти объект и открыть модуль</summary>
 <figure class="doc-screenshot demo-figure" id="overview-tree">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="overview-tree-caption">
-    <source src="./assets/demos/2026-11/explorer-tree.mp4" type="video/mp4"/>
-    <a href="./assets/demos/2026-11/explorer-tree.mp4">Открыть видео: Найти объект и открыть модуль</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="overview-tree-caption">
+    <source src="./assets/demos/2026-11-18/explorer-tree.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-tree.mp4">Открыть видео «Найти объект и открыть модуль»</a>
   </video>
-  <figcaption id="overview-tree-caption">Документ → реквизиты → табличная часть → модуль объекта BSL. <a href="./assets/demos/2026-11/explorer-tree.mp4">MP4 без звука</a>.</figcaption>
+  <figcaption id="overview-tree-caption">В дереве откройте «Документы → ЗаказПокупателя → Модули → Модуль объекта». <a href="./assets/demos/2026-11-18/explorer-tree.mp4">MP4 без звука, 15 с</a>.</figcaption>
 </figure>
           </details>
-          <details class="demo-scenario"><summary>3. Посмотреть свойства</summary>
+          <details class="demo-scenario"><summary>Посмотреть свойства</summary>
 <figure class="doc-screenshot demo-figure" id="overview-properties">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="overview-properties-caption">
-    <source src="./assets/demos/2026-11/explorer-properties.mp4" type="video/mp4"/>
-    <a href="./assets/demos/2026-11/explorer-properties.mp4">Открыть видео: Посмотреть свойства</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="overview-properties-caption">
+    <source src="./assets/demos/2026-11-18/explorer-properties.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-properties.mp4">Открыть видео «Посмотреть свойства»</a>
   </video>
-  <figcaption id="overview-properties-caption">Откройте свойства документа, найдите настройки номера и перейдите к исходному XML. <a href="./assets/demos/2026-11/explorer-properties.mp4">MP4 без звука</a>.</figcaption>
+  <figcaption id="overview-properties-caption">Откройте свойства документа и перейдите от поля «Имя» к его записи в XML. <a href="./assets/demos/2026-11-18/explorer-properties.mp4">MP4 без звука, 14 с</a>.</figcaption>
 </figure>
           </details>
-          <details class="demo-scenario"><summary>4. Открыть форму</summary>
+          <details class="demo-scenario"><summary>Открыть форму</summary>
 <figure class="doc-screenshot demo-figure" id="overview-forms">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11/explorer-forms.webp" aria-label="Открыть форму" aria-describedby="overview-forms-caption">
-    <source src="./assets/demos/2026-11/explorer-forms.mp4" type="video/mp4"/>
-    <a href="./assets/demos/2026-11/explorer-forms.mp4">Открыть видео: Открыть форму</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18/explorer-forms.webp" aria-label="Открыть форму" aria-describedby="overview-forms-caption">
+    <source src="./assets/demos/2026-11-18/explorer-forms.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-forms.mp4">Открыть видео «Открыть форму»</a>
   </video>
-  <figcaption id="overview-forms-caption">Выберите поле на форме, раскройте данные и переключите страницы «Товары» и «Дополнительно». <a href="./assets/demos/2026-11/explorer-forms.mp4">MP4 без звука</a>.</figcaption>
+  <figcaption id="overview-forms-caption">Откройте управляемую форму из дерева и посмотрите её структуру, данные и изображение. <a href="./assets/demos/2026-11-18/explorer-forms.mp4">MP4 без звука, 16 с</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>Изменить управляемую форму</summary>
+<figure class="doc-screenshot demo-figure" id="overview-form-edit">
+  <video class="demo-video" controls muted playsinline preload="none" width="1280" height="800" poster="./assets/demos/2026-11-18/explorer-form-edit.webp" aria-label="Изменить управляемую форму" aria-describedby="overview-form-edit-caption">
+    <source src="./assets/demos/2026-11-18/explorer-form-edit.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-form-edit.mp4">Открыть видео «Изменить управляемую форму»</a>
+  </video>
+  <figcaption id="overview-form-edit-caption">Измените заголовок поля «Покупатель» на «Клиент», затем отмените и повторите правку. <a href="./assets/demos/2026-11-18/explorer-form-edit.mp4">MP4 без звука, 16 с</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>Проверить Git-изменения по объектам</summary>
+<figure class="doc-screenshot demo-figure" id="overview-scm">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18/explorer-scm.webp" aria-label="Проверить Git-изменения по объектам" aria-describedby="overview-scm-caption">
+    <source src="./assets/demos/2026-11-18/explorer-scm.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18/explorer-scm.mp4">Открыть видео «Проверить Git-изменения по объектам»</a>
+  </video>
+  <figcaption id="overview-scm-caption">Выберите объекты 1С по имени и откройте изменения в двух файлах <code>ObjectModule.bsl</code>. <a href="./assets/demos/2026-11-18/explorer-scm.mp4">MP4 без звука, 15 с</a>.</figcaption>
+</figure>
+          </details>
+          <details class="demo-scenario"><summary>Изменить запрос и сохранить</summary>
+<figure class="doc-screenshot demo-figure" id="overview-query">
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="./assets/demos/2026-11-18-query/explorer-query.webp" aria-label="Изменить запрос и сохранить" aria-describedby="overview-query-caption">
+    <source src="./assets/demos/2026-11-18-query/explorer-query.mp4" type="video/mp4"/>
+    <a href="./assets/demos/2026-11-18-query/explorer-query.mp4">Открыть видео «Изменить запрос и сохранить»</a>
+  </video>
+  <figcaption id="overview-query-caption">Откройте запрос BSL в отдельной вкладке, измените его и нажмите Ctrl+S. Закройте вкладку, чтобы вернуться к исходному модулю. <a href="./assets/demos/2026-11-18-query/explorer-query.mp4">MP4 без звука</a>.</figcaption>
 </figure>
           </details>
         </div>
-        <p class="demo-note">Linux · VS Code 1.144 · Explorer 0.1.19 · ESKA 0.30.0. Демо без пользовательских данных. На скринкастах показан просмотр форм (beta). Создание и копирование объектов доступны в Explorer; структуру форм можно редактировать через CLI.</p>
+
         <div class="hero-actions">
           <a class="button button-primary" href="./eska/docs/#explorer">Как пользоваться Explorer</a>
           <a class="button button-quiet" href="https://github.com/odineska/eska-vscode-explorer">Исходники расширения</a>
@@ -163,7 +180,7 @@
         <div class="section-intro">
           <p class="section-index">03 / запуск и отладка</p>
           <div class="section-copy">
-            <h2>Код 1С<br/>под контролем</h2>
+            <h2>Запуск и HTTP-отладка 1С</h2>
             <p>Запускайте клиент или подключайтесь к работающей сессии. Адаптер ESKA общается с сервером отладки 1С по HTTP.</p>
           </div>
         </div>

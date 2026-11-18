@@ -87,6 +87,9 @@
      <a href="#cli-eska-build">
       eska-build
      </a>
+     <a href="#cli-eska-debug">
+      eska-debug
+     </a>
      <a href="#cli-eska-vcs">
       eska-vcs
      </a>
@@ -248,6 +251,7 @@
 <tr><td><a href="#command-eska-metadata-recover"><code>eska metadata recover</code></a></td><td>Проверить или восстановить прерванную запись метаданных, включая создание начальной конфигурации.</td></tr>
 <tr><td><a href="#command-eska-metadata-list"><code>eska metadata list</code></a></td><td>Найти объекты в выбранном родителе без рекурсивного обхода конфигурации.</td></tr>
 <tr><td><a href="#command-eska-metadata-add"><code>eska metadata add</code></a></td><td>Добавить реквизит или табличную часть через общую модель метаданных</td></tr>
+        <tr><td><a href="#command-eska-metadata-create-module"><code>eska metadata create-module</code></a></td><td>Создать отсутствующий модуль поддерживаемой роли</td></tr>
 <tr><td><a href="#command-eska-metadata-create-schema"><code>eska metadata create-schema</code></a></td><td>Прочитать доступные операции создания, владельцев, типы и ограничения</td></tr>
 <tr><td><a href="#command-eska-metadata-inspect"><code>eska metadata inspect</code></a></td><td>Прочитать свойства и схему допустимых изменений</td></tr>
 <tr><td><a href="#command-eska-metadata-types"><code>eska metadata types</code></a></td><td>Получить допустимые типы существующего поля</td></tr>
@@ -281,6 +285,11 @@
           Собрать нативный артефакт 1С из Designer XML
          </td>
         </tr>
+        <tr><td><a href="#command-eska-run"><code>eska run</code></a></td><td>Запустить 1С:Предприятие с профилем test</td></tr>
+        <tr><td><a href="#command-eska-apply"><code>eska apply</code></a></td><td>Предпросмотр и применение изменений Designer XML к тестовой базе</td></tr>
+        <tr><td><a href="#command-eska-extension"><code>eska extension</code></a></td><td>Управление расширениями в тестовой базе.</td></tr>
+        <tr><td><a href="#command-eska-extension-install"><code>eska extension install</code></a></td><td>Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.</td></tr>
+        <tr><td><a href="#command-eska-extension-remove"><code>eska extension remove</code></a></td><td>Предпросмотр или удаление выбранного установленного расширения из тестовой базы.</td></tr>
         <tr>
          <td>
           <a href="#command-eska-check">
@@ -612,39 +621,42 @@
       <summary>
        eska: синтаксис и все параметры
       </summary>
-      <pre><code class="language-text">eska 0.22.0
+      <pre><code class="language-text">eska 0.32.0
 Инструментарий разработки проектов 1С:Предприятие
 
 Использование: eska [ПАРАМЕТРЫ] [КОМАНДА]
 
 Команды:
-  add       Подключить БСП к внешнему отчёту или обработке
-  update    Обновить установленную ESKA
-  metadata  Чтение и изменение существующих свойств метаданных через JSON
-  ide       Постоянный read-only процесс для IDE
-  build     Собрать нативный артефакт 1С из Designer XML
-  check     Полная проверка Designer XML и BSL для CI
-  fmt       Настраиваемое форматирование BSL и запросов без анализатора
-  clean     Удалить служебную базу сборки
-  clone     Клонировать и проверить существующий проект eska
-  config    Управлять глобальными настройками этого компьютера
-  new       Создать новый каркас проекта
-  init      Подключить существующую Designer XML выгрузку
-  import    Заменить исходники проекта из файла CF, CFE, EPF или ERF
-  platform  Найти установленные платформы 1С
-  patch     Собрать патч из изменений методов общих модулей между Git-версиями
-  diff      Показать изменения файлов проекта
-  doctor    Диагностировать окружение текущего проекта
-  finish    Завершить активную задачу по правилам workflow
-  history   Показать локальную историю commit
-  save      Сохранить текущие изменения проекта в историю Git
-  start     Начать работу над задачей по workflow проекта
-  status    Показать состояние проекта и workflow
-  switch    Переключиться на существующую задачу или базовую ветку workflow
-  shelve    Сохранить незакоммиченные изменения текущей ветки в полку
-  unshelve  Восстановить полку текущей ветки с сохранением index и рабочих файлов
-  shelves   Показать сохранённые полки всех веток репозитория
-  version   Показать или изменить версию проекта 1С
+  add        Подключить БСП к внешнему отчёту или обработке
+  update     Обновить установленную ESKA
+  metadata   Чтение, изменение и создание метаданных Designer XML
+  ide        Постоянный read-only процесс для IDE
+  build      Собрать нативный артефакт 1С из Designer XML
+  run        Запустить 1С:Предприятие с профилем test
+  apply      Предпросмотр и применение изменений Designer XML к тестовой базе
+  extension  Управление расширениями в тестовой базе.
+  check      Полная проверка Designer XML и BSL для CI
+  fmt        Настраиваемое форматирование BSL и запросов без анализатора
+  clean      Удалить служебную базу сборки
+  clone      Клонировать и проверить существующий проект eska
+  config     Управлять глобальными настройками этого компьютера
+  new        Создать новый каркас проекта
+  init       Подключить существующую Designer XML выгрузку
+  import     Заменить исходники проекта из файла CF, CFE, EPF или ERF
+  platform   Найти установленные платформы 1С
+  patch      Собрать патч из изменений методов общих модулей между Git-версиями
+  diff       Показать изменения файлов проекта
+  doctor     Диагностировать окружение текущего проекта
+  finish     Завершить активную задачу по правилам workflow
+  history    Показать локальную историю commit
+  save       Сохранить текущие изменения проекта в историю Git
+  start      Начать работу над задачей по workflow проекта
+  status     Показать состояние проекта и workflow
+  switch     Переключиться на существующую задачу или базовую ветку workflow
+  shelve     Сохранить незакоммиченные изменения текущей ветки в полку
+  unshelve   Восстановить полку текущей ветки с сохранением index и рабочих файлов
+  shelves    Показать сохранённые полки всех веток репозитория
+  version    Показать или изменить версию проекта 1С
 Параметры:
       --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
       --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
@@ -710,6 +722,7 @@ Usage: eska metadata [OPTIONS] &lt;COMMAND&gt;
 
 Commands:
   create           Создать объект метаданных, при необходимости на основе существующего.
+  create-module    Создать отсутствующий модуль поддерживаемой роли
   copy             Создать полную копию объекта с новыми идентификаторами, модулями и ресурсами.
   delete           Удалить объект и его файлы после проверки входящих ссылок.
   object-schema    Получить допустимые типы объектов, ограничения и JSON Schema запросов.
@@ -1400,6 +1413,7 @@ Options:
       --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
       --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
 </code></pre>
+      <p>Если политика удаляет ветку задачи, перед завершением восстановите её полку через <code>unshelve</code> и сохраните изменения.</p>
      </details>
      <p>
       <a id="command-eska-history">
@@ -1819,6 +1833,114 @@ Options:
       --workspace              Выбрать все проекты workspace
 </code></pre>
      </details>
+     <p><a id="command-eska-run"></a></p>
+     <details>
+      <summary>eska run: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Запустить 1С:Предприятие с профилем test
+
+Usage: eska run [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --profile &lt;PROFILE&gt;      Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --format &lt;FORMAT&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+  -h, --help                   Показать справку
+</code></pre>
+     </details>
+     <p><a id="command-eska-apply"></a></p>
+     <details>
+      <summary>eska apply: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр и применение изменений Designer XML к тестовой базе
+
+Usage: eska apply [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;              Выбрать язык интерфейса
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --application &lt;APPLICATION&gt;  Обновить указанное приложение workspace в порядке зависимостей.
+      --project-dir &lt;КАТАЛОГ&gt;      Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+      --initialize                 Предпросмотр явного полного импорта XML для нового снимка
+      --confirm &lt;CONFIRM&gt;          Применить изменения из проверенного предпросмотра
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+  -h, --help                       Показать справку
+</code></pre>
+      <p>Выполните первый запуск без <code>--confirm</code> для просмотра базы и состава изменений. Затем повторите команду с полученным токеном и теми же параметрами. Для первого полного импорта добавьте <code>--initialize</code>.</p>
+     </details>
+     <p><a id="command-eska-extension"></a></p>
+     <details>
+      <summary>eska extension: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Управление расширениями в тестовой базе.
+
+Usage: eska extension [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  install  Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.
+  remove   Предпросмотр или удаление выбранного установленного расширения из тестовой базы.
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+  -h, --help                   Показать справку
+</code></pre>
+     </details>
+     <p><a id="command-eska-metadata-create-module"></a></p>
+     <details>
+      <summary>eska metadata create-module: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Создать отсутствующий модуль поддерживаемой роли
+
+Usage: eska metadata create-module [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --owner &lt;OWNER&gt;          ID существующего владельца модуля
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+      --role &lt;ROLE&gt;            Роль модуля из object-schema (например object или manager)
+      --input &lt;INPUT&gt;          Файл запроса создания в JSON с версией схемы, либо - для stdin
+      --plan &lt;PLAN&gt;            Сохранённый JSON-вывод add --dry-run, либо - для stdin; сохраняет рассмотренные идентификаторы
+      --dry-run                Вернуть подготовленный план создания без записи исходников
+      --no-input               Отключить все вопросы; при нехватке параметров вернуть ошибку
+  -h, --help                   Показать справку
+  -p, --project &lt;PROJECT&gt;      Выбрать один проект рабочего пространства
+      --format &lt;FORMAT&gt;        Формат вывода; add использует human, прежние операции и create-schema — JSON [possible values: human, json]
+</code></pre>
+      <p>Укажите идентификатор владельца из <code>metadata list</code> или <code>metadata inspect</code> и роль из <code>metadata object-schema</code>. С <code>--dry-run</code> можно проверить будущий путь и изменения до записи.</p>
+     </details>
+     <p><a id="command-eska-extension-install"></a></p>
+     <details>
+      <summary>eska extension install: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.
+
+Usage: eska extension install [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --profile &lt;PROFILE&gt;      Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --confirm &lt;CONFIRM&gt;      Применить изменения из проверенного предпросмотра
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+      --format &lt;FORMAT&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+  -h, --help                   Показать справку
+</code></pre>
+      <p>Укажите проект расширения <code>InfoBase</code> через <code>--project-dir</code> или запустите команду из его каталога. Сначала получите план для профиля <code>test</code>, затем передайте его токен в <code>--confirm</code>.</p>
+     </details>
+     <p><a id="command-eska-extension-remove"></a></p>
+     <details>
+      <summary>eska extension remove: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр или удаление выбранного установленного расширения из тестовой базы.
+
+Usage: eska extension remove [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --profile &lt;PROFILE&gt;      Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --confirm &lt;CONFIRM&gt;      Применить изменения из проверенного предпросмотра
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий)
+      --force                  Явно разрешить удаление и возможную потерю данных расширения.
+      --format &lt;FORMAT&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+  -h, --help                   Показать справку
+</code></pre>
+      <p>Получите план удаления для профиля <code>test</code>. Для удаления повторите команду с <code>--confirm</code> и <code>--force</code>. Данные расширения могут быть удалены вместе с ним.</p>
+     </details>
     </section>
     <section class="doc-section" id="cli-eska-project">
      <div class="doc-heading">
@@ -1928,6 +2050,10 @@ Options:
           Определить контекст выбранного приложения
          </td>
         </tr>
+        <tr><td><a href="#command-eska-project-settings-local"><code>eska-project settings-local</code></a></td><td>Просмотр и редактирование локальных настроек запуска проекта</td></tr>
+        <tr><td><a href="#command-eska-project-settings-local-show"><code>eska-project settings-local show</code></a></td><td>Показать текущие настройки и их ревизию</td></tr>
+        <tr><td><a href="#command-eska-project-settings-local-save"><code>eska-project settings-local save</code></a></td><td>Сохранить настройки из JSON-документа на стандартном вводе</td></tr>
+        <tr><td><a href="#command-eska-project-settings-local-validate"><code>eska-project settings-local validate</code></a></td><td>Проверить сохранённые профили</td></tr>
         <tr>
          <td>
           <a href="#command-eska-project-new">
@@ -1962,6 +2088,7 @@ Options:
 <tr><td><a href="#command-eska-project-metadata-recover"><code>eska-project metadata recover</code></a></td><td>Проверить или восстановить прерванную запись метаданных, включая создание начальной конфигурации.</td></tr>
 <tr><td><a href="#command-eska-project-metadata-list"><code>eska-project metadata list</code></a></td><td>Найти объекты в выбранном родителе без рекурсивного обхода конфигурации.</td></tr>
 <tr><td><a href="#command-eska-project-metadata-add"><code>eska-project metadata add</code></a></td><td>Добавить реквизит или табличную часть через общую модель метаданных</td></tr>
+        <tr><td><a href="#command-eska-project-metadata-create-module"><code>eska-project metadata create-module</code></a></td><td>Создать отсутствующий модуль поддерживаемой роли</td></tr>
 <tr><td><a href="#command-eska-project-metadata-create-schema"><code>eska-project metadata create-schema</code></a></td><td>Прочитать доступные операции создания, владельцев, типы и ограничения</td></tr>
 <tr><td><a href="#command-eska-project-metadata-inspect"><code>eska-project metadata inspect</code></a></td><td>Прочитать свойства и схему допустимых изменений</td></tr>
 <tr><td><a href="#command-eska-project-metadata-types"><code>eska-project metadata types</code></a></td><td>Получить допустимые типы существующего поля</td></tr>
@@ -2050,7 +2177,7 @@ Options:
       <summary>
        eska-project: синтаксис и все параметры
       </summary>
-      <pre><code class="language-text">eska-project 0.22.0
+      <pre><code class="language-text">eska-project 0.32.0
 Работа с проектами Designer XML
 
 Использование: eska-project [OPTIONS] [COMMAND]
@@ -2062,9 +2189,10 @@ Options:
   analyzer-config  Производная конфигурация bsl-analyzer
   validate         Проверить манифесты и корневые дескрипторы Designer XML
   context          Определить контекст выбранного приложения
+  settings-local   Просмотр и редактирование локальных настроек запуска проекта
   new              Создать проект Designer XML без инициализации Git
   init             Подключить существующую выгрузку Designer XML без инициализации Git
-  metadata         Чтение и изменение существующих свойств метаданных через JSON
+  metadata         Чтение, изменение и создание метаданных Designer XML
   version          Показать или изменить версию проекта 1С
 Параметры:
       --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
@@ -2260,6 +2388,7 @@ Usage: eska-project metadata [OPTIONS] &lt;COMMAND&gt;
 
 Commands:
   create           Создать объект метаданных, при необходимости на основе существующего.
+  create-module    Создать отсутствующий модуль поддерживаемой роли
   copy             Создать полную копию объекта с новыми идентификаторами, модулями и ресурсами.
   delete           Удалить объект и его файлы после проверки входящих ссылок.
   object-schema    Получить допустимые типы объектов, ограничения и JSON Schema запросов.
@@ -2789,6 +2918,89 @@ Options:
       --workspace              Выбрать все проекты workspace
 </code></pre>
      </details>
+     <p><a id="command-eska-project-settings-local"></a></p>
+     <details>
+      <summary>eska-project settings-local: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Просмотр и редактирование локальных настроек запуска проекта
+
+Usage: eska-project settings-local [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  show      Показать текущие настройки и их ревизию
+  save      Сохранить настройки из JSON-документа на стандартном вводе
+  validate  Проверить сохранённые профили
+
+Options:
+      --format &lt;ФОРМАТ&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+  -h, --help                   Показать справку
+</code></pre>
+     </details>
+     <p><a id="command-eska-project-settings-local-show"></a></p>
+     <details>
+      <summary>eska-project settings-local show: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Показать текущие настройки и их ревизию
+
+Использование: eska-project settings-local show [ПАРАМЕТРЫ]
+
+Параметры:
+      --format &lt;ФОРМАТ&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+      <p>Формат <code>json</code> возвращает <code>settings</code>, <code>revision</code> и <code>git_protection</code>.</p>
+     </details>
+     <p><a id="command-eska-project-settings-local-save"></a></p>
+     <details>
+      <summary>eska-project settings-local save: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Сохранить настройки из JSON-документа на стандартном вводе
+
+Использование: eska-project settings-local save [ПАРАМЕТРЫ]
+
+Параметры:
+      --format &lt;ФОРМАТ&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+      <p>Передайте JSON с полями <code>revision</code> и <code>settings</code> через стандартный ввод. Для первого сохранения укажите <code>revision: null</code>. В Git-проекте сохранение доступно, когда файл <code>.eska/settings_local.toml</code> исключён и отсутствует в индексе.</p>
+     </details>
+     <p><a id="command-eska-project-settings-local-validate"></a></p>
+     <details>
+      <summary>eska-project settings-local validate: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Проверить сохранённые профили
+
+Использование: eska-project settings-local validate [ПАРАМЕТРЫ]
+
+Параметры:
+      --format &lt;ФОРМАТ&gt;        Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+      <p>Проверяет сохранённые профили запуска без открытия сеанса 1С.</p>
+     </details>
+     <p><a id="command-eska-project-metadata-create-module"></a></p>
+     <details>
+      <summary>eska-project metadata create-module: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Создать отсутствующий модуль поддерживаемой роли
+
+Usage: eska-project metadata create-module [OPTIONS]
+
+Options:
+      --lang &lt;ЛОКАЛЬ&gt;          Выбрать язык интерфейса
+      --owner &lt;OWNER&gt;          ID существующего владельца модуля
+      --project-dir &lt;КАТАЛОГ&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+      --role &lt;ROLE&gt;            Роль модуля из object-schema (например object или manager)
+      --input &lt;INPUT&gt;          Файл запроса создания в JSON с версией схемы, либо - для stdin
+      --plan &lt;PLAN&gt;            Сохранённый JSON-вывод add --dry-run, либо - для stdin; сохраняет рассмотренные идентификаторы
+      --dry-run                Вернуть подготовленный план создания без записи исходников
+      --no-input               Отключить все вопросы; при нехватке параметров вернуть ошибку
+  -h, --help                   Показать справку
+  -p, --project &lt;PROJECT&gt;      Выбрать один проект рабочего пространства
+      --format &lt;FORMAT&gt;        Формат вывода; add использует human, прежние операции и create-schema — JSON [possible values: human, json]
+</code></pre>
+      <p>Укажите идентификатор владельца из <code>metadata list</code> или <code>metadata inspect</code> и роль из <code>metadata object-schema</code>. С <code>--dry-run</code> можно проверить будущий путь и изменения до записи.</p>
+     </details>
     </section>
     <section class="doc-section" id="cli-eska-check">
      <div class="doc-heading">
@@ -2837,7 +3049,7 @@ Options:
       <summary>
        eska-check: синтаксис и все параметры
       </summary>
-      <pre><code class="language-text">eska-check 0.22.0
+      <pre><code class="language-text">eska-check 0.32.0
 Полная проверка Designer XML и BSL для CI
 
 Использование: eska-check [OPTIONS]
@@ -2903,6 +3115,12 @@ Options:
           Собрать нативный артефакт 1С из Designer XML
          </td>
         </tr>
+        <tr><td><a href="#command-eska-build-run"><code>eska-build run</code></a></td><td>Запустить 1С:Предприятие с профилем test</td></tr>
+        <tr><td><a href="#command-eska-build-probe"><code>eska-build probe</code></a></td><td>Проверить платформу и доступность адресов профиля</td></tr>
+        <tr><td><a href="#command-eska-build-apply"><code>eska-build apply</code></a></td><td>Предпросмотр и применение изменений Designer XML к тестовой базе</td></tr>
+        <tr><td><a href="#command-eska-build-extension"><code>eska-build extension</code></a></td><td>Управление расширениями в тестовой базе.</td></tr>
+        <tr><td><a href="#command-eska-build-extension-install"><code>eska-build extension install</code></a></td><td>Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.</td></tr>
+        <tr><td><a href="#command-eska-build-extension-remove"><code>eska-build extension remove</code></a></td><td>Предпросмотр или удаление выбранного установленного расширения из тестовой базы.</td></tr>
         <tr>
          <td>
           <a href="#command-eska-build-unpack">
@@ -3022,19 +3240,23 @@ Options:
       <summary>
        eska-build: синтаксис и все параметры
       </summary>
-      <pre><code class="language-text">eska-build 0.22.0
+      <pre><code class="language-text">eska-build 0.32.0
 Сборка и распаковка нативных артефактов 1С
 
 Использование: eska-build [OPTIONS] [COMMAND]
 
 Команды:
-  build     Собрать нативный артефакт 1С из Designer XML
-  unpack    Распаковать CF/CFE/EPF/ERF в новый каталог Designer XML
-  patch     Собрать патч из изменений методов общих модулей между Git-версиями
-  import    Заменить исходники проекта из файла CF, CFE, EPF или ERF
-  clean     Удалить служебную базу сборки
-  platform  Найти установленные платформы 1С
-  config    Управлять глобальными настройками этого компьютера
+  build      Собрать нативный артефакт 1С из Designer XML
+  unpack     Распаковать CF/CFE/EPF/ERF в новый каталог Designer XML
+  patch      Собрать патч из изменений методов общих модулей между Git-версиями
+  import     Заменить исходники проекта из файла CF, CFE, EPF или ERF
+  clean      Удалить служебную базу сборки
+  platform   Найти установленные платформы 1С
+  config     Управлять глобальными настройками этого компьютера
+  run        Запустить 1С:Предприятие с профилем test
+  probe      Проверить платформу и доступность адресов профиля
+  apply      Предпросмотр и применение изменений Designer XML к тестовой базе
+  extension  Управление расширениями в тестовой базе.
 Параметры:
       --lang &lt;LANG&gt;                Выбрать язык интерфейса
       --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
@@ -3309,11 +3531,212 @@ Options:
       --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
 </code></pre>
      </details>
+     <p><a id="command-eska-build-run"></a></p>
+     <details>
+      <summary>eska-build run: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Запустить 1С:Предприятие с профилем test
+
+Использование: eska-build run [OPTIONS]
+
+Параметры:
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+  -h, --help                       Показать справку
+</code></pre>
+     </details>
+     <p><a id="command-eska-build-probe"></a></p>
+     <details>
+      <summary>eska-build probe: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Проверить платформу и доступность адресов профиля
+
+Использование: eska-build probe [OPTIONS]
+
+Параметры:
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+  -h, --help                       Показать справку
+      --stdin                      Проверить профиль из JSON на стандартном вводе без сохранения
+</code></pre>
+     </details>
+     <p><a id="command-eska-build-apply"></a></p>
+     <details>
+      <summary>eska-build apply: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр и применение изменений Designer XML к тестовой базе
+
+Использование: eska-build apply [OPTIONS]
+
+Параметры:
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --application &lt;APPLICATION&gt;  Обновить указанное приложение workspace в порядке зависимостей.
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --initialize                 Предпросмотр явного полного импорта XML для нового снимка
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+      --confirm &lt;CONFIRM&gt;          Применить изменения из проверенного предпросмотра
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+  -h, --help                       Показать справку
+</code></pre>
+      <p>Выполните первый запуск без <code>--confirm</code> для просмотра базы и состава изменений. Затем повторите команду с полученным токеном и теми же параметрами. Для первого полного импорта добавьте <code>--initialize</code>.</p>
+     </details>
+     <p><a id="command-eska-build-extension"></a></p>
+     <details>
+      <summary>eska-build extension: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Управление расширениями в тестовой базе.
+
+Использование: eska-build extension [OPTIONS] &lt;COMMAND&gt;
+
+Команды:
+  install  Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.
+  remove   Предпросмотр или удаление выбранного установленного расширения из тестовой базы.
+
+Параметры:
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+  -h, --help                       Показать справку
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+</code></pre>
+     </details>
+     <p><a id="command-eska-build-extension-install"></a></p>
+     <details>
+      <summary>eska-build extension install: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр или установка выбранного расширения Designer XML в тестовую базу.
+
+Использование: eska-build extension install [OPTIONS]
+
+Параметры:
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --confirm &lt;CONFIRM&gt;          Применить изменения из проверенного предпросмотра
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+  -h, --help                       Показать справку
+</code></pre>
+      <p>Укажите проект расширения <code>InfoBase</code> через <code>--project-dir</code> или запустите команду из его каталога. Сначала получите план для профиля <code>test</code>, затем передайте его токен в <code>--confirm</code>.</p>
+     </details>
+     <p><a id="command-eska-build-extension-remove"></a></p>
+     <details>
+      <summary>eska-build extension remove: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Предпросмотр или удаление выбранного установленного расширения из тестовой базы.
+
+Использование: eska-build extension remove [OPTIONS]
+
+Параметры:
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [default: test] [possible values: test, prod]
+      --confirm &lt;CONFIRM&gt;          Применить изменения из проверенного предпросмотра
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --force                      Явно разрешить удаление и возможную потерю данных расширения.
+      --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
+      --format &lt;FORMAT&gt;            Формат вывода: human или json [default: human] [possible values: human, json]
+  -h, --help                       Показать справку
+</code></pre>
+      <p>Получите план удаления для профиля <code>test</code>. Для удаления повторите команду с <code>--confirm</code> и <code>--force</code>. Данные расширения могут быть удалены вместе с ним.</p>
+     </details>
+    </section>
+    <section class="doc-section" id="cli-eska-debug">
+     <div class="doc-heading">
+      <span>05</span>
+      <div><h2>eska-debug</h2></div>
+     </div>
+     <div class="table-wrap">
+      <table>
+       <thead><tr><th>Вход</th><th>Назначение</th></tr></thead>
+       <tbody>
+        <tr><td><a href="#command-eska-debug"><code>eska-debug</code></a></td><td>Отладка 1С:Предприятия по HTTP</td></tr>
+        <tr><td><a href="#command-eska-debug-check"><code>eska-debug check</code></a></td><td>Проверить открытые исходники prod по выбранному workflow</td></tr>
+        <tr><td><a href="#command-eska-debug-dap"><code>eska-debug dap</code></a></td><td>Запустить HTTP-отладку с DAP на стандартном вводе и выводе</td></tr>
+        <tr><td><a href="#command-eska-debug-standalone"><code>eska-debug standalone</code></a></td><td>Запустить самостоятельную DAP-сессию без проекта ESKA</td></tr>
+        <tr><td><a href="#command-eska-debug-infobases"><code>eska-debug infobases</code></a></td><td>Вывести файловые и кластерные базы из списка запуска 1С в JSON</td></tr>
+       </tbody>
+      </table>
+     </div>
+     <p><a id="command-eska-debug"></a></p>
+     <details>
+      <summary>eska-debug: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Отладка 1С:Предприятия по HTTP
+
+Usage: eska-debug [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  check       Проверить открытые исходники prod по выбранному workflow
+  dap         Запустить HTTP-отладку с DAP на стандартном вводе и выводе
+  standalone  Запустить самостоятельную DAP-сессию без проекта ESKA
+  infobases   Вывести файловые и кластерные базы из списка запуска 1С в JSON
+
+Options:
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --project-dir &lt;PROJECT_DIR&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+  -h, --help                       Показать справку
+  -V, --version                    Print version
+</code></pre>
+     </details>
+     <p><a id="command-eska-debug-check"></a></p>
+     <details>
+      <summary>eska-debug check: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Проверить открытые исходники prod по выбранному workflow
+
+Usage: eska-debug check [OPTIONS]
+
+Options:
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --unsaved                    В рабочей области редактора есть несохранённые документы
+  -h, --help                       Показать справку
+      --project-dir &lt;PROJECT_DIR&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+     </details>
+     <p><a id="command-eska-debug-dap"></a></p>
+     <details>
+      <summary>eska-debug dap: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Запустить HTTP-отладку с DAP на стандартном вводе и выводе
+
+Usage: eska-debug dap [OPTIONS] --profile &lt;PROFILE&gt; --mode &lt;MODE&gt;
+
+Options:
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --profile &lt;PROFILE&gt;          Локальный профиль запуска проекта [possible values: test, prod]
+      --mode &lt;MODE&gt;                Запуск клиента или подключение к существующему серверу отладки [possible values: launch, attach]
+      --project-dir &lt;PROJECT_DIR&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+      --sources &lt;SOURCES&gt;          Явное решение об исходниках для отладки prod [possible values: current, fast-forward, switch-main]
+      --unsaved                    В рабочей области редактора есть несохранённые документы
+  -h, --help                       Показать справку
+</code></pre>
+      <p>Для <code>prod</code> при расхождении исходников выберите действие через <code>--sources</code>. Обновление возможно в чистой рабочей копии без несохранённых буферов и без расхождения истории основной ветки.</p>
+     </details>
+     <p><a id="command-eska-debug-standalone"></a></p>
+     <details>
+      <summary>eska-debug standalone: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Запустить самостоятельную DAP-сессию без проекта ESKA
+
+Usage: eska-debug standalone [OPTIONS]
+
+Options:
+  -h, --help                       Показать справку
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --project-dir &lt;PROJECT_DIR&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+      <p>Адаптер читает параметры запуска или подключения из DAP-запроса. Проект с <code>eska.toml</code> для этого режима не требуется.</p>
+     </details>
+     <p><a id="command-eska-debug-infobases"></a></p>
+     <details>
+      <summary>eska-debug infobases: синтаксис и все параметры</summary>
+      <pre><code class="language-text">Вывести файловые и кластерные базы из списка запуска 1С в JSON
+
+Usage: eska-debug infobases [OPTIONS]
+
+Options:
+      --lang &lt;LANG&gt;                Выбрать язык интерфейса
+      --list &lt;LIST&gt;                Путь к файлу списка запуска 1С
+  -h, --help                       Показать справку
+      --project-dir &lt;PROJECT_DIR&gt;  Искать проект из указанного каталога; для clone/new/init — базовый каталог (по умолчанию — текущий) [default: .]
+</code></pre>
+      <p>С <code>--list</code> можно прочитать конкретный файл списка запуска вместо списка пользователя по умолчанию.</p>
+     </details>
     </section>
     <section class="doc-section" id="cli-eska-vcs">
      <div class="doc-heading">
       <span>
-       05
+       06
       </span>
       <div>
        <h2>
@@ -3489,7 +3912,7 @@ Options:
       <summary>
        eska-vcs: синтаксис и все параметры
       </summary>
-      <pre><code class="language-text">eska-vcs 0.22.0
+      <pre><code class="language-text">eska-vcs 0.32.0
 Git/workflow, полки и смысловое сравнение Designer XML
 
 Использование: eska-vcs [OPTIONS] &lt;COMMAND&gt;
@@ -3580,6 +4003,7 @@ Git/workflow, полки и смысловое сравнение Designer XML
       --lang &lt;LANG&gt;                Выбрать язык интерфейса
       --project-dir &lt;PROJECT_DIR&gt;  Начать поиск проекта с этого каталога [default: .]
 </code></pre>
+      <p>Если политика удаляет ветку задачи, перед завершением восстановите её полку через <code>unshelve</code> и сохраните изменения.</p>
      </details>
      <p>
       <a id="command-eska-vcs-history">
@@ -3755,7 +4179,7 @@ Git/workflow, полки и смысловое сравнение Designer XML
     <section class="doc-section" id="cli-eska-fmt">
      <div class="doc-heading">
       <span>
-       06
+       07
       </span>
       <div>
        <h2>
