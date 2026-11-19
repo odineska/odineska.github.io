@@ -1,4 +1,4 @@
-# odineska.github.io
+# odineska.tech
 
 Статический GitHub Pages сайт Odineska — открытых инструментов для разработки на 1С:
 
@@ -60,11 +60,11 @@ python3 -m http.server 8000 --bind 127.0.0.1
 Установщики используют опубликованный канал:
 
 ```sh
-curl --proto '=https' --tlsv1.2 -LsSf https://odineska.github.io/eska/install | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://odineska.tech/eska/install | sh
 ```
 
 ```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://odineska.github.io/eska/install.ps1 | iex"
+powershell -ExecutionPolicy Bypass -c "irm https://odineska.tech/eska/install.ps1 | iex"
 ```
 
 Публикация сайта выполняется существующим GitHub Pages процессом.
