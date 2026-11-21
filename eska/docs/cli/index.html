@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <meta content="Справочник ESKA 0.38.0. Команды семи программ, параметры, примеры и коды выхода." name="description"/>
+  <meta content="Справочник ESKA 0.38.1. Команды семи программ, параметры, примеры и коды выхода." name="description"/>
   <meta content="#0d1220" name="theme-color"/>
   <title>
    Все команды ESKA · Odineska
@@ -108,8 +108,8 @@
      <h1>
       Все команды ESKA
      </h1>
-<p>Синтаксис команд приведён для <a href="https://github.com/odineska/eska/releases/tag/v0.38.0">ESKA 0.38.0</a>.
-Выберите программу и команду в таблице её раздела. В раскрывающемся блоке перечислены аргументы и параметры.
+<p>Синтаксис 131 команды сверен с выводом <code>--help</code> официального выпуска <a href="https://github.com/odineska/eska/releases/tag/v0.38.1">ESKA 0.38.1</a>.
+Операции <code>settings-local show</code>, <code>save</code> и <code>validate</code> проверены на тестовом профиле. Выберите программу и команду в таблице её раздела. В раскрывающемся блоке перечислены аргументы и параметры.
 Для просмотра справки достаточно установленного бинарника.</p>
 <p>Команда <code>eska --version</code> показывает версию программы, а <code>eska version</code> читает версию проекта 1С.
 Параметр <code>--project-dir</code> задаёт начальный каталог для поиска проекта. У команд
@@ -145,7 +145,7 @@
 eska metadata create --kind document --name Заказ --dry-run --no-input --format json &gt; plan.json
 eska metadata create --plan plan.json --no-input --format json
 </code></pre>
-<p>Для workspace укажите проект через <code>-p ИМЯ</code>. Если после предпросмотра изменились исходники, получите новый план. Примеры добавления реквизитов и модулей, операций формы и восстановления записи есть в <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/metadata-authoring.md">руководстве по созданию метаданных</a>.</p>
+<p>Для workspace укажите проект через <code>-p ИМЯ</code>. Если после предпросмотра изменились исходники, получите новый план. Примеры добавления реквизитов и модулей, операций формы и восстановления записи есть в <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/metadata-authoring.md">руководстве по созданию метаданных</a>.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -383,7 +383,7 @@ eska metadata create --plan plan.json --no-input --format json
 <p><a id="command-eska"></a></p>
 <details>
 <summary>eska: синтаксис и все параметры</summary>
-<pre><code class="language-text">eska 0.38.0
+<pre><code class="language-text">eska 0.38.1
 Инструментарий разработки проектов 1С:Предприятие
 
 Использование: eska [ПАРАМЕТРЫ] [КОМАНДА]
@@ -1923,13 +1923,13 @@ HTTP-сервер 1С. Для файловой базы вместо <code>debug
 <code>MobileJobFileMode</code>, <code>MobileManagedClient</code>, <code>MobileManagedServer</code>.
 В проекте типа <code>processing</code> таблица <code>debug.external_processing</code> задаёт
 <code>artifact</code> и необязательный <code>debug_url</code> для подключения к загруженной копии.
-Относительный путь артефакта считается от корня проекта. <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/1c-http-debug.md#epf-%D0%B2-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B5-explorer">Отладка EPF из проекта</a>
+Относительный путь артефакта считается от корня проекта. <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/1c-http-debug.md#epf-%D0%B2-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B5-explorer">Отладка EPF из проекта</a>
 <code>password_env</code> содержит имя переменной окружения, а её
 значение передаётся отдельно от TOML.</p>
 <p><a id="command-eska-project"></a></p>
 <details>
 <summary>eska-project: синтаксис и все параметры</summary>
-<pre><code class="language-text">eska-project 0.38.0
+<pre><code class="language-text">eska-project 0.38.1
 Работа с проектами Designer XML
 
 Использование: eska-project [OPTIONS] [COMMAND]
@@ -2708,7 +2708,7 @@ Options:
 <p>Запускайте проверку из проекта с Designer XML и установленным <code>bsl-analyzer-app</code>. В workspace можно выбрать приложение через <code>--application ИМЯ</code>. Например, команда ниже проверит контекст проекта и запишет отчёт. Каталог <code>reports</code> должен существовать вне исходников, а имя файла должно быть свободно.</p>
 <pre><code class="language-sh">eska-check --format json --report ./reports/check.json
 </code></pre>
-<p>Код выхода <code>0</code> означает, что проверка завершена и пороги соблюдены. Код <code>1</code> означает превышение порога, <code>2</code> — ошибку аргументов, <code>3</code> — незавершённую проверку, <code>130</code> — отмену. При коде <code>3</code> проверьте путь к анализатору и сообщение об ошибке в отчёте. <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/check-cli.md">Формат отчёта и пороги</a></p>
+<p>Код выхода <code>0</code> означает, что проверка завершена и пороги соблюдены. Код <code>1</code> означает превышение порога, <code>2</code> — ошибку аргументов, <code>3</code> — незавершённую проверку, <code>130</code> — отмену. При коде <code>3</code> проверьте путь к анализатору и сообщение об ошибке в отчёте. <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/check-cli.md">Формат отчёта и пороги</a></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -2726,7 +2726,7 @@ Options:
 <p><a id="command-eska-check-default"></a></p>
 <details>
 <summary>eska-check: синтаксис и все параметры</summary>
-<pre><code class="language-text">eska-check 0.38.0
+<pre><code class="language-text">eska-check 0.38.1
 Полная проверка Designer XML и BSL для CI
 
 Использование: eska-check [OPTIONS]
@@ -2760,7 +2760,7 @@ Options:
 eska-build build --dry-run --format json
 eska-build build --manifest
 </code></pre>
-<p>Для обратной операции передайте исходный файл и путь к новому каталогу, например <code>eska-build unpack ./input/report.erf ./report-xml</code>. Родительский каталог должен существовать. При ошибке выбора платформы укажите путь к <code>ibcmd</code> через <code>--ibcmd</code>. <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/build-tool.md">Сборка и распаковка</a></p>
+<p>Для обратной операции передайте исходный файл и путь к новому каталогу, например <code>eska-build unpack ./input/report.erf ./report-xml</code>. Родительский каталог должен существовать. При ошибке выбора платформы укажите путь к <code>ibcmd</code> через <code>--ibcmd</code>. <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/build-tool.md">Сборка и распаковка</a></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -2842,7 +2842,7 @@ eska-build build --manifest
 <p><a id="command-eska-build-default"></a></p>
 <details>
 <summary>eska-build: синтаксис и все параметры</summary>
-<pre><code class="language-text">eska-build 0.38.0
+<pre><code class="language-text">eska-build 0.38.1
 Сборка и распаковка нативных артефактов 1С
 
 Использование: eska-build [OPTIONS] [COMMAND]
@@ -3364,7 +3364,7 @@ Explorer. Workspace-приложение должно определяться �
 Для DAP-сессии из проекта укажите профиль и режим <code>launch</code> или <code>attach</code>.
 Команда <code>standalone</code> открывает адаптер без проекта ESKA. Список баз из
 настроек запуска 1С доступен через <code>infobases</code>.</p>
-<p><a href="https://github.com/odineska/eska/blob/v0.38.0/docs/run-debug.md">Запуск и подключение к отладке</a> · <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/eska-debug-standalone.md">Автономный DAP</a></p>
+<p><a href="https://github.com/odineska/eska/blob/v0.38.1/docs/run-debug.md">Запуск и подключение к отладке</a> · <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/eska-debug-standalone.md">Автономный DAP</a></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -3480,7 +3480,7 @@ Options:
 пользователя по умолчанию. В режиме <code>--include-distrobox</code> путь относится к списку
 хоста. <code>--distrobox NAME</code> выбирает контейнер перед <code>ESKA_DISTROBOX</code> и
 <code>[build].container</code>. Ответ содержит источники записей и статус доступности каждого
-списка. <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/eska-debug-standalone.md#%D0%B1%D0%B0%D0%B7%D1%8B-%D1%85%D0%BE%D1%81%D1%82%D0%B0-%D0%B8-distrobox">Источники и формат JSON</a></p>
+списка. <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/eska-debug-standalone.md#%D0%B1%D0%B0%D0%B7%D1%8B-%D1%85%D0%BE%D1%81%D1%82%D0%B0-%D0%B8-distrobox">Источники и формат JSON</a></p>
 </details>
 </section>
     <section class="doc-section" id="cli-eska-vcs">
@@ -3500,7 +3500,7 @@ eska-vcs diff --semantic
 eska-vcs save --dry-run
 eska-vcs save -m &quot;Добавлена форма заказа&quot;
 </code></pre>
-<p>Для временного переключения используйте <code>shelve</code>. Список полок выводит <code>shelves</code>, а <code>unshelve --dry-run</code> проверяет возможность восстановления. При конфликте сначала разберите изменения в рабочей копии. <a href="https://github.com/odineska/eska/blob/v0.38.0/docs/vcs-tool.md">Сценарии работы с Git</a></p>
+<p>Для временного переключения используйте <code>shelve</code>. Список полок выводит <code>shelves</code>, а <code>unshelve --dry-run</code> проверяет возможность восстановления. При конфликте сначала разберите изменения в рабочей копии. <a href="https://github.com/odineska/eska/blob/v0.38.1/docs/vcs-tool.md">Сценарии работы с Git</a></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -3562,7 +3562,7 @@ eska-vcs save -m &quot;Добавлена форма заказа&quot;
 <p><a id="command-eska-vcs"></a></p>
 <details>
 <summary>eska-vcs: синтаксис и все параметры</summary>
-<pre><code class="language-text">eska-vcs 0.38.0
+<pre><code class="language-text">eska-vcs 0.38.1
 Git/workflow, полки и смысловое сравнение Designer XML
 
 Использование: eska-vcs [OPTIONS] &lt;COMMAND&gt;
