@@ -75,6 +75,7 @@
      </small>
     </div>
     <nav class="docs-toc">
+     <a href="./explorer/">Сценарии Explorer и примеры CLI</a>
      <a href="#capabilities">
       Возможности и ограничения
      </a>
@@ -181,11 +182,11 @@
       Возможности ESKA и Explorer
      </h1>
 <p>ESKA работает с исходниками 1С в формате Designer XML. В VS Code и VSCodium расширение Explorer открывает дерево метаданных, формы, модули BSL и запросы. Из терминала доступны создание и изменение метаданных, форматирование, анализ, Git, сборка и отладка.</p>
-<p><strong>Проект в активной разработке.</strong> Руководство описывает текущую версию исходников. Для установленного выпуска проверьте доступные команды через <code>--help</code> и версии компонентов через <code>--version</code>.</p>
+<p><strong>Проект в активной разработке.</strong> Команды и пользовательские сценарии сверены с <a href="https://github.com/odineska/eska/releases/tag/v0.38.0">ESKA 0.38.0</a> и <a href="https://github.com/odineska/eska-vscode-explorer/releases/tag/v0.1.32">Explorer 0.1.32</a>. Версия приложения на каждой записи указана в подписи.</p>
 
      <div class="docs-hero-actions">
-      <a class="button button-primary" href="#practice">
-       Практический пример
+      <a class="button button-primary" href="./explorer/">
+       Работа в Explorer
       </a>
       <a class="button button-quiet" href="#installation">
        Установка
@@ -847,41 +848,12 @@ eska-debug --version
 каталогах PATH. Относительные PATH entries пропускаются. Явно заданный путь
 не имеет fallback: его исчезновение или несовместимость требует исправить настройку.
      </p>
-     <p>
-      Анализатор должен быть именно совместимым
-      <code>
-       bsl-analyzer-app
-      </code>
-      с командами
-      <code>
-       contract
-      </code>
-      ,
-      <code>
-       check-config
-      </code>
-      ,
-      <code>
-       analyze --format jsonl
-      </code>
-      и
-      <code>
-       lsp --mode stdio
-      </code>
-      . ESKA проверяет контракт,
-а не только имя файла. Для текущих примеров использована версия 0.4.2; наличие
-готового upstream asset для вашей ОС/CPU проверяется отдельно. Соседняя
-архитектура автоматически не подставляется. Совместимую локальную сборку можно
-указать в
-      <code>
-       eska.explorer.analyzerExecutable
-      </code>
-      и CLI
-      <code>
-       --analyzer
-      </code>
-      .
-     </p>
+<p>Анализатору нужны команды <code>contract</code>, <code>check-config</code>, <code>analyze --format jsonl</code>
+и <code>lsp --mode stdio</code>. CLI проверен с <code>bsl-analyzer-app</code> 0.4.2 и 0.4.6.
+Совместимую сборку для вашей ОС и архитектуры можно указать в
+<code>eska.explorer.analyzerExecutable</code> и CLI <code>--analyzer</code>. Каталог правил и их
+уровни доступны в <strong>Настройки проекта → Анализ BSL</strong>.
+<a href="https://github.com/odineska/eska/blob/main/docs/analyzer-configuration.md">Настройки анализатора</a>.</p>
      <h3 id="одна-машина-remote-и-работа-без-сети">
       Одна машина, Remote и работа без сети
      </h3>
@@ -1010,6 +982,12 @@ destination должен существовать, сам destination — отс
       </code>
       .
      </p>
+<p>В интерактивном <code>eska new</code> меню «Платформа 1С» перечисляет установленные
+версии и последним пунктом «Выбрать позже». Этот пункт оставляет версию
+проекта пустой. Без терминала передайте <code>--platform-version &quot;&quot;</code>.
+Для <code>new --from</code> ESKA распакует файл самой новой установленной платформой
+текущего runner. При отсутствии платформы распаковка завершится ошибкой.
+В мастере «Начать проект 1С» Explorer доступны тот же список и поздний выбор.</p>
      <h3 id="как-устроен-проект">
       Как устроен проект
      </h3>
@@ -1105,6 +1083,8 @@ artifacts_directory = "build"
           Да
          </td>
         </tr>
+<tr><td><code>.eska/settings_local.toml</code></td><td>Профили запуска и отладки <code>test</code> и <code>prod</code></td><td>Нет</td></tr>
+<tr><td><code>.gitignore</code>, <code>.gitattributes</code></td><td>Исключения Git и шаблоны файлов Git LFS</td><td>Да</td></tr>
         <tr>
          <td>
           Пользовательский
@@ -1185,6 +1165,20 @@ artifacts_directory = "build"
        </tbody>
       </table>
      </div>
+<p>В Explorer откройте <strong>Настройки проекта → Настроить проект</strong>. Выберите
+раздел, измените значения и нажмите <strong>Предпросмотр</strong>, чтобы сравнить содержимое
+файла до и после правки. <strong>Сохранить</strong> проверяет черновик и ревизию файла.
+Общие разделы, которые редактируют <code>eska.toml</code>, используют один черновик.
+Исключения Git, правила Git LFS и каждый локальный профиль сохраняются отдельно.
+Для общей политики рабочего пространства откройте настройки его корня.</p>
+<p>В <strong>Форматировании</strong> можно выбрать <code>ESKA</code>, <code>1С</code> или командный профиль.
+Флажки и списки меняют отдельные параметры. <strong>Наследовать</strong> удаляет явное
+переопределение, а пустой список исключений можно задать явно. Для
+<strong>Анализа BSL</strong> состояние и параметры каждого правила доступны в каталоге.
+Изменения политики проверяет установленный анализатор. После сохранения
+ESKA обновляет производный конфиг, когда доступны проверенный контекст,
+анализатор и запись в управляемый файл.
+<a href="formatting/">Настройки форматирования</a> · <a href="https://github.com/odineska/eska/blob/main/docs/analyzer-configuration.md">Политика анализатора</a>.</p>
      <p>
       Пользовательский config находится в стандартном config-каталоге ОС в подкаталоге
       <code>
@@ -1216,6 +1210,11 @@ artifacts_directory = "build"
 eska config edit
 # прямые входы: eska-build config init / config edit
 </code></pre>
+<p><code>config edit</code> открывает копию и перед сохранением проверяет исходный файл.
+Если настройки изменились, другой процесс держит блокировку записи или файл
+доступен только для чтения, команда завершится с ошибкой и укажет путь к вашему
+черновику. При успешном сохранении резервная копия предыдущей версии останется
+рядом с <code>config.toml</code>.</p>
      <p>
       Обычное чтение проекта не создаёт глобальный config автоматически. Для Distrobox:
      </p>
@@ -1625,6 +1624,7 @@ cache
        </h2>
       </div>
      </div>
+<p><a href="explorer/">Работа в Explorer с примерами CLI</a></p>
      <p>
       Откройте папку проекта или workspace, выберите представление ESKA и подключение.
 Подключение не запускает платформу и не выполняет автоматическую сборку.
@@ -1646,12 +1646,19 @@ cache
   </video>
   <figcaption id="demo-setup-caption">Переместите панель ESKA наверх в проводнике, сверните соседние разделы и раскройте проект. <a href="../../assets/demos/2026-11-18/explorer-setup.mp4">MP4 без звука, 15 с</a>.</figcaption>
 </figure>
-<figure class="doc-screenshot demo-figure" id="demo-tree">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11-18/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="demo-tree-caption">
-    <source src="../../assets/demos/2026-11-18/explorer-tree.mp4" type="video/mp4"/>
-    <a href="../../assets/demos/2026-11-18/explorer-tree.mp4">Открыть видео «Найти объект и открыть модуль»</a>
+<figure class="doc-screenshot demo-figure" id="demo-standard-attributes">
+  <video class="demo-video" controls muted playsinline preload="none" width="932" height="480" poster="../../assets/demos/2026-11-21/explorer-standard-attributes.webp" aria-label="Открыть свойства стандартного реквизита" aria-describedby="demo-standard-attributes-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-standard-attributes.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-standard-attributes.mp4">Открыть свойства стандартного реквизита (MP4)</a>
   </video>
-  <figcaption id="demo-tree-caption">В дереве откройте «Документы → ЗаказПокупателя → Модули → Модуль объекта». <a href="../../assets/demos/2026-11-18/explorer-tree.mp4">MP4 без звука, 15 с</a>.</figcaption>
+  <figcaption id="demo-standard-attributes-caption">В справочнике «Товары» откройте стандартный реквизит «Пометка удаления». В карточке видны тип «Булево» и режим просмотра. Explorer 0.1.32, ESKA 0.38.0. <a href="../../assets/demos/2026-11-21/explorer-standard-attributes.mp4">MP4 без звука, 9 с</a>.</figcaption>
+</figure>
+<figure class="doc-screenshot demo-figure" id="demo-tree">
+  <video class="demo-video" controls muted playsinline preload="none" width="840" height="490" poster="../../assets/demos/2026-11-21/explorer-tree.webp" aria-label="Найти объект и открыть модуль" aria-describedby="demo-tree-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-tree.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-tree.mp4">Найти объект и открыть модуль (MP4)</a>
+  </video>
+  <figcaption id="demo-tree-caption">У документа «ЗаказПокупателя» раскройте группу модулей и откройте BSL-модуль объекта. Explorer 0.1.23, ESKA 0.32.0. <a href="../../assets/demos/2026-11-21/explorer-tree.mp4">MP4 без звука, 10 с</a>.</figcaption>
 </figure>
      <h3 id="дерево-метаданных">
       Дерево метаданных
@@ -1673,6 +1680,7 @@ cache
 исключены настройками наблюдения VS Code, используйте ручное обновление.
      </p>
 <p>В <strong>Стандартных реквизитах</strong> видны платформенные поля и их типы, в том числе при отсутствии настройки в XML. Выбор открывает свойства поля в режиме чтения. У объектов с предопределёнными данными дерево открывает их иерархию и исходник. Нажатие на подписку на событие ведёт к обработчику в общем модуле.</p>
+<p>У справочника «Товары» в группе <strong>Стандартные реквизиты</strong> можно открыть «Пометка удаления» и посмотреть её тип в карточке свойств.</p>
 <h3 id="metadata-authoring">Создание, копирование и удаление</h3>
 <p>В контекстном меню группы выберите <strong>Добавить…</strong>: группа <strong>Справочники</strong> создаёт
 справочник, <strong>Реквизиты</strong> — реквизит своего владельца, <strong>Формы</strong> — форму.
@@ -1741,11 +1749,11 @@ JSON-запросы, <code>--no-input</code>, предварительная п�
 </figure>
 
 <figure class="doc-screenshot demo-figure" id="demo-form-edit">
-  <video class="demo-video" controls muted playsinline preload="none" width="1280" height="800" poster="../../assets/demos/2026-11-18/explorer-form-edit.webp" aria-label="Изменить управляемую форму" aria-describedby="demo-form-edit-caption">
-    <source src="../../assets/demos/2026-11-18/explorer-form-edit.mp4" type="video/mp4"/>
-    <a href="../../assets/demos/2026-11-18/explorer-form-edit.mp4">Открыть видео «Изменить управляемую форму»</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1280" height="566" poster="../../assets/demos/2026-11-21/explorer-form-edit.webp" aria-label="Изменить управляемую форму" aria-describedby="demo-form-edit-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-form-edit.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-form-edit.mp4">Изменить управляемую форму (MP4)</a>
   </video>
-  <figcaption id="demo-form-edit-caption">Измените заголовок поля «Покупатель» на «Клиент», затем отмените и повторите правку. <a href="../../assets/demos/2026-11-18/explorer-form-edit.mp4">MP4 без звука, 16 с</a>.</figcaption>
+  <figcaption id="demo-form-edit-caption">Измените заголовок «Покупатель» на «Клиент» в форме. Посмотрите результат в предпросмотре, отмените и повторите правку. Explorer 0.1.23, ESKA 0.32.0. <a href="../../assets/demos/2026-11-21/explorer-form-edit.mp4">MP4 без звука, 14 с</a>.</figcaption>
 </figure>
      <h3 id="открытие-и-переход-от-файла">
       Открытие и переход от файла
@@ -1978,11 +1986,11 @@ Unsaved BSL сам по себе не меняет Git-статус. Без вс
 <p>В панели можно открыть исходник или версию из HEAD, посмотреть diff, индексировать выбранные файлы, снять их с индекса, добавить путь в <code>.gitignore</code> и отменить изменения с подтверждением. Доступен групповой выбор. Изменения в индексе сравниваются с HEAD, изменения в рабочей копии — с индексом. У каждого репозитория своё поле сообщения, общее со встроенной панелью Git. Введите сообщение и нажмите <strong>Фиксация</strong> или <strong>Ctrl+Enter</strong> (<strong>Cmd+Enter</strong> на macOS).</p>
 <p>Панель использует встроенное расширение Git редактора. Изменённые файлы также отмечаются в дереве метаданных. Команды для терминала описаны в <a href="#daily-work">разделе Git</a>.</p>
 <figure class="doc-screenshot demo-figure" id="demo-scm">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11-18/explorer-scm.webp" aria-label="Проверить Git-изменения по объектам" aria-describedby="demo-scm-caption">
-    <source src="../../assets/demos/2026-11-18/explorer-scm.mp4" type="video/mp4"/>
-    <a href="../../assets/demos/2026-11-18/explorer-scm.mp4">Открыть видео «Проверить Git-изменения по объектам»</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="500" poster="../../assets/demos/2026-11-21/explorer-scm.webp" aria-label="Проверить Git-изменения по объектам" aria-describedby="demo-scm-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-scm.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-scm.mp4">Проверить Git-изменения по объектам (MP4)</a>
   </video>
-  <figcaption id="demo-scm-caption">Выберите объекты 1С по имени и откройте изменения в двух файлах <code>ObjectModule.bsl</code>. <a href="../../assets/demos/2026-11-18/explorer-scm.mp4">MP4 без звука, 15 с</a>.</figcaption>
+  <figcaption id="demo-scm-caption">Выберите объект 1С по имени и сравните изменения в его ObjectModule.bsl с предыдущей версией. Explorer 0.1.23, ESKA 0.32.0. <a href="../../assets/demos/2026-11-21/explorer-scm.mp4">MP4 без звука, 14 с</a>.</figcaption>
 </figure>
 <h3 id="debug">Запуск и HTTP-отладка 1С</h3>
 <p>Откройте <strong>Настройки проекта → Настроить проект</strong> и заполните нужный профиль в <code>.eska/settings_local.toml</code>. В разделе <strong>Запуск и отладка → ESKA: запуск 1С</strong> доступны запуск клиента, обновление тестовой базы и подключение к <code>dbgs</code>. Команда <strong>Запустить 1С с отладкой</strong> запускает клиент, <strong>Подключиться к серверу отладки 1С</strong> подключается к работающей сессии. Во время отладки можно выбрать предмет и типы автоподключения.</p>
@@ -2129,11 +2137,11 @@ Standalone-проект этой функцией не отключается. �
 на строку. Идентичность объекта и пути вложенных полей предоставляет backend.
      </p>
 <figure class="doc-screenshot demo-figure" id="demo-properties">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11-18/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="demo-properties-caption">
-    <source src="../../assets/demos/2026-11-18/explorer-properties.mp4" type="video/mp4"/>
-    <a href="../../assets/demos/2026-11-18/explorer-properties.mp4">Открыть видео «Посмотреть свойства»</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="490" poster="../../assets/demos/2026-11-21/explorer-properties.webp" aria-label="Посмотреть свойства" aria-describedby="demo-properties-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-properties.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-properties.mp4">Посмотреть свойства (MP4)</a>
   </video>
-  <figcaption id="demo-properties-caption">Откройте свойства документа и перейдите от поля «Имя» к его записи в XML. <a href="../../assets/demos/2026-11-18/explorer-properties.mp4">MP4 без звука, 14 с</a>.</figcaption>
+  <figcaption id="demo-properties-caption">Откройте свойства документа и перейдите от поля «Имя» к записи в XML. Explorer 0.1.23, ESKA 0.32.0. <a href="../../assets/demos/2026-11-21/explorer-properties.mp4">MP4 без звука, 12 с</a>.</figcaption>
 </figure>
      <div class="table-wrap">
       <table>
@@ -2581,11 +2589,11 @@ dirty-текст сохраняется с ограничением записи
 полного вывода типа выражения или проверки выполнения запроса.
      </p>
 <figure class="doc-screenshot demo-figure" id="demo-query">
-  <video class="demo-video" controls muted playsinline preload="none" width="1248" height="758" poster="../../assets/demos/2026-11-18-query/explorer-query.webp" aria-label="Изменить запрос и сохранить" aria-describedby="demo-query-caption">
-    <source src="../../assets/demos/2026-11-18-query/explorer-query.mp4" type="video/mp4"/>
-    <a href="../../assets/demos/2026-11-18-query/explorer-query.mp4">Открыть видео «Изменить запрос и сохранить»</a>
+  <video class="demo-video" controls muted playsinline preload="none" width="980" height="520" poster="../../assets/demos/2026-11-21/explorer-query.webp" aria-label="Изменить запрос и сохранить через Ctrl+S" aria-describedby="demo-query-caption">
+    <source src="../../assets/demos/2026-11-21/explorer-query.mp4" type="video/mp4">
+    <a href="../../assets/demos/2026-11-21/explorer-query.mp4">Изменить запрос и сохранить через Ctrl+S (MP4)</a>
   </video>
-  <figcaption id="demo-query-caption">Откройте запрос BSL в отдельной вкладке, измените его и нажмите Ctrl+S. Закройте вкладку, чтобы вернуться к исходному модулю. <a href="../../assets/demos/2026-11-18-query/explorer-query.mp4">MP4 без звука</a>.</figcaption>
+  <figcaption id="demo-query-caption">Добавьте сортировку в отдельной вкладке запроса и нажмите Ctrl+S. Обновлённый текст виден в модуле BSL. Explorer 0.1.23, ESKA 0.32.0. <a href="../../assets/demos/2026-11-21/explorer-query.mp4">MP4 без звука, 14 с</a>.</figcaption>
 </figure>
      <h3 id="таблицы-поля-и-соединения">
       Таблицы, поля и соединения
@@ -2792,6 +2800,7 @@ Preview показывает результат до публикации; ко�
        </h2>
       </div>
      </div>
+<p>За диагностику BSL, подсказки параметров и поиск определений в Explorer отвечает языковой сервер bsl-analyzer. Команда ESKA благодарит разработчиков анализатора за открытый сервер и инструменты проверки кода. <a href="https://github.com/itrous/bsl-analyzer">Исходники bsl-analyzer</a> · <a href="https://github.com/itrous/bsl-analyzer/releases">Выпуски анализатора</a></p>
      <p>
       Базовая подсветка BSL/SDBL, скобки, комментарии и отступы входят в Explorer.
 Семантические сервисы работают через отдельный внешний
@@ -2952,32 +2961,7 @@ read-only и файловые границы. Отказ одной цели о�
        </h2>
       </div>
      </div>
-     <p>
-      <code>
-       eska-fmt
-      </code>
-      работает без анализатора, платформы и metadata-индекса. Общая
-      <code>
-       eska fmt
-      </code>
-      делегирует ту же операцию. По умолчанию без секции
-      <code>
-       [format]
-      </code>
-      используется профиль
-      <strong>
-       <code>
-        1c
-       </code>
-       версии 1
-      </strong>
-      . Доступны также
-      <code>
-       eska
-      </code>
-      и именованные
-пользовательские профили.
-     </p>
+<p><code>eska-fmt</code> и <code>eska fmt</code> форматируют файлы без анализатора, платформы и индекса метаданных. По умолчанию используется профиль <code>eska</code> версии 1. В секции <code>[format]</code> можно выбрать <code>1c</code> или именованный профиль команды.</p>
      <pre><code class="language-toml">[format]
 profile = "team"
 profile_version = 1
@@ -3629,22 +3613,18 @@ cd solution
 eska status
 eska start AUDIT-42
 </code></pre>
-     <p>
-      <code>
-       clone
-      </code>
-      не угадывает, как инициализировать неподготовленную выгрузку: если manifest
-отсутствует, выполните соответствующий
-      <code>
-       init
-      </code>
-      .
-      <code>
-       start
-      </code>
-      не прячет dirty-изменения
-автоматическим stash. При отказе сначала сохраните или явно отложите свою работу.
-     </p>
+<p>Для закрытого репозитория по HTTPS <code>eska clone</code> использует настроенные
+credential helpers Git и askpass. При необходимости запрашивает логин и пароль
+в интерактивном терминале Linux или macOS.</p>
+<p><code>clone</code> сохраняет рабочую копию любого успешно клонированного Git-репозитория
+и возвращает код 0. Если в его корне отсутствует <code>eska.toml</code> или проверка проекта
+выявила ошибку, команда выводит в <code>stderr</code> сообщение с префиксом <code>WARN</code>.
+Для подключения существующей выгрузки Designer XML используйте <code>eska init</code>.
+Если клон находится внутри чужого workspace, <code>init</code> создаёт самостоятельный
+проект в клоне. <code>new</code> из такого клона также ищет workspace только в пределах
+текущего рабочего дерева Git.</p>
+<p><code>start</code> не прячет dirty-изменения автоматическим stash. При отказе сначала
+сохраните или явно отложите свою работу.</p>
      <h3 id="посмотреть-изменения-и-историю">
       Посмотреть изменения и историю
      </h3>
@@ -3656,18 +3636,20 @@ eska diff main HEAD --semantic --format json
 eska diff main HEAD --since-branch-point --semantic
 eska history --limit 10 --format json
 </code></pre>
-     <p>
-      Файловый diff показывает изменения путей; semantic diff объясняет известные
-объекты, свойства, модули и методы BSL, формы и другие поддержанные элементы.
+<p>До подключения проекта <code>status</code> показывает корень рабочего дерева, состояние
+HEAD, ветку и количество изменённых файлов во всём репозитории. Такой отчёт
+использует JSON-схему 4. Для настроенного проекта и workspace действует схема 3.</p>
+<p>До подключения проекта <code>history</code> показывает коммиты текущего репозитория.
+В workspace команда определяет задачу коммита по общему workflow.</p>
+<p>Без <code>eska.toml</code> файловый <code>diff</code> показывает пути относительно корня рабочего
+дерева Git, в том числе при сравнении ревизий. Для <code>--semantic</code> и выбора
+участника workspace нужен манифест.</p>
+<p>В проекте файловый diff показывает изменения путей. Семантический diff объясняет
+изменения объектов, свойств, модулей и методов BSL, форм и других поддержанных элементов.
 Это не полный компилятор BSL. Для неизвестного или повреждённого фрагмента
 показывается честный file-level fallback с причиной, а не вымышленный смысл.
 Читаются затронутые пути и нужные snapshots; весь проект не сканируется ради
-каждого
-      <code>
-       status
-      </code>
-      или draft сообщения.
-     </p>
+каждого <code>status</code> или draft сообщения.</p>
      <p>
       В workspace некоторые команды принимают повторяемый
       <code>
@@ -3715,7 +3697,7 @@ eska unshelve --dry-run --format json
 eska unshelve
 </code></pre>
      <p>
-      Полка сохраняет staged и unstaged отдельно, non-ignored untracked, удаления,
+      <code>shelve</code>, <code>shelves</code> и <code>unshelve</code> доступны в Git-репозитории до создания <code>eska.toml</code>. Полка сохраняет staged и unstaged отдельно, non-ignored untracked, удаления,
 mode и raw index. Это repository-wide состояние, включая соседние проекты
 workspace и файлы вне вложенного member.
       <code>
@@ -3810,12 +3792,36 @@ finish выполнены. Squash/rebase может не подтверждат�
      <h3 id="найти-и-выбрать-платформу">
       Найти и выбрать платформу
      </h3>
+<p>В настройках «Запуск и отладка → Платформа → Из установленных…» можно
+выбрать подтверждённую установку на хосте или в контейнере Distrobox из
+черновика профиля (при пустом имени — из машинных defaults). В списке видны
+версия, источник и путь <code>ibcmd</code>. Выбор подставляет в черновик среду запуска,
+контейнер, версию и путь; изменения сохраняются обычной кнопкой «Сохранить».
+При недоступном источнике остаются результаты другого источника.</p>
+<p>Для IDE доступен opt-in режим <code>eska platform list --include-distrobox --format json</code>
+(также у <code>eska-build</code>). Он независимо сканирует хост и настроенный контейнер,
+игнорируя <code>--ibcmd</code> / <code>ESKA_IBCMD</code> как ограничение списка. Архитектура остаётся
+из <code>--platform-arch</code>, окружения или машинных defaults. Без нового флага контракт
+прежний. JSON содержит <code>schema_version: 1</code>, <code>kind: &quot;installed-platforms&quot;</code>,
+<code>platforms: [{version, ibcmd, source}]</code>, где <code>source</code> — <code>{kind: &quot;host&quot;}</code> или
+<code>{kind: &quot;distrobox&quot;, container}</code>. Статусы источников находятся в
+<code>sources: {host: &quot;ready&quot;|&quot;unavailable&quot;, distrobox: null|{container, status}}</code>;
+пустой успешно проверенный источник имеет статус <code>ready</code>. Частичная
+недоступность не меняет успешный exit code; отмена завершает команду с ошибкой.
+На Unix каждый источник имеет общий бюджет 5 секунд и ограничение вывода
+процессов 1 MiB (до 1 секунды дополнительно на завершение контейнерного процесса);
+проверка не отвечает на предложение создать отсутствующий
+контейнер. Если контейнер не настроен, <code>sources.distrobox</code> равен <code>null</code>.</p>
      <pre><code class="language-sh">eska platform list --format json
 eska doctor --format json
 # прямые входы:
 eska-build platform list --format json
 eska-project doctor --format json
 </code></pre>
+<p>В обычном Git-репозитории без <code>eska.toml</code> команда <code>doctor</code> выводит строку
+<code>WARN</code> для проверки <code>project.config</code> и продолжает проверки окружения и Git.
+При отсутствии других ошибок команда завершается с кодом 0. Повреждённый
+манифест и запрос конкретного проекта без манифеста дают код 1.</p>
      <p>
       Machine config выбирает runner
       <code>
@@ -4138,21 +4144,11 @@ ownership. Исходники, опубликованные артефакты, 
      <pre><code class="language-sh">eska import ./incoming/new-version.epf --dry-run --format json
 eska import ./incoming/new-version.epf
 </code></pre>
-     <p>
-      Import заменяет
-      <strong>
-       весь
-      </strong>
-      выбранный source, а не добавляет только новые файлы.
-Preview показывает изменения; перед подтверждением разберите свои локальные
-правки. В интерактивном режиме подтверждение явное, для сознательного
-неинтерактивного применения предусмотрен
-      <code>
-       --force
-      </code>
-      . Это разрешение конкретной
-замены, а не игнорирование структурных, типов или файловых проверок.
-     </p>
+<p>Import заменяет <strong>весь</strong> выбранный source, а не добавляет только новые файлы.
+Preview показывает изменения. Перед подтверждением проверьте локальные правки.
+В интерактивном режиме <code>д</code> или <code>y</code> подтверждает замену, а <code>н</code>, <code>n</code>, Enter или Esc
+отменяют её. Для неинтерактивной замены предусмотрен <code>--force</code>. Проверки структуры,
+типов и файлов действуют в обоих режимах.</p>
      <p>
       В workspace выбирается один текущий member или
       <code>
@@ -4540,6 +4536,7 @@ Rust-инструменты и обычная подготовка через Ex
 <td>Выбрать проект и подключиться</td>
 <td><code>eska.explorer.connect</code></td>
 </tr>
+<tr><td>Начать проект 1С</td><td><code>eska.explorer.projectOnboarding</code></td></tr>
 <tr>
 <td>Перезапустить подключение</td>
 <td><code>eska.explorer.restart</code></td>
@@ -4564,6 +4561,7 @@ Rust-инструменты и обычная подготовка через Ex
 <td>Открыть исходник</td>
 <td><code>eska.explorer.openSource</code></td>
 </tr>
+<tr><td>Открыть в новой вкладке</td><td><code>eska.explorer.openInNewTab</code></td></tr>
 <tr>
 <td>Открыть XML</td>
 <td><code>eska.explorer.openXml</code></td>
@@ -4764,6 +4762,8 @@ Rust-инструменты и обычная подготовка через Ex
 <td>Настроить проект</td>
 <td><code>eska.explorer.configureProject</code></td>
 </tr>
+<tr><td>Собрать файл 1С…</td><td><code>eska.explorer.buildArtifact</code></td></tr>
+<tr><td>Проверить проект</td><td><code>eska.explorer.checkProject</code></td></tr>
 <tr>
 <td>Запустить тестовую базу</td>
 <td><code>eska.explorer.runTest</code></td>
@@ -4837,6 +4837,7 @@ Rust-инструменты и обычная подготовка через Ex
 <td>Открыть изменения</td>
 <td><code>eska.explorer.scm.diff</code></td>
 </tr>
+<tr><td>Сравнить две версии</td><td><code>eska.explorer.scm.compareRevisions</code></td></tr>
 <tr>
 <td>Индексировать изменения</td>
 <td><code>eska.explorer.scm.stage</code></td>

@@ -1,0 +1,171 @@
+{
+  "edited": "2026-11-21",
+  "scenes": [
+    {
+      "id": "standard-attributes",
+      "title": "Открыть свойства стандартного реквизита",
+      "recorded": "2026-11-21",
+      "vscode": "1.147.0",
+      "explorer": "0.1.32",
+      "eska": "0.38.0",
+      "durationSeconds": 8.625,
+      "width": 932,
+      "height": 480,
+      "audio": false,
+      "files": {
+        "gif": {
+          "bytes": 311279,
+          "sha256": "2544b2c6efb27a5dc4c53c165a4538c4da8d3f99d1d5306569f57e26d8b63b08"
+        },
+        "mp4": {
+          "bytes": 55857,
+          "sha256": "ea9d8f116e9b262414dc07dae4502f1a109ef135d65f112d305b4065ae10249f"
+        },
+        "webp": {
+          "bytes": 24918,
+          "sha256": "4df0bc519ffce023e55f1f9f628743912ce7068ec2b2eb622aeacbd42ccd84e3"
+        }
+      }
+    },
+    {
+      "id": "tree",
+      "title": "Найти объект и открыть модуль",
+      "durationSeconds": 10.0,
+      "width": 840,
+      "height": 490,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 338351,
+          "sha256": "459fa33bac900f3adb63cf04fbf2a8be6bf05fa11d59c5ea822cb17307bc9461"
+        },
+        "mp4": {
+          "bytes": 88924,
+          "sha256": "e5b7578aef752bdd53cc584b1f19d16a9aceded55357da1f0af7aec7d614d011"
+        },
+        "webp": {
+          "bytes": 33750,
+          "sha256": "49c30a89fb349140f55d52126f8c9a8a48fb0e54cc8df1bbdbc56c632ed8ff3a"
+        }
+      },
+      "source": "2026-11-18/explorer-tree.mp4",
+      "sourceStartSeconds": 1,
+      "recorded": "2026-11-18",
+      "explorer": "0.1.23",
+      "eska": "0.32.0"
+    },
+    {
+      "id": "properties",
+      "title": "Посмотреть свойства",
+      "durationSeconds": 12.5,
+      "width": 1248,
+      "height": 490,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 435045,
+          "sha256": "538597299f2eb62057b71680a6b98699287b76e6558a7f2040bfe25c47796a61"
+        },
+        "mp4": {
+          "bytes": 281375,
+          "sha256": "ba5145777abd64310d76f9de164b7b9522053b93d3aa0d247d5eedcaa9715aba"
+        },
+        "webp": {
+          "bytes": 39534,
+          "sha256": "6df6398bb11d4e785795ba2a126012a810ac67a920e62cb827d6115ae3d3aaad"
+        }
+      },
+      "source": "2026-11-18/explorer-properties.mp4",
+      "sourceStartSeconds": 0.75,
+      "recorded": "2026-11-18",
+      "explorer": "0.1.23",
+      "eska": "0.32.0"
+    },
+    {
+      "id": "form-edit",
+      "title": "Изменить управляемую форму",
+      "durationSeconds": 13.958333,
+      "width": 1280,
+      "height": 566,
+      "audio": false,
+      "vscode": "1.109.0",
+      "files": {
+        "gif": {
+          "bytes": 425787,
+          "sha256": "473f62bdb873fad5feb7b969d323cc906a229e74ba0339b4cd0208b7d77ab368"
+        },
+        "mp4": {
+          "bytes": 185010,
+          "sha256": "a8d85395614e46e1b81bb36df9a7e5764ba1017254deb64bfa256f887a639655"
+        },
+        "webp": {
+          "bytes": 38268,
+          "sha256": "15038c9cb082578b5fa1f075b13ae49a7388471cdddc27c11fdc8929d4f428c1"
+        }
+      },
+      "source": "2026-11-18/explorer-form-edit.mp4",
+      "sourceStartSeconds": 0.8,
+      "recorded": "2026-11-18",
+      "explorer": "0.1.23",
+      "eska": "0.32.0"
+    },
+    {
+      "id": "query",
+      "title": "Изменить запрос и сохранить через Ctrl+S",
+      "durationSeconds": 14.5,
+      "width": 980,
+      "height": 520,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 490333,
+          "sha256": "9027a6a10e1ea250e25efa921fa50058d37b15de28c6af573cf41733427c7975"
+        },
+        "mp4": {
+          "bytes": 195597,
+          "sha256": "29a78c6d6b91e06ff4ee0bd6a892cc24869cb7642f91052058fdc35785457c70"
+        },
+        "webp": {
+          "bytes": 48086,
+          "sha256": "764d52ed1ec8a257f19579a7a3d8ff654dfd0bbd5065e68fef808f919a2f48cc"
+        }
+      },
+      "source": "2026-11-18-query/explorer-query.mp4",
+      "sourceStartSeconds": 1,
+      "recorded": "2026-11-18",
+      "explorer": "0.1.23",
+      "eska": "0.32.0"
+    },
+    {
+      "id": "scm",
+      "title": "Проверить Git-изменения по объектам",
+      "durationSeconds": 13.708333,
+      "width": 1248,
+      "height": 500,
+      "audio": false,
+      "vscode": "1.144.0",
+      "files": {
+        "gif": {
+          "bytes": 399147,
+          "sha256": "4346c883b21c3f431416720fd2f2f75c5280a26555241eed2db9b1c3e892fadc"
+        },
+        "mp4": {
+          "bytes": 171605,
+          "sha256": "d3c8768cbc0a29b3b4facce509e715f434e80b8fee1bdbc20ffdfd939e1f4850"
+        },
+        "webp": {
+          "bytes": 33408,
+          "sha256": "0cec9a0060c31628459442df859c1b54077d9ab469eeae89af85f7961cfeadee"
+        }
+      },
+      "source": "2026-11-18/explorer-scm.mp4",
+      "sourceStartSeconds": 0.75,
+      "recorded": "2026-11-18",
+      "explorer": "0.1.23",
+      "eska": "0.32.0"
+    }
+  ]
+}
