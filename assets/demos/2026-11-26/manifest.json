@@ -1,0 +1,332 @@
+{
+  "recorded": "2026-11-26",
+  "environment": {
+    "platform": "8.5.4.2072",
+    "configuration": "ДемонстрационноеПриложение",
+    "configurationVersion": "2.0.0.21",
+    "explorerCommit": "84953ed",
+    "eskaCommit": "82a976de",
+    "language": "ru",
+    "interfaces": [
+      "Такси",
+      "Воздушный"
+    ]
+  },
+  "demos": [
+    {
+      "id": "setup",
+      "basename": "explorer-setup",
+      "title": "Настроить панель Explorer",
+      "description": "В подключённой демобазе сверните и снова откройте панель ESKA. Измените её ширину и раскройте справочники.",
+      "durationSeconds": 32.167,
+      "width": 1248,
+      "height": 802,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 16.083,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 30.083,
+      "files": {
+        "mp4": {
+          "bytes": 394789,
+          "sha256": "0bbd0dd61b51fa64b3eff29e181178d1c8f6fbe78500104d1519a5b0b7ed0de3"
+        },
+        "gif": {
+          "bytes": 420343,
+          "sha256": "572a4b1e11a9639bf26f365b4b9dbe34f8125e6e62fbb2e64c3a6115161967a5"
+        },
+        "webp": {
+          "bytes": 39832,
+          "sha256": "ad237006832f4291d8c54b075e8e3dd2f4198f052b1a44e28c09447a5dc16e13"
+        }
+      }
+    },
+    {
+      "id": "tree",
+      "basename": "explorer-tree",
+      "title": "Открыть модуль объекта из дерева",
+      "description": "Найдите в дереве справочник «Товары» и откройте его модуль объекта.",
+      "durationSeconds": 25.167,
+      "width": 1248,
+      "height": 802,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 12.583,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 19.583,
+      "files": {
+        "mp4": {
+          "bytes": 799256,
+          "sha256": "f2152589c79323961157bd9345cedb6b0bfa277fe42ba01154a41a7f641e0ab2"
+        },
+        "gif": {
+          "bytes": 870800,
+          "sha256": "716d0fa45fd786b13b07cad6ace5fed931530f9d87f8f2bc467f0729e2688d94"
+        },
+        "webp": {
+          "bytes": 99632,
+          "sha256": "a1e6596eb301b4862e2f88de3760f309b2f7b69ca940ebc8686e7aa8c7ee36dc"
+        }
+      }
+    },
+    {
+      "id": "properties",
+      "basename": "explorer-properties",
+      "title": "Перейти от свойства к XML",
+      "description": "Откройте свойства справочника «Товары» и перейдите из карточки к элементу «Имя» в XML.",
+      "durationSeconds": 27.667,
+      "width": 1248,
+      "height": 802,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 13.583,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 19.583,
+      "files": {
+        "mp4": {
+          "bytes": 783506,
+          "sha256": "0b1d5f7c2671b5574c275c88240c019b8c865de203aef75fc6c46897a21eafb8"
+        },
+        "gif": {
+          "bytes": 808909,
+          "sha256": "f1faba28145413697a27a71e191b76094e9ad20061f2fbf0d4f3e08decd6f5c2"
+        },
+        "webp": {
+          "bytes": 48986,
+          "sha256": "baea741d7d043385d5d5d4d69f5890a8b9650c9e1849cea41294f0417820b78d"
+        }
+      }
+    },
+    {
+      "id": "standard-attributes",
+      "basename": "explorer-standard-attributes",
+      "title": "Посмотреть тип стандартного реквизита",
+      "description": "Раскройте стандартные реквизиты справочника «Товары». У реквизита «Код» видны тип «Строка» и длина 9.",
+      "durationSeconds": 21.167,
+      "width": 1248,
+      "height": 802,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 10.583,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 17.583,
+      "files": {
+        "mp4": {
+          "bytes": 303146,
+          "sha256": "e8c678f88881c401e324907f9f1b70eea16fe0979e9bf4241ac03dac55f0c5f1"
+        },
+        "gif": {
+          "bytes": 409684,
+          "sha256": "706447034c7c0355bb29f1e88c44bb504095868c64a208a1033afcb73a0854eb"
+        },
+        "webp": {
+          "bytes": 43864,
+          "sha256": "b5725bd04b2cb514c90301f865ab9881463cdc130d51f162590e45dcd04e8e42"
+        }
+      }
+    },
+    {
+      "id": "forms",
+      "basename": "explorer-forms",
+      "title": "Сравнить предпросмотр формы заказа",
+      "description": "Откройте форму документа «Заказ» из XML. Сравните расположение элементов в «Такси» и «Воздушном». В «Воздушном» переключите светлую и тёмную темы.",
+      "durationSeconds": 31.583,
+      "width": 1440,
+      "height": 944,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 12.542,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 26.542,
+      "files": {
+        "mp4": {
+          "bytes": 1337732,
+          "sha256": "81d0e7f6434cf549c69d803967a68435ea9542b70cf3dac758a04f7b62ea49fc"
+        },
+        "gif": {
+          "bytes": 1272096,
+          "sha256": "ed2c0976ab4a6e5e071ac61e4bd65546db202337b3bc70e4fa1d8bc5f84f6c5b"
+        },
+        "webp": {
+          "bytes": 64706,
+          "sha256": "52e68f7a6df32543c4b8aca0be67fd1018c4dc270332d568e6f250329022fbc6"
+        }
+      }
+    },
+    {
+      "id": "form-edit",
+      "basename": "explorer-form-edit",
+      "title": "Изменить заголовок поля на форме заказа",
+      "description": "В форме документа «Заказ» измените заголовок поля «Покупатель» на «Клиент», проверьте результат в предпросмотре и отмените изменение.",
+      "durationSeconds": 25.083,
+      "width": 1440,
+      "height": 944,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 12.542,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 18.542,
+      "files": {
+        "mp4": {
+          "bytes": 442764,
+          "sha256": "56d5154cb8df6da5ca002544d33ba6a0604f6c10a529702f2b987302e4319e94"
+        },
+        "gif": {
+          "bytes": 509832,
+          "sha256": "e683dd60dfe97c62dc1708f671c5b12b9c7655768f4c78a648499045333d38f7"
+        },
+        "webp": {
+          "bytes": 62700,
+          "sha256": "2ba457996e7ba84da5c5a8aebd2c568f98fa64f0e8324595eb84e635d7a76223"
+        }
+      }
+    },
+    {
+      "id": "query",
+      "basename": "explorer-query",
+      "title": "Добавить сортировку и сохранить запрос",
+      "description": "Откройте запрос из общего модуля «Пользователи», добавьте сортировку по наименованию и сохраните изменение в модуле BSL.",
+      "durationSeconds": 23.167,
+      "width": 1280,
+      "height": 844,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 11.583,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 17.583,
+      "files": {
+        "mp4": {
+          "bytes": 672174,
+          "sha256": "cea3dce32c12c656fbb8c8e1776943bc36296c0f98c833048b68636a90be1e7e"
+        },
+        "gif": {
+          "bytes": 684349,
+          "sha256": "9ad01492e60806311bb9afaff62c21b3abf976cb0830f3ba40fa5e4bd472361d"
+        },
+        "webp": {
+          "bytes": 27142,
+          "sha256": "d4e421aa831b2f771eb1ec6631e520a4458b3fdbca34fa360f5d06c4644aa7be"
+        }
+      }
+    },
+    {
+      "id": "scm",
+      "basename": "explorer-scm",
+      "title": "Сравнить модули двух справочников",
+      "description": "В панели Git выберите изменения модулей объектов справочников «Контрагенты» и «Товары». В сравнении виден исходник выбранного объекта.",
+      "durationSeconds": 20.167,
+      "width": 1280,
+      "height": 844,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 10.083,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 14.083,
+      "files": {
+        "mp4": {
+          "bytes": 585719,
+          "sha256": "c6aa32a97706401943e0fa4d4bd6a7442feac3d98e615885faf88b673d1c9a7e"
+        },
+        "gif": {
+          "bytes": 825790,
+          "sha256": "70021dd48a6a82bcb65f5074431402273e8a9f46cf350081a40fb87efea025d0"
+        },
+        "webp": {
+          "bytes": 85188,
+          "sha256": "fc009e9457017701be835fdc43dbc365b55ce0875ed2f12e446ae0a2fdc90f86"
+        }
+      }
+    },
+    {
+      "id": "apply",
+      "basename": "eska-apply",
+      "title": "Следить за реструктуризацией тестовой базы",
+      "description": "В копии тестовой базы увеличьте длину наименования справочника «Товары» с 50 до 60. Терминал показывает ожидание, реструктуризацию объекта и результат обновления. Длительные паузы вырезаны, часы ESKA показывают фактически прошедшее время.",
+      "durationSeconds": 43.333,
+      "width": 1280,
+      "height": 720,
+      "audio": false,
+      "chapters": [
+        {
+          "startSeconds": 0,
+          "interface": "Taxi"
+        },
+        {
+          "startSeconds": 21.667,
+          "interface": "Version8_5"
+        }
+      ],
+      "posterAtSeconds": 35.667,
+      "files": {
+        "mp4": {
+          "bytes": 1503840,
+          "sha256": "38d2880640987308ed2ec004a772ee27e5a6b4660b07b873bc7b168505f7211e"
+        },
+        "gif": {
+          "bytes": 2617526,
+          "sha256": "e3f5ddc4c674be2b30db94bb31238c501c70409c68a4e5a5a85f58f0ffa6e07e"
+        },
+        "webp": {
+          "bytes": 148048,
+          "sha256": "471a702b42fec6a0e3143446eb832b5779e30f12686a1fe0ebb2377053e012dd"
+        }
+      }
+    }
+  ]
+}
